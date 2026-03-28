@@ -9,10 +9,14 @@ const App = () => {
   return (
     <div>
       {/* <NavBar /> */}
+<<<<<<< HEAD
       <LandingPage />
       {/* <PlanPage /> */}
       <VendorDetails />
       {/* <CheckoutPage /> */}
+=======
+      {/* <LandingPage /> */}
+>>>>>>> 682cbade397be7ada43b33232e4c0dfbe0a317cb
     </div>
   )
 }
