@@ -6,10 +6,11 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   password: String,
-  role: {
-    type: String,
-    default: "user",
-  },
+ role: {
+  type: String,
+  enum: ["user", "provider", "admin"],
+  default: "user",
+},
 });
 export default mongoose.model("User", userSchema);
 

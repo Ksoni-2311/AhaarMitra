@@ -5,8 +5,8 @@ import LandingPage from './pages/LandingPage.jsx'
 const App = () => {
   return (
     <div>
-      {/* <NavBar /> */}
-      {/* <LandingPage /> */}
+       {/* <NavBar />
+      <LandingPage />  */}
     </div>
   )
 }
