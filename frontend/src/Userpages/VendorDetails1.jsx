@@ -4,25 +4,8 @@ const VendorDetails1 = () => {
   return (
     <div className="bg-gradient-to-b from-gray-50 to-white text-gray-900 font-[Manrope]">
 
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200 h-20 px-12 flex justify-between items-center shadow-sm">
-        <h1 className="text-xl font-black tracking-tight">AhaarMitra</h1>
-
-        <div className="hidden md:flex gap-8 text-sm font-semibold">
-          <span className="border-b-2 border-black pb-1">Explore</span>
-          <span className="text-gray-500 hover:text-black transition">Subscriptions</span>
-          <span className="text-gray-500 hover:text-black transition">Orders</span>
-          <span className="text-gray-500 hover:text-black transition">Support</span>
-        </div>
-
-        <input
-          placeholder="Search cuisines..."
-          className="bg-gray-100 border border-gray-200 rounded-full px-5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-        />
-      </nav>
-
       {/* Hero */}
-      <section className="relative h-[520px] mt-20 overflow-hidden">
+      <section className="relative h-[300px] mt-16 overflow-hidden">
         <img
           src="https://assets.gqindia.com/photos/6086c49078866ae25e37741e/1:1/w_1080,h_1080,c_limit/Tiffin%20Service%20COVID.jpeg"
           className="w-full h-full object-cover scale-105"
@@ -72,6 +55,12 @@ const VendorDetails1 = () => {
                 Pure Veg
               </h2>
               <p className="text-xs text-gray-500 mt-1">DIETARY TYPE</p>
+            </div>
+            <div>
+              <button className="px-6 py-2 bg-[#FE9A00] text-white rounded-lg font-semibold uppercase hover:bg-[#e88a00] transition">
+                Menu
+              </button>
+              <p className="text-xs uppercase text-gray-500 mt-1">See Menu</p>
             </div>
           </div>
 

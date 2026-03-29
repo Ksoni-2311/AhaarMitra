@@ -1,23 +1,32 @@
 import React from 'react'
-import NavBar from './pages/NavBar.jsx'
+import NavBar from './Userpages/NavBar.jsx'
 import { Routes, Route } from "react-router-dom";
 import Footer from './components/Footer.jsx'
-import ConfigurePlan4 from './pages/ConfigurePlan4.jsx'
-import AhaarMitraMultiAddress10 from './pages/AhaarMitraMultiAddress10.jsx'
-import TiffinSeeker9 from './pages/TiffinSeeker9.jsx';
-import SecureCheckout5 from './pages/SecureCheckout5.jsx';
-import AhaarMitraOnboarding11 from './pages/AhaarMitraOnboarding11.jsx';
-import CheckoutConfirmation3 from './pages/CheckoutConfirmation3.jsx';
-import DeliveryAddress14 from './pages/DeliveryAddress14.jsx';
-import TiffinTrial2 from './pages/TiffinTrial2.jsx';
-import VendorDetails1 from './pages/VendorDetails1.jsx';
-import TiffinSeekerRegistration13 from './pages/TiffinSeekerRegistration13.jsx';
-import AhaarMitraOrders15 from './pages/AhaarMitraOrders15.jsx';
+import ConfigurePlan4 from './Userpages/ConfigurePlan4.jsx'
+import AhaarMitraMultiAddress10 from './Userpages/AhaarMitraMultiAddress10.jsx'
+import TiffinSeeker9 from './Userpages/TiffinSeeker9.jsx';
+import SecureCheckout5 from './Userpages/SecureCheckout5.jsx';
+import AhaarMitraOnboarding11 from './Userpages/AhaarMitraOnboarding11.jsx';
+import CheckoutConfirmation3 from './Userpages/CheckoutConfirmation3.jsx';
+import DeliveryAddress14 from './Userpages/DeliveryAddress14.jsx';
+import TiffinTrial2 from './Userpages/TiffinTrial2.jsx';
+import TiffinSeekerRegistration13 from './Userpages/TiffinSeekerRegistration13.jsx';
+import AhaarMitraOrders15 from './Userpages/AhaarMitraOrders15.jsx';
+import VendorDetails1 from './Userpages/VendorDetails1.jsx';
+
+
+
+
+import RegisterProvider1 from './VendorPages/RegisterProvider1.jsx';
+import BusinessDetails2 from './VendorPages/BusinessDetails2.jsx';
+import PayoutSetup3 from './VendorPages/PayoutSetup3.jsx';
+
+
 const App = () => {
   return (
     <div className='min-h-screen flex flex-col'>
       <NavBar />
-      <div className='my-10'>
+      <div className=''>
         <Routes>
           < Route path="/1" element={<VendorDetails1 />} />
           < Route path="/2" element={<TiffinTrial2 />} />
@@ -30,7 +39,13 @@ const App = () => {
           < Route path="/13" element={<TiffinSeekerRegistration13 />} />
           < Route path="/14" element={<DeliveryAddress14 />} />
           < Route path="/15" element={<AhaarMitraOrders15 />} />
-          < Route path="/ConfigurePlan" element={<ConfigurePlan4 />} />
+
+          {/* VenderPages */}
+          < Route path="/v1" element={<RegisterProvider1 />} />
+          < Route path="/v2" element={<BusinessDetails2 />} />
+          < Route path="/v3" element={<PayoutSetup3 />} />
+
+
         </Routes>
       </div>
       <Footer />

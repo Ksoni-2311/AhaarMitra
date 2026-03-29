@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 const NavBar = () => {
   return (
-       <div className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 h-20 px-6 md:px-12 flex justify-between items-center">
+       <div className="fixed top-0 w-full z-50 bg-white border-b border-gray-200 h-16 px-6 md:px-12 flex justify-between items-center">
         <div className="text-2xl font-black tracking-tighter">AhaarMitra</div>
 
         <div className="hidden md:flex items-center gap-8 font-bold">

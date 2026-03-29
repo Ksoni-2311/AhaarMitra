@@ -147,7 +147,7 @@ function VendorCard({ vendor }) {
         </div>
 
         {/* Windows */}
-        <div className="space-y-4 mb-8">
+        <div className="space-x-4 mb-8 flex ">
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-[10px] font-black uppercase tracking-widest text-stone-400 flex items-center gap-1.5">
