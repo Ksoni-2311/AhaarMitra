@@ -67,27 +67,7 @@ export default function SecureCheckout5() {
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
 
-        {/* ── NAV ── */}
-        <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 shadow-sm">
-          <div className="flex justify-between items-center px-8 h-20 w-full max-w-[1920px] mx-auto">
-            {/* Left */}
-            <div className="flex items-center gap-4">
-              <a href="#" className="material-symbols-outlined text-stone-400 hover:text-stone-900 transition-colors">
-                arrow_back
-              </a>
-              <div className="text-2xl font-black tracking-tighter text-stone-900 uppercase">AhaarMitra</div>
-            </div>
-            {/* Center */}
-            <div className="hidden md:flex items-center gap-8">
-              <span className="text-stone-400 text-sm font-bold tracking-widest uppercase">Secure Checkout</span>
-            </div>
-            {/* Right */}
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-stone-400 text-lg">lock</span>
-              <span className="text-xs font-bold text-stone-400 uppercase tracking-widest hidden sm:block">SSL Encrypted</span>
-            </div>
-          </div>
-        </nav>
+     
 
         {/* ── MAIN ── */}
         <main className="pt-32 pb-20 px-6 md:px-8 max-w-[1920px] mx-auto w-full grid grid-cols-12 gap-10">
@@ -272,31 +252,6 @@ export default function SecureCheckout5() {
             </div>
           </aside>
         </main>
-
-        {/* ── FOOTER ── */}
-        <footer className="bg-white border-t border-stone-200">
-          <div className="max-w-[1920px] mx-auto py-12 px-8 flex flex-col md:flex-row justify-between items-center w-full gap-6">
-            <div className="flex flex-col items-center md:items-start gap-1.5">
-              <span className="text-lg font-black text-stone-900 uppercase tracking-tighter">AhaarMitra</span>
-              <p className="text-sm font-medium text-stone-400">© 2024 AhaarMitra. Secure Payment Portal.</p>
-            </div>
-            <div className="flex gap-8">
-              {["Help Center", "Transaction Policy", "Contact"].map((l) => (
-                <a key={l} href="#" className="text-sm font-medium text-stone-400 hover:text-stone-900 transition-colors">
-                  {l}
-                </a>
-              ))}
-            </div>
-            <div className="flex gap-4 text-stone-300">
-              {["brand_awareness", "shield_with_heart", "verified_user"].map((ic) => (
-                <span key={ic} className="material-symbols-outlined hover:text-stone-500 cursor-pointer transition-colors">
-                  {ic}
-                </span>
-              ))}
-            </div>
-          </div>
-        </footer>
-
       </div>
     </>
   );

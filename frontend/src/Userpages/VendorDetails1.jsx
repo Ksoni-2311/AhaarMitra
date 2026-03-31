@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const VendorDetails1 = () => {
   return (
@@ -187,9 +188,21 @@ const VendorDetails1 = () => {
               Trial Customization ₹99
             </h2>
 
+            <Link to={"/2"}>
             <button className="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">
-              Finalize Trial →
+              Customize Trial →
             </button>
+              </Link>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+            <h2 className="font-bold mb-4">
+              Subscribe ₹2999/month
+            </h2>
+    
+            <Link to={"/4"}>
+            <button className="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">
+              Subscribe Now →
+            </button></Link>
           </div>
 
           <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function TiffinSeekerRegistration13() {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -219,12 +220,14 @@ export default function TiffinSeekerRegistration13() {
 
             {/* Submit */}
             <div className="fade-up fu-7 pt-2">
+             <Link to="/14">
               <button
                 type="button"
                 className="submit-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs"
               >
                 Complete Registration
               </button>
+             </Link>
             </div>
           </div>
 

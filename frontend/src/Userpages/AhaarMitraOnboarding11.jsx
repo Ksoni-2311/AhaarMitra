@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function AhaarMitraOnboarding11() {
   return (
     <>
@@ -121,9 +123,12 @@ export default function AhaarMitraOnboarding11() {
                 </div>
 
                 {/* CTA */}
-                <button className="card-btn relative mt-auto w-full bg-stone-900 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm">
-                  Select as Seeker
-                </button>
+                <Link
+                  to="/13"
+                  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm text-center block"
+                >
+                  SELECT AS SEEKER
+                </Link>
               </div>
 
               {/* ── PROVIDER CARD ── */}

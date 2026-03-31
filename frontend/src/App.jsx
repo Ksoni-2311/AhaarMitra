@@ -20,6 +20,7 @@ import VendorDetails1 from './Userpages/VendorDetails1.jsx';
 import RegisterProvider1 from './VendorPages/RegisterProvider1.jsx';
 import BusinessDetails2 from './VendorPages/BusinessDetails2.jsx';
 import PayoutSetup3 from './VendorPages/PayoutSetup3.jsx';
+import ScrollToTop from './utils/ScrollToTop.jsx';
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
     <div className='min-h-screen flex flex-col'>
       <NavBar />
       <div className=''>
+        <ScrollToTop />
         <Routes>
           < Route path="/1" element={<VendorDetails1 />} />
           < Route path="/2" element={<TiffinTrial2 />} />

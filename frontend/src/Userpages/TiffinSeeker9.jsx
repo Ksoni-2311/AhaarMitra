@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const vendors = [
   {
@@ -175,10 +176,11 @@ function VendorCard({ vendor }) {
             </p>
           </div>
         </div>
-
-        <button className="mt-auto w-full bg-stone-900 text-white font-black py-4 rounded-2xl hover:bg-amber-500 transition-all duration-300 uppercase tracking-widest text-xs">
+      <Link to={"/1"}>
+        <button className="mt-auto w-full bg-stone-900 text-white font-black py-4 rounded-2xl hover:bg-amber-500 transition-all duration-300 uppercase tracking-widest text-xs"
+        >
           View Meal Plans
-        </button>
+        </button></Link>
       </div>
     </div>
   );

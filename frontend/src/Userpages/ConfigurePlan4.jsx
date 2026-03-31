@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const ConfigurePlan4 = () => {
    return (
@@ -26,21 +27,7 @@ const ConfigurePlan4 = () => {
       `}</style>
 
       <div className="antialiased min-h-screen flex flex-col bg-white text-gray-900">
-        {/* Navbar */}
-        <nav className="fixed top-0 w-full z-50 bg-gray-100/80 backdrop-blur-md border-b border-gray-200/10 h-20 px-12 flex justify-between items-center">
-          <div className="text-2xl font-black text-gray-900 tracking-tighter">AhaarMitra</div>
-          <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-gray-600">
-            <span className="material-symbols-outlined text-lg">shield</span>
-            Secure Family Organizer Dashboard
-          </div>
-          <button
-            className="text-gray-700 hover:text-gray-900 flex items-center gap-2 text-sm font-bold"
-            onClick={() => window.close()}
-          >
-            <span className="material-symbols-outlined">close</span>
-            Exit Setup
-          </button>
-        </nav>
+       
 
         {/* Main Page */}
         <main className="pt-32 pb-20 px-12 max-w-[1600px] mx-auto w-full flex gap-12 flex-1">
@@ -343,12 +330,14 @@ const ConfigurePlan4 = () => {
                   </div>
                 </div>
 
-                <button className="w-full bg-white text-black font-black py-4 rounded-xl text-sm hover:scale-[1.02] transition-transform shadow-xl shadow-white/5 uppercase tracking-widest">
+                <Link to={"/5"}>
+                <button className="mt-4 w-full bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 transition shadow ">
                   Initialize Subscription
                 </button>
+                </Link>
                 <div className="bg-amber-600/10 border border-amber-600/20 rounded-lg p-4 flex gap-3">
                   <span className="material-symbols-outlined text-amber-500 text-lg">info</span>
-                  <p className="text-[10px] leading-relaxed text-amber-200/70 font-medium">
+                  <p className="text-[10px] leading-relaxed text-black font-medium">
                     Prices include current offers. Monthly billing will be adjusted based on holidays or skipped meals.
                   </p>
                 </div>
@@ -357,22 +346,7 @@ const ConfigurePlan4 = () => {
           </aside>
         </main>
 
-        {/* Footer */}
-        <footer className="w-full py-8 px-12 mt-auto border-t border-gray-200 bg-white">
-          <div className="flex justify-between items-center max-w-[1600px] mx-auto">
-            <div className="flex items-center gap-8">
-              <div className="text-lg font-bold text-gray-900">AhaarMitra</div>
-              <div className="flex gap-6">
-                <a className="text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-800 transition-colors" href="#">Safety Protocols</a>
-                <a className="text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-800 transition-colors" href="#">Privacy</a>
-                <a className="text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-800 transition-colors" href="#">Help Center</a>
-              </div>
-            </div>
-            <div className="text-gray-600 text-[10px] font-bold uppercase tracking-widest">
-              © 2024 Secure Subscription Engine
-            </div>
-          </div>
-        </footer>
+        
       </div>
     </>
   );
