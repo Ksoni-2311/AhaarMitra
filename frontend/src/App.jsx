@@ -2,6 +2,8 @@ import React from 'react'
 import NavBar from './Userpages/NavBar.jsx'
 import { Routes, Route } from "react-router-dom";
 import Footer from './components/Footer.jsx'
+
+// User Pages
 import ConfigurePlan4 from './Userpages/ConfigurePlan4.jsx'
 import AhaarMitraMultiAddress10 from './Userpages/AhaarMitraMultiAddress10.jsx'
 import TiffinSeeker9 from './Userpages/TiffinSeeker9.jsx';
@@ -14,43 +16,45 @@ import TiffinSeekerRegistration13 from './Userpages/TiffinSeekerRegistration13.j
 import AhaarMitraOrders15 from './Userpages/AhaarMitraOrders15.jsx';
 import VendorDetails1 from './Userpages/VendorDetails1.jsx';
 
-
-
-
+// Vendor Pages
 import RegisterProvider1 from './VendorPages/RegisterProvider1.jsx';
 import BusinessDetails2 from './VendorPages/BusinessDetails2.jsx';
 import PayoutSetup3 from './VendorPages/PayoutSetup3.jsx';
 
-
 const App = () => {
   return (
-    <div className='min-h-screen flex flex-col'>
+    <div className="min-h-screen flex flex-col">
+      
+      {/* Navbar */}
       <NavBar />
-      <div className=''>
+
+      {/* Main Content */}
+      <div className="flex-grow">
         <Routes>
-          < Route path="/1" element={<VendorDetails1 />} />
-          < Route path="/2" element={<TiffinTrial2 />} />
-          < Route path="/3" element={<CheckoutConfirmation3 />} />
-          < Route path="/4" element={<ConfigurePlan4 />} />
-          < Route path="/5" element={<SecureCheckout5 />} />
-          < Route path="/9" element={<TiffinSeeker9 />} />
-          < Route path="/10" element={<AhaarMitraMultiAddress10 />} />
-          < Route path="/11" element={<AhaarMitraOnboarding11 />} />
-          < Route path="/13" element={<TiffinSeekerRegistration13 />} />
-          < Route path="/14" element={<DeliveryAddress14 />} />
-          < Route path="/15" element={<AhaarMitraOrders15 />} />
+          <Route path="/1" element={<VendorDetails1 />} />
+          <Route path="/2" element={<TiffinTrial2 />} />
+          <Route path="/3" element={<CheckoutConfirmation3 />} />
+          <Route path="/4" element={<ConfigurePlan4 />} />
+          <Route path="/5" element={<SecureCheckout5 />} />
+          <Route path="/9" element={<TiffinSeeker9 />} />
+          <Route path="/10" element={<AhaarMitraMultiAddress10 />} />
+          <Route path="/11" element={<AhaarMitraOnboarding11 />} />
+          <Route path="/13" element={<TiffinSeekerRegistration13 />} />
+          <Route path="/14" element={<DeliveryAddress14 />} />
+          <Route path="/15" element={<AhaarMitraOrders15 />} />
 
-          {/* VenderPages */}
-          < Route path="/v1" element={<RegisterProvider1 />} />
-          < Route path="/v2" element={<BusinessDetails2 />} />
-          < Route path="/v3" element={<PayoutSetup3 />} />
-
-
+          {/* Vendor Routes */}
+          <Route path="/v1" element={<RegisterProvider1 />} />
+          <Route path="/v2" element={<BusinessDetails2 />} />
+          <Route path="/v3" element={<PayoutSetup3 />} />
         </Routes>
       </div>
-      <Footer />
-    </div>
-  )
-}
 
-export default App
+      {/* Footer */}
+      <Footer />
+
+    </div>
+  );
+};
+
+export default App;
