@@ -1,21 +1,35 @@
 import jwt from "jsonwebtoken";
 
 const authMiddleware = (req, res, next) => {
-    const header = req.headers.authorization;
+  let token;
 
-    if (!header) {
-        return res.status(401).json({ message: "No token" });
-    }
+  // 🔥 check header first
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
-    const token = header.split(" ")[1];
+  // 🔥 check cookie
+//   else if (req.headers.cookie) {
+//     const cookie = req.headers.cookie
+//       .split("; ")
+//       .find(c => c.startsWith("token="));
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; 
-        next();
-    } catch (err) {
-        res.status(401).json({ message: "Invalid token" });
-    }
+//     if (cookie) {
+//       token = cookie.split("=")[1];
+//     }
+//   }
+
+  if (!token) {
+    return res.status(401).json({ message: "No token" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch {
+    res.status(401).json({ message: "Invalid token" });
+  }
 };
 
 export default authMiddleware;
