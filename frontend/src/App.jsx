@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from './Userpages/NavBar.jsx'
+import NavBar from './components/NavBar.jsx'
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from './components/Footer.jsx'
 
