@@ -1,5 +1,6 @@
 import React from 'react'
 import NavBar from './components/NavBar.jsx'
+import VendorNavBar from './components/VendorNavBar.jsx'
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from './components/Footer.jsx'
 
@@ -30,8 +31,14 @@ import VendorFinance8 from './VendorPages/VendorFinance8.jsx';
 
 const App = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ["/11", "/13","/14","/v1","/v2","/v3"];
+
+  const hideNavbarRoutes = ["/11", "/13", "/14", "/v1", "/v2", "/v3"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
+
+  const vendorRoutes = ["/v4", "/v5", "/v6", "/v7", "/v8"];
+
+  const isVendorPage = vendorRoutes.includes(location.pathname);
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -40,7 +47,7 @@ const App = () => {
     <div className="min-h-screen flex flex-col">
 
       {/* Navbar */}
-       {shouldShowNavbar && <NavBar />}
+      {!shouldHideNavbar && (isVendorPage ? <VendorNavBar /> : <NavBar />)}
       {/* {isLoading && <Loader />} */}
       <div className=''>
         <ScrollToTop />
