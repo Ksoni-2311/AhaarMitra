@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 import Vendor from "../models/vendor.model.js";
 import { generateOtp, verifyOtp } from "../utils/otpStore.js";
 
@@ -24,7 +26,6 @@ export const verifyOtpController = async (req, res) => {
     // ❗ Delete old incomplete entry if exists
     await Vendor.deleteOne({ phone, isTemporary: true });
 
-    // ✅ Create TEMP vendor
     const vendor = await Vendor.create({
         name,
         email,
@@ -38,16 +39,18 @@ export const verifyOtpController = async (req, res) => {
             id: vendor._id,
             isOtpVerified: true,
         },
-        "secret",
+        process.env.JWT_SECRET,
         { expiresIn: "30m" }
     );
-
+    
     res.json({ token });
 };
 
 // 🔹 Save Business Details
 export const saveBusiness = async (req, res) => {
     try {
+        console.log("buss");
+        
         if (!req.vendor.isTemporary) {
             return res.status(400).json({ message: "Invalid flow" });
         }
@@ -58,8 +61,10 @@ export const saveBusiness = async (req, res) => {
         const { businessName, type, address, gstNumber, fssaiNumber } = req.body;
         console.log("reqbdy");
         console.log(req.body);
+        console.log("reqvndr");
+        console.log(req.vendor);
         
-        req.vendor.business = {
+        const v=req.vendor.business = {
             businessName,
             type,
             address,
@@ -67,6 +72,7 @@ export const saveBusiness = async (req, res) => {
             fssaiNumber,
         };
         console.log("req.vendor");
+        console.log(v);
         console.log(req.vendor.business);
 
         await req.vendor.save();
