@@ -219,7 +219,7 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
     Send OTP
   </button>
 
-  {/* reCAPTCHA MUST BE OUTSIDE */}
+  {/* ReCAPTCHA MUST BE OUTSIDE */}
   <div id="recaptcha-container"></div>
 </div>
 
