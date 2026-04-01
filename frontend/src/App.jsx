@@ -22,6 +22,11 @@ import BusinessDetails2 from './VendorPages/BusinessDetails2.jsx';
 import PayoutSetup3 from './VendorPages/PayoutSetup3.jsx';
 import ScrollToTop from './utils/ScrollToTop.jsx';
 import Loader from './components/Loader.jsx';
+import SuccessIntelligence6 from './VendorPages/SuccessIntelligence6.jsx';
+import CulinaryTrends5 from './VendorPages/CulinaryTrends5.jsx';
+import AhaarMitraTracker4 from './VendorPages/AhaarMitraTracker4.jsx';
+import VendorDashboard7 from './VendorPages/VendorDashboard7.jsx';
+import VendorFinance8 from './VendorPages/VendorFinance8.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -61,6 +66,11 @@ const App = () => {
           <Route path="/v1" element={<RegisterProvider1 />} />
           <Route path="/v2" element={<BusinessDetails2 />} />
           <Route path="/v3" element={<PayoutSetup3 />} />
+          <Route path="/v4" element={<AhaarMitraTracker4 />} />
+          <Route path="/v5" element={<CulinaryTrends5 />} />
+          <Route path="/v6" element={<SuccessIntelligence6 />} />
+          <Route path="/v7" element={<VendorDashboard7 />} />
+          <Route path="/v8" element={<VendorFinance8 />} />
         </Routes>
       </div>
 
