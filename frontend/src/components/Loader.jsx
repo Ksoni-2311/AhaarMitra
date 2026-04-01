@@ -1,62 +1,62 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import logo from "../../assets/AhaarMitraLogo.svg"; // ✅ adjust path if needed
+import logo from "../../assets/AhaarMitraLogo.svg";
 
 const Loader = ({ onFinish }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onFinish();
-    }, 3500);
+    }, 2720); // synced with animation
+
     return () => clearTimeout(timer);
   }, [onFinish]);
 
   return (
     <motion.div
-      className="fixed inset-0 flex items-center justify-center bg-black z-50"
+      className="fixed inset-0 flex items-center justify-center bg-white z-50"
+      
+      // 🔥 smooth entry
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div className="relative flex flex-col items-center">
+      animate={{ opacity: 1 }}
 
-        {/* LOGO IMAGE */}
+      // 🔥 smooth exit (main fix)
+      exit={{ 
+        opacity: 0,
+        scale: 1.02,
+        filter: "blur(6px)"
+      }}
+
+      transition={{ 
+        duration: 0.6,
+        ease: "easeInOut"
+      }}
+    >
+      <motion.div className="relative flex flex-col items-center justify-center">
+        
+        {/* LOGO */}
         <motion.img
           src={logo}
           alt="AhaarMitra Logo"
-          className="w-[280px] md:w-[400px]"
-          initial={{ scale: 0.8, opacity: 0 }}
+          className="w-[220px] md:w-[300px]"
+          initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{
-            duration: 1.2,
-            ease: "easeInOut",
+            duration: 0.85,
+            ease: [0.22, 1, 0.36, 1],
           }}
-        />
-
-        {/* SHIMMER SWEEP */}
-        <motion.div
-          initial={{ x: "-120%" }}
-          animate={{ x: "120%" }}
-          transition={{
-            duration: 1.0,
-            delay: 0.2,
-            ease: "easeInOut",
-          }}
-          className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
-          style={{ mixBlendMode: "overlay" }}
         />
 
         {/* UNDERLINE */}
         <motion.div
+          className="h-[3px] w-[70%] bg-[#ff8c1a] origin-left rounded-full mt-3"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{
-            delay: 1.8,
-            duration: 0.8,
-            ease: "easeInOut",
+            duration: 1.275,
+            delay: 0.68,
+            ease: [0.65, 0, 0.35, 1],
           }}
-          className="h-[3px] mt-4 origin-left w-full"
-          style={{ backgroundColor: "#ff8c1a" }}
         />
-
       </motion.div>
     </motion.div>
   );
