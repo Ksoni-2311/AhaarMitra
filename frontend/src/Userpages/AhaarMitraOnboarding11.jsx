@@ -123,12 +123,33 @@ export default function AhaarMitraOnboarding11() {
                 </div>
 
                 {/* CTA */}
-                <Link
-                  to="/13"
-                  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm text-center block"
-                >
-                  SELECT AS SEEKER
-                </Link>
+                <button
+  onClick={async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/user/role", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ role: "user" }) // optional
+      });
+
+      const data = await res.json();
+
+      // ✅ Save token
+      localStorage.setItem("token", data.token);
+
+      // ✅ Move to next page
+      window.location.href = "/13";
+
+    } catch (err) {
+      console.log(err);
+    }
+  }}
+  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm"
+>
+  SELECT AS SEEKER
+</button>
               </div>
 
               {/* ── PROVIDER CARD ── */}
