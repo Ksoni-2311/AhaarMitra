@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import NavBar from "../components/NavBar.jsx";
 const vendors = [
   {
     id: 1,
@@ -268,6 +268,44 @@ function VendorCard({ vendor }) {
 }
 
 const TiffinSeeker9 = () => {
+  const TimeDropdown = () => {
+    const [open, setOpen] = React.useState(false);
+    const [selected, setSelected] = React.useState("Anytime (12 PM – 9 PM)");
+
+    const options = [
+      "Anytime (12 PM – 9 PM)",
+      "Morning (12 PM – 3 PM)",
+      "Night (8 PM – 9 PM)",
+    ];
+
+    return (
+      <div className="relative w-fit">
+        <div
+          onClick={() => setOpen(!open)}
+          className="bg-white border border-gray-300 rounded-xl px-4 py-2 text-sm font-medium cursor-pointer"
+        >
+          {selected}
+        </div>
+
+        {open && (
+          <div className="absolute mt-2 w-full bg-white border rounded-xl shadow-lg">
+            {options.map((option, i) => (
+              <div
+                key={i}
+                onClick={() => {
+                  setSelected(option);
+                  setOpen(false);
+                }}
+                className="px-4 py-2 hover:bg-indigo-500 hover:text-white cursor-pointer"
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
   return (
     <>
       {/* Google Fonts */}
@@ -285,7 +323,7 @@ const TiffinSeeker9 = () => {
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {/* NAV */}
-        <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 h-20 px-6 md:px-12 flex justify-between items-center shadow-sm">
+        {/* <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 h-20 px-6 md:px-12 flex justify-between items-center shadow-sm">
           <div className="text-2xl font-black text-stone-900 tracking-tighter">
             AhaarMitra
           </div>
@@ -338,10 +376,11 @@ const TiffinSeeker9 = () => {
               />
             </div>
           </div>
-        </nav>
+        </nav> */}
 
+        <NavBar />
         {/* MAIN */}
-        <main className="pt-32 pb-24 px-6 md:px-12 max-w-[1600px] mx-auto">
+        <main className="pt-24 pb-24 px-6 md:px-12 max-w-[1600px] mx-auto">
           {/* Header */}
           <header className="mb-12">
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">

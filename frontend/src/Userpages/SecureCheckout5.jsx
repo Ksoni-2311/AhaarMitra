@@ -64,17 +64,12 @@ export default function SecureCheckout5() {
 
       <div
         className="min-h-screen flex flex-col bg-stone-50 text-stone-900"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
-
-     
-
         {/* ── MAIN ── */}
-        <main className="pt-32 pb-20 px-6 md:px-8 max-w-[1920px] mx-auto w-full grid grid-cols-12 gap-10">
-
+        <main className="pt-16 pb-20 px-6 md:px-8 max-w-[1920px] mx-auto w-full grid grid-cols-12 gap-10">
           {/* ── LEFT col ── */}
           <div className="col-span-12 lg:col-span-8 space-y-10">
-
             {/* Header */}
             <header className="space-y-2 fu fu1">
               <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-stone-900">
@@ -134,27 +129,43 @@ export default function SecureCheckout5() {
                           <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 mb-2">
                             Card Number
                           </label>
-                          <input className={fi} placeholder="xxxx xxxx xxxx xxxx" type="text" />
+                          <input
+                            className={fi}
+                            placeholder="xxxx xxxx xxxx xxxx"
+                            type="text"
+                          />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
                             <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 mb-2">
                               Expiry Date
                             </label>
-                            <input className={fi} placeholder="MM / YY" type="text" />
+                            <input
+                              className={fi}
+                              placeholder="MM / YY"
+                              type="text"
+                            />
                           </div>
                           <div>
                             <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 mb-2">
                               CVV
                             </label>
-                            <input className={fi} placeholder="•••" type="password" />
+                            <input
+                              className={fi}
+                              placeholder="•••"
+                              type="password"
+                            />
                           </div>
                         </div>
                         <div>
                           <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 mb-2">
                             Cardholder Name
                           </label>
-                          <input className={fi} placeholder="Full Name as on card" type="text" />
+                          <input
+                            className={fi}
+                            placeholder="Full Name as on card"
+                            type="text"
+                          />
                         </div>
                       </div>
                     )}
@@ -165,9 +176,12 @@ export default function SecureCheckout5() {
 
             {/* Security notice */}
             <div className="fu fu3 flex items-center gap-4 p-5 bg-white border border-stone-200 rounded-2xl shadow-sm">
-              <span className="material-symbols-outlined text-amber-500 shrink-0">shield</span>
+              <span className="material-symbols-outlined text-amber-500 shrink-0">
+                shield
+              </span>
               <p className="text-sm text-stone-500 font-medium leading-relaxed">
-                Your transaction is secured with industry-standard 256-bit encryption. We do not store your full card details.
+                Your transaction is secured with industry-standard 256-bit
+                encryption. We do not store your full card details.
               </p>
             </div>
           </div>
@@ -175,7 +189,6 @@ export default function SecureCheckout5() {
           {/* ── RIGHT col (aside) ── */}
           <aside className="col-span-12 lg:col-span-4 fu fu4">
             <div className="sticky top-28 space-y-5">
-
               {/* Plan Summary card */}
               <div className="bg-stone-900 text-white p-8 rounded-2xl shadow-2xl shadow-stone-900/20">
                 <h3 className="text-2xl font-black tracking-tighter uppercase italic border-b border-white/10 pb-4 mb-6">
@@ -186,17 +199,27 @@ export default function SecureCheckout5() {
                   {/* Selected plan */}
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-0.5">Selected Plan</p>
-                      <p className="font-bold text-white">Premium Tier (60 Meals)</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-0.5">
+                        Selected Plan
+                      </p>
+                      <p className="font-bold text-white">
+                        Premium Tier (60 Meals)
+                      </p>
                     </div>
-                    <span className="text-lg font-black text-white">₹4,200</span>
+                    <span className="text-lg font-black text-white">
+                      ₹4,200
+                    </span>
                   </div>
 
                   {/* Add-ons */}
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-0.5">Add-ons</p>
-                      <p className="font-bold text-white">Dual-Location Delivery</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-0.5">
+                        Add-ons
+                      </p>
+                      <p className="font-bold text-white">
+                        Dual-Location Delivery
+                      </p>
                     </div>
                     <span className="text-lg font-black text-white">₹150</span>
                   </div>
@@ -205,8 +228,12 @@ export default function SecureCheckout5() {
                   <div className="pt-2 border-t border-white/10">
                     <div className="flex justify-between items-center badge-discount px-3 py-2.5 rounded-xl">
                       <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-amber-700 text-sm">loyalty</span>
-                        <p className="text-[10px] font-black uppercase text-amber-700">Bundle Discount (15% OFF)</p>
+                        <span className="material-symbols-outlined text-amber-700 text-sm">
+                          loyalty
+                        </span>
+                        <p className="text-[10px] font-black uppercase text-amber-700">
+                          Bundle Discount (15% OFF)
+                        </p>
                       </div>
                       <span className="font-black text-amber-700">-₹1,500</span>
                     </div>
@@ -216,18 +243,26 @@ export default function SecureCheckout5() {
                   <div className="pt-5 mt-2 border-t-4 border-white/20 border-double">
                     <div className="flex justify-between items-end">
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-1">Grand Total</p>
-                        <p className="text-5xl font-black tracking-tighter text-white">₹2,850</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-1">
+                          Grand Total
+                        </p>
+                        <p className="text-5xl font-black tracking-tighter text-white">
+                          ₹2,850
+                        </p>
                       </div>
-                      <p className="text-xs font-bold text-white/30 mb-2">/MONTH</p>
+                      <p className="text-xs font-bold text-white/30 mb-2">
+                        /MONTH
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* CTA */}
-                <button className="pay-btn w-full mt-8 bg-white text-stone-900 py-5 rounded-xl font-black uppercase tracking-[0.2em] text-sm shadow-xl flex items-center justify-center gap-3 group">
+                <button className="pay-btn w-full mt-8 bg-white text-stone-900 py-5 rounded-xl font-black uppercase tracking-[0.2em] text-sm shadow-xl flex items-center justify-center gap-3 group transition-all hover:bg-stone-900 hover:text-white">
                   Complete Payment
-                  <span className="material-symbols-outlined lock-icon text-lg">lock</span>
+                  <span className="material-symbols-outlined lock-icon text-lg group-hover:text-white">
+                    lock
+                  </span>
                 </button>
                 <p className="text-center mt-3 text-[10px] font-bold text-white/30 uppercase tracking-widest">
                   Secured by Stripe &amp; Razorpay
@@ -243,9 +278,12 @@ export default function SecureCheckout5() {
                   verified
                 </span>
                 <div>
-                  <p className="text-sm font-black uppercase tracking-wide text-stone-900 mb-1">Buyer Protection</p>
+                  <p className="text-sm font-black uppercase tracking-wide text-stone-900 mb-1">
+                    Buyer Protection
+                  </p>
                   <p className="text-xs text-stone-500 leading-relaxed font-medium">
-                    Get full refund if meals are not delivered as scheduled within the first 3 days.
+                    Get full refund if meals are not delivered as scheduled
+                    within the first 3 days.
                   </p>
                 </div>
               </div>

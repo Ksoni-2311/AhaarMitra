@@ -9,12 +9,12 @@ const VendorNavBar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-8 font-bold">
-          <a className="text-black transition"><Link to={'/'}>Explore
+          <a className="text-black transition"><Link to={'/v4'}>Tracker
           </Link>   </a>
-          <a className="text-black transition"><Link to={'/Subscription'}>Subscriptions
+          <a className="text-black transition"><Link to={'/v5'}>Analytics
           </Link></a>
-          <a className="text-black transition">hello</a>
-          <a className="text-black transition">Support</a>
+          <a className="text-black transition"><Link to={'/v6'}>Customers</Link></a>
+          <a className="text-black transition"><Link to={'/v7'}>Services</Link></a>
         </div>
 
         <div className="flex items-center gap-4 md:gap-6">

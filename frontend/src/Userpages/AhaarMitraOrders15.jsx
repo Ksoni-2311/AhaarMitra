@@ -372,7 +372,7 @@ export default function AhaarMitraOrders15() {
       <main style={{ paddingTop: 128, paddingBottom: 80, padding: "128px 48px 80px", maxWidth: 1280, margin: "0 auto" }}>
 
         {/* Header */}
-        <header style={{ marginBottom: 40, display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}>
+        {/* <header style={{ marginBottom: 40, display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}>
           <div>
             <h1 style={{ fontSize: 48, fontWeight: 900, letterSpacing: "-0.03em", color: "#0A0A0A", marginBottom: 12 }}>Order Management</h1>
             <p style={{ color: "#A3A3A3", fontWeight: 500, fontSize: 15 }}>Manage your active meal subscriptions and view full order history.</p>
@@ -385,7 +385,7 @@ export default function AhaarMitraOrders15() {
           }}>
             <Icon name="calendar_add_on" style={{ fontSize: 18 }} /> New Subscription
           </button>
-        </header>
+        </header> */}
 
         {/* Active Subscriptions */}
         <section style={{ marginBottom: 64 }}>
