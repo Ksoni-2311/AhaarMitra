@@ -309,18 +309,18 @@ const TiffinSeeker9 = () => {
   return (
     <>
       {/* Google Fonts */}
-      <link
+      {/* <link
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         rel="stylesheet"
-      />
+      /> */}
 
       <div
         className="min-h-screen bg-stone-50 text-stone-900 antialiased overflow-x-hidden"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {/* NAV */}
         {/* <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 h-20 px-6 md:px-12 flex justify-between items-center shadow-sm">

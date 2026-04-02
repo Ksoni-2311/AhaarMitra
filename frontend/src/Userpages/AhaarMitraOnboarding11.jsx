@@ -3,18 +3,18 @@ import AhaarMitraLogo from '../../assets/AhaarMitraLogo.png'
 export default function AhaarMitraOnboarding11() {
   return (
     <>
-      <link
+      {/* <link
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         rel="stylesheet"
-      />
+      /> */}
 
       <style>{`
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(24px); }
+          from { opacity: 0; transform: translateY(24px);}
           to   { opacity: 1; transform: translateY(0); }
         }
         .fade-up { animation: fadeUp 0.6s cubic-bezier(0.165,0.84,0.44,1) both; }
@@ -53,7 +53,7 @@ export default function AhaarMitraOnboarding11() {
 
       <div
         className="min-h-screen flex flex-col bg-stone-50 bg-dot text-stone-900 antialiased overflow-x-hidden"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {/* ── HEADER ─────────────────────────────────────────── */}
         <header className="w-full px-6 text-center">

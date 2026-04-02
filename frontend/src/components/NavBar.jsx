@@ -8,7 +8,7 @@ const NavBar = () => {
           <img src={ahaarmitraLogo} alt="" />
         </div>
 
-        <div className="hidden md:flex items-center gap-8 font-bold">
+        <div className="hidden md:flex items-center gap-8">
           <Link to={'/'} className="text-black transition">Explore</Link>
           <Link to={'/Subscription'} className="text-black transition">
             Subscriptions

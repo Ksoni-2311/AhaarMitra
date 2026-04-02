@@ -18,8 +18,8 @@ export default function TiffinSeekerRegistration13() {
 
   return (
     <>
-      <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+      {/* <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" /> */}
 
       <style>{`
         @keyframes fadeUp {
@@ -102,7 +102,7 @@ export default function TiffinSeekerRegistration13() {
 
       <div
         className="min-h-screen flex flex-col items-center justify-center bg-stone-50 bg-dot py-20 px-6 text-stone-900"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {/* ── TOP CONTENT ── */}
         <div className="max-w-md w-full text-center mb-10">
