@@ -46,7 +46,7 @@ export const registerUser = async (req, res) => {
       {
         name,
         email,
-        password: hashedPassword,
+        phone,
         registrationStep: 2
       },
       { new: true }
