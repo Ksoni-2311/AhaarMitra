@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className="w-full py-24 px-12 border-t border-white/5 bg-black mt-32" >
+        <div className="w-full py-24 px-12 border-t border-white/5 bg-black mt-2" >
             <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 items-start gap-16">
                 <div className="flex flex-col gap-8">
                     <div className="text-3xl font-black text-white tracking-tighter">AhaarMitra</div>

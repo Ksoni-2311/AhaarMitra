@@ -41,35 +41,7 @@ export default function TiffinTrial2() {
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans antialiased">
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-zinc-100 shadow-sm h-16 px-8 md:px-12 flex justify-between items-center">
-        <div className="text-2xl font-black tracking-tighter text-zinc-900">AhaarMitra</div>
-
-        <div className="hidden md:flex items-center gap-8 font-bold tracking-tight text-sm">
-          <a href="#" className="text-zinc-900 border-b-2 border-zinc-900 pb-0.5">Explore</a>
-          <a href="#" className="text-zinc-400 hover:text-zinc-900 transition-colors">Subscriptions</a>
-          <a href="#" className="text-zinc-400 hover:text-zinc-900 transition-colors">Orders</a>
-          <a href="#" className="text-zinc-400 hover:text-zinc-900 transition-colors">Support</a>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="relative flex items-center bg-zinc-100 rounded-full px-4 py-2 border border-zinc-200">
-            <svg className="w-4 h-4 text-zinc-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-            <input className="bg-transparent border-none focus:ring-0 text-sm text-zinc-700 w-36 placeholder:text-zinc-400 outline-none" placeholder="Search cuisines..." type="text"/>
-          </div>
-          <button className="text-zinc-400 hover:text-zinc-700 transition-colors">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          </button>
-          <button className="text-zinc-400 hover:text-zinc-700 transition-colors">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          </button>
-          <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-zinc-200">
-            <img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y" className="w-full h-full object-cover"/>
-          </div>
-        </div>
-      </nav>
+      
 
       <main className="pt-16">
 

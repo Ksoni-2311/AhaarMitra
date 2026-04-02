@@ -367,39 +367,7 @@ export default function AhaarMitraOrders15() {
     <div className="ahaar-root" style={{ fontFamily: "'Manrope', sans-serif", background: "#F8F7F4", minHeight: "100vh" }}>
       <style>{styles}</style>
 
-      {/* Navbar */}
-      <nav style={{
-        position: "fixed", top: 0, width: "100%", zIndex: 50,
-        background: "rgba(248,247,244,0.85)", backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #E5E5E5", boxShadow: "0 1px 12px rgba(0,0,0,0.06)",
-        height: 80, padding: "0 48px", display: "flex", justifyContent: "space-between", alignItems: "center"
-      }}>
-        <div style={{ fontSize: 22, fontWeight: 900, color: "#0A0A0A", letterSpacing: "-0.04em" }}>AhaarMitra</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 32, fontWeight: 700, letterSpacing: "-0.01em" }}>
-          {["Explore", "Subscriptions", "Orders", "Support"].map(item => (
-            <a key={item} href="#" style={{
-              color: item === "Orders" ? "#0A0A0A" : "#A3A3A3",
-              textDecoration: "none",
-              borderBottom: item === "Orders" ? "2px solid #0A0A0A" : "none",
-              paddingBottom: 2,
-              fontSize: 14
-            }}>{item}</a>
-          ))}
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", background: "#FFFFFF", borderRadius: 999, padding: "8px 16px", border: "1px solid #E5E5E5" }}>
-            <Icon name="search" style={{ fontSize: 18, color: "#C4C4C4", marginRight: 8 }} />
-            <input placeholder="Search..." style={{ background: "transparent", border: "none", outline: "none", fontSize: 13, color: "#0A0A0A", width: 160 }} />
-          </div>
-          <Icon name="notifications" style={{ fontSize: 22, color: "#A3A3A3", cursor: "pointer" }} />
-          <div style={{ width: 40, height: 40, borderRadius: "50%", overflow: "hidden", border: "2px solid #E5E5E5" }}>
-            <div style={{ width: "100%", height: "100%", background: "#F0F0F0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Icon name="person" style={{ fontSize: 20, color: "#A3A3A3" }} />
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      
       {/* Main */}
       <main style={{ paddingTop: 128, paddingBottom: 80, padding: "128px 48px 80px", maxWidth: 1280, margin: "0 auto" }}>
 

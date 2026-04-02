@@ -130,15 +130,7 @@ const CheckoutPage = () => {
         </div>
       </div>
 
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full bg-white border-b px-12 h-20 flex items-center justify-between shadow-sm">
-        <h1 className="font-black text-lg">AhaarMitra</h1>
-        <div className="flex gap-8 text-sm">
-          <span className="border-b-2 border-black">Explore</span>
-          <span className="text-gray-500">Subscriptions</span>
-          <span className="text-gray-500">Orders</span>
-        </div>
-      </nav>
+      
 
       {/* Hero */}
       <section className="h-[500px] mt-20 relative">

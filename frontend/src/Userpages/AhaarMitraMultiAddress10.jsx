@@ -184,37 +184,6 @@ export default function AhaarMitraMultiAddress() {
 
       <div className="min-h-screen bg-stone-50 text-stone-900 antialiased overflow-x-hidden" style={{ fontFamily: "'Manrope', sans-serif" }}>
 
-        {/* ── NAV ── */}
-        <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 h-20 px-6 md:px-12 flex justify-between items-center shadow-sm">
-          <div className="text-2xl font-black text-stone-900 tracking-tighter">AhaarMitra</div>
-
-          <div className="hidden md:flex items-center gap-8 font-bold tracking-tight">
-            <a href="#" className="text-stone-900 border-b-2 border-stone-900 pb-1">Explore</a>
-            <a href="#" className="text-stone-400 hover:text-stone-900 transition-colors">Subscriptions</a>
-            <a href="#" className="text-stone-400 hover:text-stone-900 transition-colors">Orders</a>
-            <a href="#" className="text-stone-400 hover:text-stone-900 transition-colors">Support</a>
-          </div>
-
-          <div className="flex items-center gap-4 md:gap-6">
-            <div className="hidden sm:flex items-center bg-stone-100 rounded-full px-4 py-2 border border-stone-200">
-              <span className="material-symbols-outlined text-stone-400 mr-2 text-xl">search</span>
-              <input
-                className="bg-transparent border-none outline-none text-sm text-stone-800 w-32 lg:w-48 placeholder:text-stone-400"
-                placeholder="Search kitchen..."
-                type="text"
-              />
-            </div>
-            <button className="text-stone-400 hover:text-stone-900 transition-all">
-              <span className="material-symbols-outlined">notifications</span>
-            </button>
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-stone-200">
-              <img
-                alt="User Profile"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y"
-              />
-            </div>
-          </div>
-        </nav>
 
         {/* ── MAIN ── */}
         <main className="pt-32 pb-24 px-6 md:px-12 max-w-[1600px] mx-auto">

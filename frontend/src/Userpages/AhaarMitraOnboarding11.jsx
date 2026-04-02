@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import AhaarMitraLogo from '../../assets/AhaarMitraLogo.png'
 export default function AhaarMitraOnboarding11() {
   return (
     <>
@@ -56,33 +56,35 @@ export default function AhaarMitraOnboarding11() {
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {/* ── HEADER ─────────────────────────────────────────── */}
-        <header className="w-full pt-12 pb-8 px-6 text-center">
+        <header className="w-full px-6 text-center">
           {/* Wordmark */}
-          <div className="inline-block mb-8 fade-up fade-up-1">
+          <div className="inline-block mb-4 fade-up fade-up-1">
             <div className="text-3xl font-black text-stone-900 tracking-tighter uppercase">
-              AhaarMitra
+              <img className="h-30 " src={AhaarMitraLogo} alt="AHAARMITRA" />
             </div>
-            <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent mt-1 rounded-full" />
+            <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent  rounded-full" />
           </div>
 
           {/* Hero headline */}
-          <div className="max-w-4xl mx-auto fade-up fade-up-2">
+          {/* <div className="max-w-4xl mx-auto fade-up fade-up-2">
             <h1 className="text-4xl md:text-6xl font-black tracking-tight text-stone-900 mb-6 leading-tight">
               How do you want to experience{" "}
-              <span className="text-amber-500">AhaarMitra?</span>
+              <span className="justify-center flex items-center gap-2 inline-flex">             
+                 <img className="h-20 " src={AhaarMitraLogo} alt="AHAARMITRA" />
+              </span>
             </h1>
             <p className="text-stone-400 text-sm font-bold uppercase tracking-[0.3em]">
               Choose your role to get started
             </p>
-          </div>
+          </div> */}
         </header>
 
         {/* ── MAIN ───────────────────────────────────────────── */}
-        <main className="flex-grow flex flex-col items-center justify-center px-6 py-12">
-          <div className="max-w-6xl w-full">
+        <main className="flex flex-col items-center px-6 md:px-12 fade-up fade-up-3 ">
+          <div className="max-w-4xl w-full">
 
             {/* Role cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-up fade-up-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 fade-up fade-up-3">
 
               {/* ── SEEKER CARD ── */}
               <div className="role-card seeker-card group relative overflow-hidden bg-white border-2 border-stone-200 rounded-[2.5rem] p-10 flex flex-col items-center text-center cursor-pointer shadow-sm">
@@ -90,7 +92,7 @@ export default function AhaarMitraOnboarding11() {
                 <div className="absolute inset-0 bg-gradient-to-b from-amber-50/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]" />
 
                 {/* Icon */}
-                <div className="card-icon-ring relative w-24 h-24 rounded-full bg-stone-100 flex items-center justify-center mb-8 border-2 border-stone-200 transition-all duration-300">
+                <div className="card-icon-ring relative w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mb-2 border-2 border-stone-200 transition-all duration-300">
                   <span className="card-icon material-symbols-outlined text-5xl text-stone-500 transition-colors duration-300">
                     restaurant
                   </span>
@@ -124,32 +126,32 @@ export default function AhaarMitraOnboarding11() {
 
                 {/* CTA */}
                 <button
-  onClick={async () => {
-    try {
-      const res = await fetch("http://localhost:8080/api/user/role", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ role: "user" }) // optional
-      });
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("http://localhost:8080/api/user/role", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ role: "user" }) // optional
+                      });
 
-      const data = await res.json();
+                      const data = await res.json();
 
-      // ✅ Save token
-      localStorage.setItem("token", data.token);
+                      // ✅ Save token
+                      localStorage.setItem("token", data.token);
 
-      // ✅ Move to next page
-      window.location.href = "/13";
+                      // ✅ Move to next page
+                      window.location.href = "/13";
 
-    } catch (err) {
-      console.log(err);
-    }
-  }}
-  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm"
->
-  SELECT AS SEEKER
-</button>
+                    } catch (err) {
+                      console.log(err);
+                    }
+                  }}
+                  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm"
+                >
+                  SELECT AS SEEKER
+                </button>
               </div>
 
               {/* ── PROVIDER CARD ── */}
@@ -158,7 +160,7 @@ export default function AhaarMitraOnboarding11() {
                 <div className="absolute inset-0 bg-gradient-to-b from-blue-50/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]" />
 
                 {/* Icon */}
-                <div className="card-icon-ring relative w-24 h-24 rounded-full bg-stone-100 flex items-center justify-center mb-8 border-2 border-stone-200 transition-all duration-300">
+                <div className="card-icon-ring relative w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mb-2 border-2 border-stone-200 transition-all duration-300">
                   <span className="card-icon material-symbols-outlined text-5xl text-stone-500 transition-colors duration-300">
                     storefront
                   </span>
@@ -191,9 +193,11 @@ export default function AhaarMitraOnboarding11() {
                 </div>
 
                 {/* CTA */}
-                <button className="card-btn relative mt-auto w-full bg-stone-900 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm">
-                  Register as Vendor
-                </button>
+                <Link to="/v1" className="card-btn relative mt-auto w-full bg-stone-900 hover:bg-blue-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm text-center block">
+                  <button className="">
+                    Register as Vendor
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -211,27 +215,6 @@ export default function AhaarMitraOnboarding11() {
 
           </div>
         </main>
-
-        {/* ── FOOTER ─────────────────────────────────────────── */}
-        <footer className="w-full py-12 px-6 border-t border-stone-200 bg-white fade-up fade-up-5">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-8">
-              {["Privacy Policy", "Terms of Service", "Contact Support"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-stone-400 hover:text-stone-900 transition-colors text-[10px] font-bold uppercase tracking-widest"
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-            <div className="text-stone-400 text-[10px] font-medium uppercase tracking-[0.2em]">
-              © 2024 AhaarMitra Digital. All rights reserved.
-            </div>
-          </div>
-        </footer>
-
       </div>
     </>
   );
