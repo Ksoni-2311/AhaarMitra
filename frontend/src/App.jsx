@@ -1,4 +1,6 @@
 import React from 'react'
+
+
 import NavBar from './components/NavBar.jsx'
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from './components/Footer.jsx'
@@ -28,6 +30,8 @@ import AhaarMitraTracker4 from './VendorPages/AhaarMitraTracker4.jsx';
 import VendorDashboard7 from './VendorPages/VendorDashboard7.jsx';
 import VendorFinance8 from './VendorPages/VendorFinance8.jsx';
 
+const notify = () => toast('Here is your toast.');
+
 const App = () => {
   const location = useLocation();
   const hideNavbarRoutes = ["/11", "/13","/14","/v1","/v2","/v3"];
@@ -38,7 +42,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-
+      
       {/* Navbar */}
        {shouldShowNavbar && <NavBar />}
       {/* {isLoading && <Loader />} */}

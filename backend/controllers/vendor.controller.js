@@ -6,7 +6,8 @@ import bcrypt from 'bcryptjs'
 export const registerVendorController = async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
-
+    console.log(req.body);
+    
     // ✅ Validation
     if (!name || !email || !phone || !password) {
       return res.status(400).json({
@@ -62,38 +63,34 @@ export const registerVendorController = async (req, res) => {
 // 🔹 Save Business Details
 export const saveBusiness = async (req, res) => {
   try {
-    console.log("buss");
-
     if (!req.vendor.isTemporary) {
       return res.status(400).json({ message: "Invalid flow" });
     }
-    console.log("saveBcall");
-    console.log(req.vendor.isTemporary);
-
 
     const { businessName, type, address, gstNumber, fssaiNumber } = req.body;
-    console.log("reqbdy");
-    console.log(req.body);
-    console.log("reqvndr");
-    console.log(req.vendor);
 
-    const v = req.vendor.business = {
+    // ✅ Save business data
+    req.vendor.business = {
       businessName,
       type,
       address,
       gstNumber,
       fssaiNumber,
     };
-    console.log("req.vendor");
-    console.log(v);
-    console.log(req.vendor.business);
 
     await req.vendor.save();
 
-    res.json({ message: "Business saved (temporary)" });
-  } catch (error) {
-    console.log("error in save bussiess", error);
+    res.status(200).json({
+      message: "Business saved (temporary)",
+      vendor: req.vendor,
+    });
 
+  } catch (error) {
+    console.log("error in save business", error);
+
+    res.status(500).json({
+      message: "Failed to save business",
+    });
   }
 };
 
