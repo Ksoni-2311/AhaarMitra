@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const MSG91_AUTH_KEY = process.env.MSG91_AUTH_KEY;
+const MSG91_AUTHKEY = process.env.MSG91_AUTH_KEY;
 
 
 export const sendOtpMSG91 = async (phone) => {
