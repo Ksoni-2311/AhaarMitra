@@ -1,21 +1,81 @@
 import { useState, useRef } from "react";
 
 export default function TiffinSeekerRegistration13() {
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const otpRefs = [useRef(), useRef(), useRef(), useRef()];
+ const [phone, setPhone] = useState("");
+const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+const [otpSent, setOtpSent] = useState(false);
 
-  const handleOtp = (i, val) => {
+ const otpRefs = [
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+  ];
+const handleOtp = (i, val) => {
     if (!/^\d?$/.test(val)) return;
     const next = [...otp];
     next[i] = val;
     setOtp(next);
-    if (val && i < 3) otpRefs[i + 1].current?.focus();
+
+    if (val && i < otp.length - 1) {
+      otpRefs[i + 1].current?.focus();
+    }
   };
 
   const handleOtpKey = (i, e) => {
-    if (e.key === "Backspace" && !otp[i] && i > 0) otpRefs[i - 1].current?.focus();
+    if (e.key === "Backspace" && !otp[i] && i > 0) {
+      otpRefs[i - 1].current?.focus();
+    }
   };
 
+  const sendOtp = async () => {
+  const res = await fetch("http://localhost:8080/api/otp/send-otp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ phone }),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("OTP sent (use 123456)");
+    setOtpSent(true);
+  }
+};
+
+const verifyOtp = async () => {
+  const enteredOtp = otp.join("");
+
+  const res = await fetch("http://localhost:8080/api/otp/verify-otp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ otp: enteredOtp }),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Verified ✅");
+  } else {
+    alert("Wrong OTP ❌");
+  }
+};
+
+const handleOtpChange = (index, value) => {
+  if (!/^\d?$/.test(value)) return;
+
+  const newOtp = [...otp];
+  newOtp[index] = value;
+  setOtp(newOtp);
+};
+
+  
   return (
     <>
       {/* <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -172,13 +232,31 @@ export default function TiffinSeekerRegistration13() {
                 <span className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400 font-bold text-sm select-none">
                   +91
                 </span>
-                <input
-                  className="form-input"
-                  style={{ paddingLeft: "3.5rem" }}
-                  placeholder="9876543210"
-                  type="tel"
-                />
+               <input
+  type="tel"
+  placeholder="9876543210"
+  value={phone}
+  maxLength={10}
+  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+/>
               </div>
+               <button type="button" onClick={sendOtp}>
+  Send OTP
+</button>
+  {otpSent && (
+  <div>
+    {otp.map((digit, index) => (
+      <input
+        key={index}
+        maxLength={1}
+        value={digit}
+        onChange={(e) => handleOtpChange(index, e.target.value)}
+      />
+    ))}
+  </div>
+)}
+
+
             </div>
 
             {/* OTP */}
