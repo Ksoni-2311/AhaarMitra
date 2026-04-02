@@ -30,14 +30,14 @@ export default function SecureCheckout5() {
 
   return (
     <>
-      <link
+      {/* <link
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
       <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         rel="stylesheet"
-      />
+      /> */}
 
       <style>{`
         @keyframes fadeUp {
@@ -64,13 +64,13 @@ export default function SecureCheckout5() {
 
       <div
         className="min-h-screen flex flex-col bg-stone-50 text-stone-900"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
 
      
 
         {/* ── MAIN ── */}
-        <main className="pt-32 pb-20 px-6 md:px-8 max-w-[1920px] mx-auto w-full grid grid-cols-12 gap-10">
+        <main className="pt-12 pb-20 px-6 md:px-8 max-w-[1920px] mx-auto w-full grid grid-cols-12 gap-10">
 
           {/* ── LEFT col ── */}
           <div className="col-span-12 lg:col-span-8 space-y-10">
@@ -178,7 +178,7 @@ export default function SecureCheckout5() {
 
               {/* Plan Summary card */}
               <div className="bg-stone-900 text-white p-8 rounded-2xl shadow-2xl shadow-stone-900/20">
-                <h3 className="text-2xl font-black tracking-tighter uppercase italic border-b border-white/10 pb-4 mb-6">
+                <h3 className="text-2xl font-black tracking-tighter uppercase border-b border-white/10 pb-4 mb-6">
                   Plan Summary
                 </h3>
 

@@ -29,6 +29,9 @@ import CulinaryTrends5 from "./VendorPages/CulinaryTrends5.jsx";
 import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
 import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
+import AhaarMitraSubscriptions from "./Userpages/AhaarMitraSubscriptions16.jsx";
+import AhaarMitraSupport from "./Userpages/AhaarMitraSupport17.jsx";
+import CustomerAccount from "./Userpages/CustomerAccount18.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -89,6 +92,9 @@ const App = () => {
               <Route path="/13" element={<TiffinSeekerRegistration13 />} />
               <Route path="/14" element={<DeliveryAddress14 />} />
               <Route path="/Orders" element={<AhaarMitraOrders15 />} />
+              <Route path="/Subscription" element={<AhaarMitraSubscriptions />} />
+              <Route path="/Support" element={<AhaarMitraSupport />} />
+              <Route path="/Account" element={<CustomerAccount />} />
 
               {/* Vendor Routes */}
               <Route path="/v1" element={<RegisterProvider1 />} />
