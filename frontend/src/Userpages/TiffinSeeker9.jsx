@@ -268,44 +268,6 @@ function VendorCard({ vendor }) {
 }
 
 const TiffinSeeker9 = () => {
-  const TimeDropdown = () => {
-    const [open, setOpen] = React.useState(false);
-    const [selected, setSelected] = React.useState("Anytime (12 PM – 9 PM)");
-
-    const options = [
-      "Anytime (12 PM – 9 PM)",
-      "Morning (12 PM – 3 PM)",
-      "Night (8 PM – 9 PM)",
-    ];
-
-    return (
-      <div className="relative w-fit">
-        <div
-          onClick={() => setOpen(!open)}
-          className="bg-white border border-gray-300 rounded-xl px-4 py-2 text-sm font-medium cursor-pointer"
-        >
-          {selected}
-        </div>
-
-        {open && (
-          <div className="absolute mt-2 w-full bg-white border rounded-xl shadow-lg">
-            {options.map((option, i) => (
-              <div
-                key={i}
-                onClick={() => {
-                  setSelected(option);
-                  setOpen(false);
-                }}
-                className="px-4 py-2 hover:bg-indigo-500 hover:text-white cursor-pointer"
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
   return (
     <>
       {/* Google Fonts */}
@@ -378,7 +340,7 @@ const TiffinSeeker9 = () => {
           </div>
         </nav> */}
 
-        <NavBar />
+        {/* <NavBar /> */}
         {/* MAIN */}
         <main className="pt-24 pb-24 px-6 md:px-12 max-w-[1600px] mx-auto">
           {/* Header */}
@@ -520,7 +482,7 @@ const TiffinSeeker9 = () => {
         </main>
 
         {/* FOOTER */}
-        <footer className="w-full py-16 px-6 md:px-12 border-t border-stone-200 bg-white">
+        {/* <footer className="w-full py-16 px-6 md:px-12 border-t border-stone-200 bg-white">
           <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 items-start gap-12">
             <div className="flex flex-col gap-6">
               <div className="text-2xl font-black text-stone-900 tracking-tighter">
@@ -582,7 +544,7 @@ const TiffinSeeker9 = () => {
               </div>
             </div>
           </div>
-        </footer>
+        </footer> */}
       </div>
     </>
   );

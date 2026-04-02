@@ -1,14 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ahaarmitraLogo from "../../assets/ahaarMitraLogo.svg";
 const NavBar = () => {
+  const location = useLocation();
+  const navItems = [
+    { name: "Explore", path: "/explore" },
+    { name: "Subscriptions", path: "/subscription" },
+    { name: "Orders", path: "/orders" },
+    { name: "Support", path: "/support" },
+  ];
   return (
-    <div className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 h-16 px-6 md:px-12 flex justify-between items-center">
+    <div className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 h-16 px-50 md:px-12 flex justify-between items-center">
       <div className=" lg:w-60 md:w-40 w-32">
         <img src={ahaarmitraLogo} alt="" />
       </div>
 
-      <div className="hidden md:flex items-center gap-8">
+      {/* <div className="hidden md:flex items-center gap-8">
         <Link to={"/"} className="text-black transition">
           Explore
         </Link>
@@ -21,6 +28,34 @@ const NavBar = () => {
         <Link to={"/Support"} className="text-black transition">
           Support
         </Link>
+      </div> */}
+
+      <div className="hidden md:flex items-center gap-8">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.path;
+
+          return (
+            <Link key={item.name} to={item.path} className="relative group">
+              {/* Text */}
+              <span
+                className={`transition-all duration-300 ${
+                  isActive
+                    ? "text-black font-semibold"
+                    : "text-gray-500 group-hover:text-black"
+                }`}
+              >
+                {item.name}
+              </span>
+
+              {/* Underline */}
+              <span
+                className={`absolute left-0 bottom-0 h-[2px] bg-black w-full origin-center transform transition-transform duration-300 ease-in-out ${
+                  isActive ? "scale-x-100" : "scale-x-0"
+                }`}
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="flex items-center gap-4 md:gap-6">

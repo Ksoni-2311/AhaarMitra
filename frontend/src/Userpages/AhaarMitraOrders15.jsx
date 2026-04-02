@@ -494,7 +494,7 @@ export default function AhaarMitraOrders15() {
         {/* Past Orders */}
         <PastOrdersSection />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
