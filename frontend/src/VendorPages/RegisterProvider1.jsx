@@ -2,7 +2,7 @@ import React from "react";
 
 const RegisterProvider1 = () => {
   return (
-    <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black font-[Manrope]">
+    <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black">
 
 
       {/* Main */}

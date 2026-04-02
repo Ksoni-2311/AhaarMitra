@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 router.post("/role", selectRole);
-router.post("/register", auth, registerUser); // ✅ FIXED
+router.post("/register", auth, registerUser); 
 router.post("/address", auth, addAddress);
 router.post("/login", loginUser);
 

@@ -1,42 +1,85 @@
-import { useState,useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { sendOTP, verifyOTP } from "../utils/otp";
-import { useNavigate } from "react-router-dom";
-
- 
+import { useState, useRef } from "react";
 
 export default function TiffinSeekerRegistration13() {
+ const [phone, setPhone] = useState("");
 const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-const otpRefs = [
-  useRef(), useRef(), useRef(),
-  useRef(), useRef(), useRef()
-];
-const [phone, setPhone] = useState("");
-const navigate = useNavigate();
+const [otpSent, setOtpSent] = useState(false);
 
- const getOtpValue = () => otp.join("");
-
-  const handleOtp = (i, val) => {
+ const otpRefs = [
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+    useRef(),
+  ];
+const handleOtp = (i, val) => {
     if (!/^\d?$/.test(val)) return;
     const next = [...otp];
     next[i] = val;
     setOtp(next);
-if (val && i < 5) otpRefs[i + 1].current?.focus();
+
+    if (val && i < otp.length - 1) {
+      otpRefs[i + 1].current?.focus();
+    }
   };
 
   const handleOtpKey = (i, e) => {
-    if (e.key === "Backspace" && !otp[i] && i > 0) otpRefs[i - 1].current?.focus();
+    if (e.key === "Backspace" && !otp[i] && i > 0) {
+      otpRefs[i - 1].current?.focus();
+    }
   };
-  useEffect(() => {
-  if (otp.join("").length === 6) {
-    // trigger verify here if you want 👀
-  }
-}, [otp]);
 
+  const sendOtp = async () => {
+  const res = await fetch("http://localhost:8080/api/otp/send-otp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ phone }),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("OTP sent (use 123456)");
+    setOtpSent(true);
+  }
+};
+
+const verifyOtp = async () => {
+  const enteredOtp = otp.join("");
+
+  const res = await fetch("http://localhost:8080/api/otp/verify-otp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ otp: enteredOtp }),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Verified ✅");
+  } else {
+    alert("Wrong OTP ❌");
+  }
+};
+
+const handleOtpChange = (index, value) => {
+  if (!/^\d?$/.test(value)) return;
+
+  const newOtp = [...otp];
+  newOtp[index] = value;
+  setOtp(newOtp);
+};
+
+  
   return (
     <>
-      <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+      {/* <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" /> */}
 
       <style>{`
         @keyframes fadeUp {
@@ -119,7 +162,7 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
 
       <div
         className="min-h-screen flex flex-col items-center justify-center bg-stone-50 bg-dot py-20 px-6 text-stone-900"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {/* ── TOP CONTENT ── */}
         <div className="max-w-md w-full text-center mb-10">
@@ -181,47 +224,40 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
             </div>
 
             {/* Phone */}
-<div className="space-y-2 fade-up fu-5">
-  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
-    Phone Number
-  </label>
-
-  {/* INPUT */}
-  <div className="relative">
-    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400 font-bold text-sm select-none">
-      +91
-    </span>
-
-    <input
-      className="form-input"
-      style={{ paddingLeft: "3.5rem" }}
-      placeholder="9876543210"
-      type="tel"
-      value={phone}
-      onChange={(e) => setPhone(e.target.value)}
-    />
+            <div className="space-y-2 fade-up fu-5">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
+                Phone Number
+              </label>
+              <div className="relative">
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400 font-bold text-sm select-none">
+                  +91
+                </span>
+               <input
+  type="tel"
+  placeholder="9876543210"
+  value={phone}
+  maxLength={10}
+  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+/>
+              </div>
+               <button type="button" onClick={sendOtp}>
+  Send OTP
+</button>
+  {otpSent && (
+  <div>
+    {otp.map((digit, index) => (
+      <input
+        key={index}
+        maxLength={1}
+        value={digit}
+        onChange={(e) => handleOtpChange(index, e.target.value)}
+      />
+    ))}
   </div>
+)}
 
-  {/* SEND OTP BUTTON */}
-  <button
-    type="button"
-    onClick={async () => {
-      if (!phone || phone.length !== 10) {
-        alert("Enter valid phone number ");
-        return;
-      }
 
-      await sendOTP("+91" + phone);
-      alert("OTP Sent ");
-    }}
-    className="text-xs font-bold text-amber-500 mt-2"
-  >
-    Send OTP
-  </button>
-
-  {/* reCAPTCHA MUST BE OUTSIDE */}
-  <div id="recaptcha-container"></div>
-</div>
+            </div>
 
             {/* OTP */}
             <div className="space-y-2 fade-up fu-6">
@@ -237,7 +273,7 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
                 </button>
               </div>
 
-              <div className="grid grid-cols-6 gap-3">
+              <div className="grid grid-cols-4 gap-3">
                 {otp.map((digit, i) => (
                   <input
                     key={i}
@@ -255,42 +291,18 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
               </div>
 
               <p className="text-[10px] text-stone-400 mt-2 ml-1 font-medium">
-                We sent a 6-digit code to your phone.
+                We sent a 4-digit code to your phone.
               </p>
             </div>
 
             {/* Submit */}
             <div className="fade-up fu-7 pt-2">
-           
-             <button
-  type="button"
-  onClick={async () => {
-    const enteredOtp = getOtpValue();
-
-    if (enteredOtp.length !== 6) {
-      alert("Enter complete OTP ");
-      return;
-    }
-
-    try {
-      const result = await verifyOTP(enteredOtp);
-
-      if (result) {
-        alert("Phone Verified ");
-       navigate("/14");// navigate after success
-      } else {
-        alert("Invalid OTP ");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Verification failed ");
-    }
-  }}
-  className="submit-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs"
->
-  Complete Registration
-</button>
-             
+              <button
+                type="button"
+                className="submit-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs"
+              >
+                Complete Registration
+              </button>
             </div>
           </div>
 

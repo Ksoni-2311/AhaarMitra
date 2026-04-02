@@ -335,7 +335,7 @@ const ConfigurePlan4 = () => {
                   Initialize Subscription
                 </button>
                 </Link>
-                <div className="bg-amber-600/10 border border-amber-600/20 rounded-lg p-4 flex gap-3">
+                <div className="bg-amber-600/10 border border-amber-600/20 rounded-lg mt-4 p-4 flex gap-3">
                   <span className="material-symbols-outlined text-amber-500 text-lg">info</span>
                   <p className="text-[10px] leading-relaxed text-black font-medium">
                     Prices include current offers. Monthly billing will be adjusted based on holidays or skipped meals.

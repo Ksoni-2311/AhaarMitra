@@ -606,8 +606,7 @@ const WeeklyMenuWidget = () => {
 export default function VendorDashboard7() {
   return (
     <div
-      className="antialiased overflow-x-hidden min-h-screen bg-gray-50"
-      style={{ fontFamily: "'Manrope', sans-serif" }}
+      className="antialiased overflow-x-hidden min-h-screen bg-gray-50 pt-12"
     >
       {/* Background dot grid */}
       <div
@@ -620,7 +619,7 @@ export default function VendorDashboard7() {
       />
 
       {/* Header */}
-      <header className="w-full pt-8 pb-6 px-12 flex justify-between items-center border-b border-gray-100 bg-white/80 backdrop-blur-xl sticky top-0 z-50">
+      {/* <header className="w-full pt-8 pb-6 px-12 flex justify-between items-center border-b border-gray-100 bg-white/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="inline-block shrink-0">
           <div className="text-2xl font-black text-gray-900 tracking-tighter uppercase">
             AhaarMitra
@@ -651,8 +650,7 @@ export default function VendorDashboard7() {
           <Icon name="settings" className="text-base" />
           Settings
         </a>
-      </header>
-
+      </header> */}
       {/* Main content */}
       <main className="max-w-7xl mx-auto p-6 md:p-12 relative">
         {/* Hero */}

@@ -2,7 +2,7 @@ import React from "react";
 
 const PayoutSetup3 = () => {
   return (
-    <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black font-[Manrope]">
+    <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black">
 
       {/* Header */}
       <header className="w-full pt-10 pb-6 px-8 flex justify-between items-center border-b border-black/5 bg-white/70 backdrop-blur-xl sticky top-0 z-50">

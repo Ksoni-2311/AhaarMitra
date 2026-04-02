@@ -3,9 +3,9 @@ import { useState, useRef, useEffect } from "react";
 /* ─── Google Fonts & Material Icons injected once ──────────────────────────── */
 const GlobalStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-    * { font-family: 'Manrope', sans-serif; box-sizing: border-box; }
+    // @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
+    // @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+    // * { font-family: 'Manrope', sans-serif; box-sizing: border-box; }
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; user-select: none; }
     .mat-fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .scrollbar-thin::-webkit-scrollbar { width: 5px; }
@@ -183,12 +183,12 @@ const OrderRow = ({ order }) => (
             </span>
           )}
         </div>
-        <span className="text-[10px] text-gray-400 font-medium uppercase tracking-widest ml-7">{order.sub}</span>
+        {/* <span className="text-[10px] text-gray-400 font-medium uppercase tracking-widest ml-7">{order.sub}</span> */}
       </div>
     </td>
     <td className="px-6 py-5 text-gray-400 text-sm">{order.date}</td>
-    <td className="px-6 py-5 text-gray-400 text-sm">{order.time}</td>
-    <td className="px-6 py-5"><Rating value={order.rating} /></td>
+    {/* <td className="px-6 py-5 text-gray-400 text-sm">{order.time}</td> */}
+    {/* <td className="px-6 py-5"><Rating value={order.rating} /></td> */}
     <td className="px-6 py-5"><StatusBadge status={order.status} /></td>
   </tr>
 );
@@ -221,42 +221,13 @@ export default function CulinaryTrends5() {
 
   return (
     <div
-      className="min-h-screen bg-gray-50 antialiased overflow-x-hidden"
+      className="min-h-screen pt-16 bg-gray-50 antialiased overflow-x-hidden"
       style={{
         backgroundImage: "radial-gradient(circle at 2px 2px, rgba(0,0,0,0.04) 1px, transparent 0)",
         backgroundSize: "40px 40px",
       }}
     >
       <GlobalStyles />
-
-      {/* ── HEADER ── */}
-      <header className="w-full pt-8 pb-6 px-12 flex justify-between items-center border-b border-gray-200 bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
-        <div className="inline-block shrink-0">
-          <div className="text-2xl font-black text-gray-900 tracking-tighter uppercase">AhaarMitra</div>
-          <div className="h-0.5 w-full bg-gradient-to-r from-blue-500 to-transparent" />
-        </div>
-
-        <nav className="hidden md:flex items-center gap-10">
-          {["Finance", "Order History", "Services", "Subscriber"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className={`text-[11px] font-black uppercase tracking-widest transition-colors ${
-                item === "Order History"
-                  ? "text-gray-900 border-b-2 border-gray-300 pb-1"
-                  : "text-gray-400 hover:text-gray-900"
-              }`}
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
-
-        <a href="#" className="text-sm font-bold text-gray-400 hover:text-gray-900 transition-colors flex items-center gap-2 shrink-0">
-          <span className="material-symbols-outlined text-base">dashboard</span>
-          Analyst Portal
-        </a>
-      </header>
 
       {/* ── MAIN ── */}
       <main className="max-w-7xl mx-auto p-6 md:p-12">
@@ -315,12 +286,12 @@ export default function CulinaryTrends5() {
                     <th className="px-6 py-6">
                       <SortBtn label="Date" icon="unfold_more" />
                     </th>
-                    <th className="px-6 py-6">
+                    {/* <th className="px-6 py-6">
                       <SortBtn label="Delivery Time" icon="unfold_more" />
-                    </th>
+                    </th> 
                     <th className="px-6 py-6">
                       <SortBtn label="Rating" icon="unfold_more" />
-                    </th>
+                    </th> */}
 
                     {/* Status col with filter dropdown */}
                     <th className="px-6 py-6 relative" ref={statusRef}>

@@ -3,9 +3,9 @@ import { useState } from "react";
 /* ── Global Styles ─────────────────────────────────────────────────────────── */
 const G = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-    *, *::before, *::after { box-sizing: border-box; font-family: 'Manrope', sans-serif; }
+    // @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
+    // @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+    // *, *::before, *::after { box-sizing: border-box; font-family: 'Manrope', sans-serif; }
     .ms { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; line-height:1; user-select:none; }
     .ms-fill { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24; line-height:1; user-select:none; }
     .scrollbar-thin::-webkit-scrollbar{width:4px}
@@ -96,19 +96,17 @@ export default function SuccessIntelligence6() {
   const TABS = ["SUCCESS PROFILE", "ENGAGEMENT HISTORY", "PLAN ANALYTICS"];
 
   return (
-    <div className="min-h-screen bg-gray-50 dot-grid">
+    <div className="min-h-screen pt-16 bg-gray-50 dot-grid">
       <G />
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-sm">
+      {/* <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-sm">
         <div className="max-w-[1200px] mx-auto px-8 h-16 flex items-center justify-between">
-          {/* Logo */}
           <div className="shrink-0">
             <div className="text-xl font-black text-gray-900 tracking-tighter uppercase leading-none">AhaarMitra</div>
             <div className="h-0.5 w-full bg-gradient-to-r from-blue-500 to-transparent mt-0.5" />
           </div>
 
-          {/* Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {["Insights", "Engagement", "Retention", "Subscribers"].map((item) => (
               <a
@@ -125,13 +123,12 @@ export default function SuccessIntelligence6() {
             ))}
           </nav>
 
-          {/* Portal link */}
           <a href="#" className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors">
             <span className="ms text-base">rocket_launch</span>
             Success Portal
           </a>
         </div>
-      </header>
+      </header> */}
 
       {/* ── HERO TITLE BAR ── */}
       <div className="max-w-[1200px] mx-auto px-8 pt-10 pb-8 flex items-start justify-between">

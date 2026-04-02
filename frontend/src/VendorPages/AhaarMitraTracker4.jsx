@@ -50,7 +50,7 @@ function DeliveryRow({ order }) {
       {/* Order ID */}
       <td className="px-4 py-5">
         <div className="flex flex-col gap-1">
-          <span className={`font-mono text-xs font-bold ${delivered ? "text-emerald-600" : "text-blue-500"}`}>
+          <span className={` text-xs font-bold ${delivered ? "text-emerald-600" : "text-blue-500"}`}>
             {order.id}
           </span>
           {order.trial && (
@@ -243,34 +243,23 @@ const STOPS = [
 // ── App ────────────────────────────────────────────────────────────────────────
 export default function AhaarMitraTracker4() {
   return (
-    <div className="min-h-screen bg-gray-50 font-sans antialiased overflow-x-hidden"
-      style={{ fontFamily: "'Manrope', sans-serif",
+    <div className="min-h-screen bg-gray-50 pt-16 antialiased overflow-x-hidden"
+      style={{
         backgroundImage: "radial-gradient(circle at 2px 2px, rgba(0,0,0,0.04) 1px, transparent 0)",
         backgroundSize: "40px 40px" }}>
 
       {/* Google Fonts */}
-      <style>{`
+      {/* <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         input[type="checkbox"]:checked { background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e"); }
         input[type="checkbox"] { background-size: 100% 100%; background-position: center; background-repeat: no-repeat; }
-      `}</style>
+      `}</style> */}
 
-      {/* Header */}
-      <header className="w-full pt-8 pb-5 px-8 flex justify-between items-center border-b border-gray-200 bg-white/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
-        <div className="inline-block">
-          <div className="text-2xl font-black text-gray-900 tracking-tighter uppercase">AhaarMitra</div>
-          <div className="h-0.5 w-full bg-gradient-to-r from-blue-500 to-transparent" />
-        </div>
-        <a href="#" className="text-sm font-bold text-gray-400 hover:text-gray-900 transition-colors flex items-center gap-2">
-          <span className="material-symbols-outlined text-base">dashboard</span>
-          Vendor Dashboard
-        </a>
-      </header>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto p-6 md:p-12">
+      <main className="max-w-7xl mx-auto p-6 md:p-12 pt-24">
 
         {/* Hero */}
         <div className="mb-12">
@@ -363,10 +352,10 @@ export default function AhaarMitraTracker4() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button className="bg-gray-50 hover:bg-gray-100 text-gray-700 text-[10px] font-black py-3 px-6 rounded-xl transition-all uppercase tracking-widest flex items-center gap-2 border border-gray-200">
+              {/* <button className="bg-gray-50 hover:bg-gray-100 text-gray-700 text-[10px] font-black py-3 px-6 rounded-xl transition-all uppercase tracking-widest flex items-center gap-2 border border-gray-200">
                 Print Manifest
                 <span className="material-symbols-outlined text-sm">print</span>
-              </button>
+              </button> */}
               <button className="bg-gray-900 hover:bg-gray-700 text-white text-[10px] font-black py-3 px-6 rounded-xl transition-all uppercase tracking-widest flex items-center gap-2">
                 Map Overview
                 <span className="material-symbols-outlined text-sm">map</span>
