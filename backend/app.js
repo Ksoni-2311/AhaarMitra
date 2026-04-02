@@ -5,16 +5,20 @@ import vendorRoutes from './routes/vendor.routes.js';
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173", // ✅ exact frontend
+    credentials: true,
+  })
+);
 
 app.use(express.json());
-app.use(cors());
 
-app.use("/api/user",userRoutes);
-app.use("/api/vendor",vendorRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/vendor", vendorRoutes);
 
-
-app.get('/',(req,res) => {
-    res.send("you are on home page")
+app.get('/', (req, res) => {
+  res.send("you are on home page");
 });
 
 export default app;

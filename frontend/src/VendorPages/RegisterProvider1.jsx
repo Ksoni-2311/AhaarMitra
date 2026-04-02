@@ -1,10 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
+import useVendorStore from "../stores/vendor.store";
+
+
 
 const RegisterProvider1 = () => {
+  const { hitOtp, verifyOtp } = useVendorStore();
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    otp: "",
+    aadhar: "",
+  });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const fetchOtp = (e) => {
+    e.preventDefault; // 🔥 IMPORTANT (prevents reload)
+
+    if (!form.phone) {
+      alert("Enter phone number first");
+      return;
+    }
+
+    console.log("Sending OTP to:", form.phone);
+
+    // 👉 Call your backend
+    hitOtp(form.phone);
+  };
+  const ValidateOtp = (e) => {
+    e.preventDefault; // 🔥 IMPORTANT (prevents reload)
+
+    if (!form.otp) {
+      alert("Enter otp number ");
+      return;
+    }
+
+    console.log("otp recieved", form.otp);
+
+    // 👉 Call your backend
+    verifyOtp(form.phone,form.otp);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 👉 Send full data to backend
+    console.log("Form Data:", form);
+
+  };
+
   return (
     <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black font-[Manrope]">
-
-
       {/* Main */}
       <main className="min-h-[calc(100vh-160px)] grid grid-cols-1 lg:grid-cols-2">
 
@@ -125,34 +174,106 @@ const RegisterProvider1 = () => {
               </p>
             </div>
 
-            <form className="space-y-6 border-b border-gray-200 pb-12 mb-12">
-
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6 border-b border-gray-200 pb-12 mb-12"
+            >
               <div className="grid grid-cols-2 gap-4">
-                <input className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10 placeholder-black/30" placeholder="First Name" />
-                <input className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10 placeholder-black/30" placeholder="Last Name" />
+                <input
+                  name="firstName"
+                  value={form.firstName}
+                  onChange={handleChange}
+                  className="input"
+                  placeholder="First Name"
+                />
+                <input
+                  name="lastName"
+                  value={form.lastName}
+                  onChange={handleChange}
+                  className="input"
+                  placeholder="Last Name"
+                />
               </div>
 
-              <input className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10 placeholder-black/30" placeholder="Email Address" />
+              <input
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className="input"
+                placeholder="Email Address"
+              />
 
               <div className="flex gap-3">
-                <input className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10 placeholder-black/30" placeholder="+91 9876543210" />
-                <button className="px-6 py-4 rounded-2xl bg-gray-100 border border-black/10 text-[10px] font-black uppercase">
+                <input
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  className="input"
+                  placeholder="+91 9876543210"
+                />
+                <button
+                  type="button" // 🔥 IMPORTANT
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!form.phone) {
+                      alert("Enter phone number first");
+                      return;
+                    }
+                    fetchOtp(form.phone);
+                  }}
+                  className="px-6 py-4 rounded-2xl bg-gray-100 border border-black/10 text-[10px] font-black uppercase"
+                >
                   Send OTP
                 </button>
               </div>
 
-              <input className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10 placeholder-black/30" placeholder="OTP" />
+              <div className="flex gap-3">
+                <input
+                  name="otp"
+                  value={form.otp}
+                  onChange={handleChange}
+                  className="input"
+                  placeholder="OTP"
+                />
 
-              <input className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10 placeholder-black/30" placeholder="Aadhar Number" />
+                <button
+                  type="button" // 🔥 IMPORTANT (same as above)
+                  onClick={(e) => {
+                    e.preventDefault();
+
+                    if (!form.otp) {
+                      alert("Enter OTP first");
+                      return;
+                    }
+
+                    ValidateOtp();
+                  }}
+                  className="px-6 py-4 rounded-2xl bg-gray-100 border border-black/10 text-[10px] font-black uppercase"
+                >
+                  Verify OTP
+                </button>
+              </div>
+              <input
+                name="aadhar"
+                value={form.aadhar}
+                onChange={handleChange}
+                className="input"
+                placeholder="Aadhar Number"
+              />
 
               <div className="border-2 border-dashed border-black/10 rounded-3xl p-8 flex flex-col items-center bg-gray-50">
                 <span className="material-symbols-outlined text-blue-600 text-3xl">
                   cloud_upload
                 </span>
                 <p className="text-sm font-bold text-black">Upload Aadhaar</p>
+
+                <input type="file" className="mt-3" />
               </div>
 
-              <button className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase">
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase"
+              >
                 Next Step
               </button>
             </form>
@@ -163,9 +284,6 @@ const RegisterProvider1 = () => {
           </div>
         </section>
       </main>
-
-     
-
     </div>
   );
 };

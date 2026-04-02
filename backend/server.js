@@ -3,6 +3,7 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import vendorModel from "./models/vendor.model.js";
 dotenv.config();
+
 setInterval(async () => {
   await vendorModel.deleteMany({
     isTemporary: true,

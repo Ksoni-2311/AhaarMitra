@@ -1,49 +1,73 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
+import axios from 'axios'
 import Vendor from "../models/vendor.model.js";
-import { generateOtp, verifyOtp } from "../utils/otpStore.js";
+// import { generateOtp, verifyOtp } from "../utils/otpStore.js";
+import { sendOtpMSG91 } from "../utils/msg91.js";
 
-// 🔹 Send OTP
-export const sendOtp = async (req, res) => {
-    const { phone } = req.body;
+export const sendOtpController = async (req, res) => {
+  const { phone } = req.body;
 
-    generateOtp(phone);
+  const data = await sendOtpMSG91(phone);
 
-    res.json({ message: "OTP sent (check console for now)" });
+  res.json({
+    success: true,
+    message: "OTP sent",
+    otp: data.otp, // ⚠️ only for testing (remove later)
+  });
 };
+// TEMP storage (hackathon friendly)
+const verifiedPhones = new Set();
 
-// 🔹 Verify OTP
-export const verifyOtpController = async (req, res) => {
-    const { phone, otp, name, email } = req.body;
+// export const verifyOtpController = async (req, res) => {
+//   try {
+//     const { phone, otp } = req.body;
 
-    const isValid = verifyOtp(phone, otp);
+//     const response = await verifyOtpMSG91(phone, otp);
 
-    if (!isValid) {
-        return res.status(400).json({ message: "Invalid OTP" });
+//     if (response.data.type !== "success") {
+//       return res.status(400).json({ message: "Invalid OTP" });
+//     }
+
+//     // ✅ Mark as verified
+//     verifiedPhones.add(phone);
+
+//     res.json({ message: "OTP verified" });
+//   } catch (err) {
+//     res.status(500).json({ message: "Verify OTP error" });
+//   }
+// };
+
+export const registerVendorController = async (req, res) => {
+  try {
+    const { name, email, phone } = req.body;
+
+    // 🔒 Check OTP verified
+    if (!verifiedPhones.has(phone)) {
+      return res.status(403).json({ message: "Verify OTP first" });
     }
 
-    // ❗ Delete old incomplete entry if exists
-    await Vendor.deleteOne({ phone, isTemporary: true });
-
     const vendor = await Vendor.create({
-        name,
-        email,
-        phone,
-        isOtpVerified: true,
-        isTemporary: true,
+      name,
+      email,
+      phone,
+      isOtpVerified: true,
     });
 
     const token = jwt.sign(
-        {
-            id: vendor._id,
-            isOtpVerified: true,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: "30m" }
+      { id: vendor._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "30m" }
     );
-    
-    res.json({ token });
+
+    // 🧹 Remove from set
+    verifiedPhones.delete(phone);
+
+    res.json({ token, vendor });
+  } catch (err) {
+    res.status(500).json({ message: "Registration failed" });
+  }
 };
 
 // 🔹 Save Business Details
