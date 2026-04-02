@@ -1,37 +1,20 @@
-import { useState,useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { sendOTP, verifyOTP } from "../utils/otp";
-import { useNavigate } from "react-router-dom";
-
- 
+import { useState, useRef } from "react";
 
 export default function TiffinSeekerRegistration13() {
-const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-const otpRefs = [
-  useRef(), useRef(), useRef(),
-  useRef(), useRef(), useRef()
-];
-const [phone, setPhone] = useState("");
-const navigate = useNavigate();
-
- const getOtpValue = () => otp.join("");
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const otpRefs = [useRef(), useRef(), useRef(), useRef()];
 
   const handleOtp = (i, val) => {
     if (!/^\d?$/.test(val)) return;
     const next = [...otp];
     next[i] = val;
     setOtp(next);
-if (val && i < 5) otpRefs[i + 1].current?.focus();
+    if (val && i < 3) otpRefs[i + 1].current?.focus();
   };
 
   const handleOtpKey = (i, e) => {
     if (e.key === "Backspace" && !otp[i] && i > 0) otpRefs[i - 1].current?.focus();
   };
-  useEffect(() => {
-  if (otp.join("").length === 6) {
-    // trigger verify here if you want 👀
-  }
-}, [otp]);
 
   return (
     <>
@@ -181,47 +164,22 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
             </div>
 
             {/* Phone */}
-<div className="space-y-2 fade-up fu-5">
-  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
-    Phone Number
-  </label>
-
-  {/* INPUT */}
-  <div className="relative">
-    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400 font-bold text-sm select-none">
-      +91
-    </span>
-
-    <input
-      className="form-input"
-      style={{ paddingLeft: "3.5rem" }}
-      placeholder="9876543210"
-      type="tel"
-      value={phone}
-      onChange={(e) => setPhone(e.target.value)}
-    />
-  </div>
-
-  {/* SEND OTP BUTTON */}
-  <button
-    type="button"
-    onClick={async () => {
-      if (!phone || phone.length !== 10) {
-        alert("Enter valid phone number ");
-        return;
-      }
-
-      await sendOTP("+91" + phone);
-      alert("OTP Sent ");
-    }}
-    className="text-xs font-bold text-amber-500 mt-2"
-  >
-    Send OTP
-  </button>
-
-  {/* reCAPTCHA MUST BE OUTSIDE */}
-  <div id="recaptcha-container"></div>
-</div>
+            <div className="space-y-2 fade-up fu-5">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
+                Phone Number
+              </label>
+              <div className="relative">
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400 font-bold text-sm select-none">
+                  +91
+                </span>
+                <input
+                  className="form-input"
+                  style={{ paddingLeft: "3.5rem" }}
+                  placeholder="9876543210"
+                  type="tel"
+                />
+              </div>
+            </div>
 
             {/* OTP */}
             <div className="space-y-2 fade-up fu-6">
@@ -237,7 +195,7 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
                 </button>
               </div>
 
-              <div className="grid grid-cols-6 gap-3">
+              <div className="grid grid-cols-4 gap-3">
                 {otp.map((digit, i) => (
                   <input
                     key={i}
@@ -255,42 +213,18 @@ if (val && i < 5) otpRefs[i + 1].current?.focus();
               </div>
 
               <p className="text-[10px] text-stone-400 mt-2 ml-1 font-medium">
-                We sent a 6-digit code to your phone.
+                We sent a 4-digit code to your phone.
               </p>
             </div>
 
             {/* Submit */}
             <div className="fade-up fu-7 pt-2">
-           
-             <button
-  type="button"
-  onClick={async () => {
-    const enteredOtp = getOtpValue();
-
-    if (enteredOtp.length !== 6) {
-      alert("Enter complete OTP ");
-      return;
-    }
-
-    try {
-      const result = await verifyOTP(enteredOtp);
-
-      if (result) {
-        alert("Phone Verified ");
-       navigate("/14");// navigate after success
-      } else {
-        alert("Invalid OTP ");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Verification failed ");
-    }
-  }}
-  className="submit-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs"
->
-  Complete Registration
-</button>
-             
+              <button
+                type="button"
+                className="submit-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs"
+              >
+                Complete Registration
+              </button>
             </div>
           </div>
 

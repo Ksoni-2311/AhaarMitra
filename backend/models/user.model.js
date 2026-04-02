@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   unique: true,
   sparse: true   // 🔥 ADD THIS
 },
-  password: String,
+ phone:Number,
 
   addresses: [
   {
