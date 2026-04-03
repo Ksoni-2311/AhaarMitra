@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
