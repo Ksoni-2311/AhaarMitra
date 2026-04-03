@@ -4,7 +4,7 @@ import userRoutes from './routes/user.routes.js';
 import dotenv from "dotenv";
 
 import vendorRoutes from './routes/vendor.routes.js';
-import vendorServiceRoutes from './controllers/vendor.config.routes.js';
+import vendorServiceRoutes from './routes/vendor.config.routes.js';
 
 dotenv.config();
 const app = express();

@@ -1,4 +1,4 @@
-import vendorServiceConfig from "../models/vendor.service.config.js";
+import VendorServiceConfig from "../models/VendorServiceConfig.js"
 
 export const getVendorServiceConfig = async (req, res) => {
   try {

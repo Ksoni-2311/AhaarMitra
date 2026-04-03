@@ -5,7 +5,7 @@ import {
   upsertVendorServiceConfig,
   updatePricingVariants,
   updateWeeklyMenu,
-} from "./vendor.config.controllers.js"
+} from "../controllers/vendor.config.controllers.js"
 
 const router = express.Router();
 
