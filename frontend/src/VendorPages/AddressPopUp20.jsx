@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AddressPopUp20 = () => {
   return (
@@ -17,10 +18,11 @@ const AddressPopUp20 = () => {
               Enter the complete physical address for your operational zone
             </p>
           </div>
-
-          <button className="text-gray-400 hover:text-gray-700 transition">
-            ✕
-          </button>
+            <Link to="/v7">
+              <button className="text-gray-400 hover:text-gray-700 transition">
+                ✕
+              </button>
+            </Link>
         </div>
 
         {/* Form */}
@@ -90,13 +92,14 @@ const AddressPopUp20 = () => {
 
         {/* Footer */}
         <div className="p-8 bg-gray-50 flex gap-4">
-          <button className="flex-1 py-4 px-6 rounded-2xl border border-gray-300 text-[11px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all">
-            Cancel
-          </button>
-
-          <button className="flex-[2] py-4 px-6 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-500 shadow-lg transition-all border border-blue-500/30">
-            Add Hub
-          </button>
+            <Link to="/v7">
+              <button className="flex-1 py-4 px-6 rounded-2xl border border-gray-300 text-[11px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all">
+                Cancel
+              </button>
+            </Link>
+            <button className="flex-[2] py-4 px-6 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-500 shadow-lg transition-all border border-blue-500/30">
+              Add Hub
+            </button>
         </div>
 
       </div>
