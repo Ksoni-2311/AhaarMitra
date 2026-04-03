@@ -767,7 +767,7 @@ function CancellationCard() {
 }
 
 // ─── App ──────────────────────────────────────────────────────────────────────
-export default function AhaarMitraOrders15() {
+export default function VendorDashboard7() {
   const navItems = [
     { label: "Finance", active: false },
     { label: "Order History", active: false },

@@ -84,7 +84,7 @@ export default function MealTypePopUp19() {
 
           {/* ❌ CLOSE BUTTON → NAVIGATE */}
           <button
-            onClick={() => navigate("/orders")}
+            onClick={() => navigate("/v7")}
             className="w-8 h-8 rounded-full flex items-center justify-center text-gray-300 hover:text-gray-600 hover:bg-gray-100 transition-all"
           >
             <Icon name="close" className="text-lg" />
