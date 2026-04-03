@@ -49,7 +49,7 @@ const NavBar = () => {
 
               {/* Underline */}
               <span
-                className={`absolute left-0 bottom-0 h-[2px] bg-black w-full origin-center transform transition-transform duration-300 ease-in-out ${
+                className={`absolute left-0 -bottom-1 h-[2px] bg-black w-full origin-center transform transition-transform duration-300 ease-in-out ${
                   isActive ? "scale-x-100" : "scale-x-0"
                 }`}
               />

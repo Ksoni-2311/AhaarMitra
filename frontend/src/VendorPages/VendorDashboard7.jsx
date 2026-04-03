@@ -645,9 +645,11 @@ function WeeklyMenuCard() {
                   </div>
                 </div>
               ))}
-              <button className="w-full py-2 flex items-center justify-center gap-1.5 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
-                <span>+</span> Add Item
-              </button>
+              <Link to="/24">
+                <button className="w-full py-2 flex items-center justify-center gap-1.5 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+                  <span>+</span> Add Item
+                </button>
+              </Link>
             </div>
           </div>
         ))}
