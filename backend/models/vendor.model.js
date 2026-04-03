@@ -4,6 +4,7 @@ const vendorSchema = new mongoose.Schema({
   name: String,
   email: String,
   phone: { type: String, unique: true },
+  password:String,
 
   isOtpVerified: { type: Boolean, default: false },
 
