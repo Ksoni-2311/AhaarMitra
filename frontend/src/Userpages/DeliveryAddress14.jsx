@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TAGS = ["Home", "University", "Office", "Other"];
 
@@ -11,13 +11,116 @@ const TAG_ICONS = {
 };
 
 export default function DeliveryAddress14() {
-  const [savedAddresses, setSavedAddresses] = useState([
-    { id: 1, tag: "Home", line: "402, Skyline Towers, Bengaluru..." },
-  ]);
+  const navigate = useNavigate();
 
-  const deleteAddress = (id) =>
-    setSavedAddresses((prev) => prev.filter((a) => a.id !== id));
+  const [formData, setFormData] = useState({
+    street: "",
+    city: "",
+    state: "",
+    pincode: "",
+    instructions: "",
+    label: "Home",
+    isDefault: true,
+  });
 
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSaveAddress = async () => {
+  try {
+    setLoading(true);
+    setMessage("");
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setMessage("Token not found. Please complete registration again.");
+      return;
+    }
+
+    if (!formData.street || !formData.city || !formData.state || !formData.pincode) {
+      setMessage("Please fill all required address fields");
+      return;
+    }
+
+    const res = await fetch("http://localhost:8080/api/user/address", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+    console.log("ADDRESS RESPONSE:", data);
+
+    if (!res.ok) {
+      throw new Error(data.msg || data.message || data.error || "Failed to save address");
+    }
+
+    localStorage.setItem("registrationStep", data.step);
+
+    if (data.user?.addresses) {
+      setSavedAddresses(
+        data.user.addresses.map((addr, index) => ({
+          id: index + 1,
+          tag: addr.label || "Other",
+          line: `${addr.street}, ${addr.city}, ${addr.state} - ${addr.pincode}`,
+        }))
+      );
+    } else {
+      setSavedAddresses((prev) => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          tag: formData.label,
+          line: `${formData.street}, ${formData.city}, ${formData.state} - ${formData.pincode}`,
+        },
+      ]);
+    }
+
+    setMessage("Address saved successfully");
+
+    setFormData({
+      street: "",
+      city: "",
+      state: "",
+      pincode: "",
+      instructions: "",
+      label: "Home",
+      isDefault: true,
+    });
+
+    setTimeout(() => {
+      navigate("/9");
+    }, 1000);
+
+  } catch (err) {
+    console.log("ADDRESS ERROR:", err);
+    setMessage(err.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
+
+const deleteAddress = (id) => {
+  setSavedAddresses((prev) => prev.filter((a) => a.id !== id));
+};
+
+const handleContinue = () => {
+  navigate("/9");
+};
   return (
     <>
       <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -38,7 +141,6 @@ export default function DeliveryAddress14() {
           background-size: 32px 32px;
         }
 
-        /* shared input styles */
         .fi {
           width: 100%;
           background: #f9fafb;
@@ -61,7 +163,6 @@ export default function DeliveryAddress14() {
         .fi-select { appearance: none; cursor: pointer; }
         .fi-ta { resize: none; min-height: 140px; }
 
-        /* map grid pattern */
         .map-grid {
           background-color: #f1f5f9;
           background-image:
@@ -70,15 +171,12 @@ export default function DeliveryAddress14() {
           background-size: 24px 24px;
         }
 
-        /* address card hover */
         .addr-card { transition: border-color .2s, background .2s; }
         .addr-card:hover { border-color: #fcd34d; background: #fffbeb; }
 
-        /* dashed add button */
         .add-btn { transition: border-color .2s, color .2s, background .2s; }
         .add-btn:hover { border-color: #f59e0b; color: #d97706; background: #fffbeb; }
 
-        /* CTAs */
         .save-btn { transition: background .25s, color .25s, transform .15s, box-shadow .2s; }
         .save-btn:hover { background: #f59e0b !important; color: #fff !important; transform: translateY(-1px); box-shadow: 0 8px 24px -4px rgba(245,158,11,.35); }
 
@@ -99,18 +197,12 @@ export default function DeliveryAddress14() {
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         <div className="flex-grow flex flex-col items-center py-12 lg:py-16 px-6">
-
-          {/* ── TOP ── */}
           <div className="max-w-6xl w-full text-center mb-12">
-
-            {/* Wordmark */}
             <div className="text-2xl font-black text-stone-900 tracking-tighter mb-8 fu fu-1">
               AhaarMitra
             </div>
 
-            {/* 3-step progress pill */}
             <div className="fu fu-2 inline-flex items-center gap-3 bg-white border border-stone-200 shadow-sm px-6 py-2.5 rounded-full mb-10">
-              {/* Step 1 */}
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full bg-stone-200 text-stone-500 flex items-center justify-center">
                   <span className="material-symbols-outlined text-[13px]" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
@@ -118,7 +210,6 @@ export default function DeliveryAddress14() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-stone-400">Role</span>
               </div>
               <div className="w-8 h-px bg-stone-200" />
-              {/* Step 2 */}
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full bg-stone-200 text-stone-500 flex items-center justify-center">
                   <span className="material-symbols-outlined text-[13px]" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
@@ -126,7 +217,6 @@ export default function DeliveryAddress14() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-stone-400">Registration</span>
               </div>
               <div className="w-8 h-px bg-stone-200" />
-              {/* Step 3 — active */}
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full bg-amber-500 text-white text-[10px] font-black flex items-center justify-center">3</span>
                 <span className="text-[10px] font-black uppercase tracking-widest text-stone-900">Addresses</span>
@@ -141,18 +231,14 @@ export default function DeliveryAddress14() {
             </p>
           </div>
 
-          {/* ── BODY ── */}
           <div className="max-w-6xl w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-
-              {/* ── LEFT: Form ── */}
               <div className="space-y-8">
                 <section className="space-y-5 fu fu-4">
                   <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 mb-1">
                     Add Your First Address
                   </h2>
 
-                  {/* Street */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
                       Street / Apartment / Door No.
@@ -161,32 +247,72 @@ export default function DeliveryAddress14() {
                       className="fi"
                       placeholder="e.g. 402, Skyline Towers, Tech Park Road"
                       type="text"
+                      name="street"
+                      value={formData.street}
+                      onChange={handleChange}
                     />
                   </div>
 
-                  {/* City + State */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">City</label>
-                      <input className="fi" placeholder="Bengaluru" type="text" />
+                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
+                        City
+                      </label>
+                      <input
+                        className="fi"
+                        placeholder="Bengaluru"
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">State</label>
-                      <input className="fi" placeholder="Karnataka" type="text" />
+                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
+                        State
+                      </label>
+                      <input
+                        className="fi"
+                        placeholder="Karnataka"
+                        type="text"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                      />
                     </div>
                   </div>
 
-                  {/* Pincode + Tag */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">Pincode</label>
-                      <input className="fi" placeholder="560100" inputMode="numeric" type="text" />
+                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
+                        Pincode
+                      </label>
+                      <input
+                        className="fi"
+                        placeholder="560100"
+                        inputMode="numeric"
+                        type="text"
+                        name="pincode"
+                        value={formData.pincode}
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">Tag Address As</label>
+                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
+                        Tag Address As
+                      </label>
                       <div className="relative">
-                        <select className="fi fi-select pr-10">
-                          {TAGS.map((t) => <option key={t} value={t.toLowerCase()}>{t}</option>)}
+                        <select
+                          className="fi fi-select pr-10"
+                          name="label"
+                          value={formData.label}
+                          onChange={handleChange}
+                        >
+                          {TAGS.map((t) => (
+                            <option key={t} value={t}>
+                              {t}
+                            </option>
+                          ))}
                         </select>
                         <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-stone-400 text-sm">
                           expand_more
@@ -195,7 +321,6 @@ export default function DeliveryAddress14() {
                     </div>
                   </div>
 
-                  {/* Instructions */}
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 ml-1 block">
                       Detailed Delivery Instructions / Landmarks
@@ -203,38 +328,56 @@ export default function DeliveryAddress14() {
                     <textarea
                       className="fi fi-ta"
                       placeholder="e.g. Near the big oak tree, opposite Metro Station, leave at gate..."
+                      name="instructions"
+                      value={formData.instructions}
+                      onChange={handleChange}
                     />
                   </div>
 
-                  {/* Save button */}
-                  <button className="save-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs mt-2">
-                    Save This Address
+                  <div className="flex items-center gap-3">
+                    <input
+                      id="isDefault"
+                      type="checkbox"
+                      name="isDefault"
+                      checked={formData.isDefault}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="isDefault" className="text-sm font-semibold text-stone-600">
+                      Set as default address
+                    </label>
+                  </div>
+
+                  {message && (
+                    <p className="text-sm font-semibold text-amber-600">{message}</p>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleSaveAddress}
+                    disabled={loading}
+                    className="save-btn w-full bg-stone-900 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs mt-2 disabled:opacity-60"
+                  >
+                    {loading ? "Saving..." : "Save This Address"}
                   </button>
                 </section>
 
-                {/* Back link */}
                 <div className="fu fu-5">
-                  <a href="#" className="back-link inline-flex items-center gap-2 text-stone-400 text-[10px] font-black uppercase tracking-widest">
+                  <Link to="/13" className="back-link inline-flex items-center gap-2 text-stone-400 text-[10px] font-black uppercase tracking-widest">
                     <span className="material-symbols-outlined text-sm back-arrow">arrow_back</span>
                     Back to Registration
-                  </a>
+                  </Link>
                 </div>
               </div>
 
-              {/* ── RIGHT: Map + Saved ── */}
               <div className="space-y-10 fu fu-5">
-
-                {/* Map preview */}
                 <section className="space-y-3">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 block">
                     Review Your Delivery Spot
                   </label>
 
                   <div className="relative w-full h-64 map-grid rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
-                    {/* Subtle vignette */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-100/40 pointer-events-none" />
 
-                    {/* Pin */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="relative">
                         <div className="absolute -top-11 left-1/2 -translate-x-1/2 bg-amber-500 text-white text-[10px] font-black px-3 py-1 rounded-full whitespace-nowrap uppercase tracking-widest shadow-md">
@@ -246,12 +389,10 @@ export default function DeliveryAddress14() {
                         >
                           location_on
                         </span>
-                        {/* Pin shadow */}
                         <div className="w-3 h-1 bg-stone-400/30 blur-sm rounded-full mx-auto -mt-1" />
                       </div>
                     </div>
 
-                    {/* Border overlay */}
                     <div className="absolute inset-0 pointer-events-none border border-stone-200 rounded-2xl" />
                   </div>
 
@@ -260,7 +401,6 @@ export default function DeliveryAddress14() {
                   </p>
                 </section>
 
-                {/* Saved addresses */}
                 <section className="space-y-4">
                   <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400">
                     Saved Addresses
@@ -294,8 +434,21 @@ export default function DeliveryAddress14() {
                       </div>
                     ))}
 
-                    {/* Add another */}
-                    <button className="add-btn w-full border-2 border-dashed border-stone-200 text-stone-400 font-black py-4 rounded-2xl uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData({
+                          street: "",
+                          city: "",
+                          state: "",
+                          pincode: "",
+                          instructions: "",
+                          label: "Home",
+                          isDefault: true,
+                        })
+                      }
+                      className="add-btn w-full border-2 border-dashed border-stone-200 text-stone-400 font-black py-4 rounded-2xl uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-2"
+                    >
                       <span className="material-symbols-outlined text-sm">add</span>
                       Add Another Address
                     </button>
@@ -304,18 +457,18 @@ export default function DeliveryAddress14() {
               </div>
             </div>
 
-            {/* ── Continue button ── */}
             <div className="mt-16 fu fu-9">
-              <Link to={"/9"}>
-              <button className="continue-btn w-full bg-amber-500 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-sm shadow-xl shadow-amber-500/20">
+              <button
+                type="button"
+                onClick={handleContinue}
+                className="continue-btn w-full bg-amber-500 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-sm shadow-xl shadow-amber-500/20"
+              >
                 Continue to Dashboard
               </button>
-              </Link>
             </div>
           </div>
         </div>
 
-        {/* ── FOOTER ── */}
         <footer className="w-full py-8 px-6 border-t border-stone-200 mt-auto">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 opacity-40">
             <div className="text-[10px] font-black tracking-widest uppercase text-stone-500">

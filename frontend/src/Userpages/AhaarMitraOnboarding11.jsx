@@ -1,6 +1,42 @@
-import { Link } from "react-router-dom";
-import AhaarMitraLogo from '../../assets/AhaarMitraLogo.png'
+import { Link, useNavigate } from "react-router-dom";
+import AhaarMitraLogo from "../../assets/AhaarMitraLogo.png";
+import { useState } from "react";
+
 export default function AhaarMitraOnboarding11() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleSeekerSelect = async () => {
+  try {
+    setLoading(true);
+
+    const res = await fetch("http://localhost:8080/api/user/role", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+    console.log("ROLE STATUS:", res.status);
+    console.log("ROLE RESPONSE:", data);
+
+    if (!res.ok) {
+      throw new Error(data.error || data.message || "Role selection failed");
+    }
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("registrationStep", data.step);
+
+    navigate("/13");
+  } catch (err) {
+    console.log("ROLE ERROR:", err);
+    alert(err.message || "Something went wrong while selecting role");
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <>
       <link
@@ -55,58 +91,35 @@ export default function AhaarMitraOnboarding11() {
         className="min-h-screen flex flex-col bg-stone-50 bg-dot text-stone-900 antialiased overflow-x-hidden"
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
-        {/* ── HEADER ─────────────────────────────────────────── */}
         <header className="w-full px-6 text-center">
-          {/* Wordmark */}
           <div className="inline-block mb-4 fade-up fade-up-1">
             <div className="text-3xl font-black text-stone-900 tracking-tighter uppercase">
-              <img className="h-30 " src={AhaarMitraLogo} alt="AHAARMITRA" />
+              <img className="h-30" src={AhaarMitraLogo} alt="AHAARMITRA" />
             </div>
-            <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent  rounded-full" />
+            <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent rounded-full" />
           </div>
-
-          {/* Hero headline */}
-          {/* <div className="max-w-4xl mx-auto fade-up fade-up-2">
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight text-stone-900 mb-6 leading-tight">
-              How do you want to experience{" "}
-              <span className="justify-center flex items-center gap-2 inline-flex">             
-                 <img className="h-20 " src={AhaarMitraLogo} alt="AHAARMITRA" />
-              </span>
-            </h1>
-            <p className="text-stone-400 text-sm font-bold uppercase tracking-[0.3em]">
-              Choose your role to get started
-            </p>
-          </div> */}
         </header>
 
-        {/* ── MAIN ───────────────────────────────────────────── */}
-        <main className="flex flex-col items-center px-6 md:px-12 fade-up fade-up-3 ">
+        <main className="flex flex-col items-center px-6 md:px-12 fade-up fade-up-3">
           <div className="max-w-4xl w-full">
-
-            {/* Role cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 fade-up fade-up-3">
-
-              {/* ── SEEKER CARD ── */}
               <div className="role-card seeker-card group relative overflow-hidden bg-white border-2 border-stone-200 rounded-[2.5rem] p-10 flex flex-col items-center text-center cursor-pointer shadow-sm">
-                {/* Hover glow overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-amber-50/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]" />
 
-                {/* Icon */}
                 <div className="card-icon-ring relative w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mb-2 border-2 border-stone-200 transition-all duration-300">
                   <span className="card-icon material-symbols-outlined text-5xl text-stone-500 transition-colors duration-300">
                     restaurant
                   </span>
                 </div>
 
-                {/* Title */}
-                <h2 className="relative text-3xl font-black mb-4 text-stone-900">Tiffin Seeker</h2>
+                <h2 className="relative text-3xl font-black mb-4 text-stone-900">
+                  Tiffin Seeker
+                </h2>
 
-                {/* Description */}
                 <p className="relative text-stone-500 mb-10 leading-relaxed font-medium">
                   Enjoy healthy, home-cooked meals delivered to multiple locations like your university or home. Subscribe to local kitchens and manage your daily diet with ease.
                 </p>
 
-                {/* Feature list */}
                 <div className="relative space-y-3 w-full mb-10">
                   {["Multi-address delivery support", "Personalized meal preferences"].map((feat) => (
                     <div
@@ -124,57 +137,32 @@ export default function AhaarMitraOnboarding11() {
                   ))}
                 </div>
 
-                {/* CTA */}
                 <button
-                  onClick={async () => {
-                    try {
-                      const res = await fetch("http://localhost:8080/api/user/role", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ role: "user" }) // optional
-                      });
-
-                      const data = await res.json();
-
-                      // ✅ Save token
-                      localStorage.setItem("token", data.token);
-
-                      // ✅ Move to next page
-                      window.location.href = "/13";
-
-                    } catch (err) {
-                      console.log(err);
-                    }
-                  }}
-                  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm"
+                  onClick={handleSeekerSelect}
+                  disabled={loading}
+                  className="card-btn relative mt-auto w-full bg-black hover:bg-orange-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm disabled:opacity-60"
                 >
-                  SELECT AS SEEKER
+                  {loading ? "Please wait..." : "SELECT AS SEEKER"}
                 </button>
               </div>
 
-              {/* ── PROVIDER CARD ── */}
               <div className="role-card provider-card group relative overflow-hidden bg-white border-2 border-stone-200 rounded-[2.5rem] p-10 flex flex-col items-center text-center cursor-pointer shadow-sm">
-                {/* Hover glow overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-blue-50/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]" />
 
-                {/* Icon */}
                 <div className="card-icon-ring relative w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mb-2 border-2 border-stone-200 transition-all duration-300">
                   <span className="card-icon material-symbols-outlined text-5xl text-stone-500 transition-colors duration-300">
                     storefront
                   </span>
                 </div>
 
-                {/* Title */}
-                <h2 className="relative text-3xl font-black mb-4 text-stone-900">Tiffin Provider</h2>
+                <h2 className="relative text-3xl font-black mb-4 text-stone-900">
+                  Tiffin Provider
+                </h2>
 
-                {/* Description */}
                 <p className="relative text-stone-500 mb-10 leading-relaxed font-medium">
                   Transform your kitchen into a business. Reach students and professionals in your area, manage subscribers, and grow your culinary brand.
                 </p>
 
-                {/* Feature list */}
                 <div className="relative space-y-3 w-full mb-10">
                   {["Advanced order management", "Dynamic delivery zoning"].map((feat) => (
                     <div
@@ -192,16 +180,15 @@ export default function AhaarMitraOnboarding11() {
                   ))}
                 </div>
 
-                {/* CTA */}
-                <Link to="/v1" className="card-btn relative mt-auto w-full bg-stone-900 hover:bg-blue-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm text-center block">
-                  <button className="">
-                    Register as Vendor
-                  </button>
+                <Link
+                  to="/v1"
+                  className="card-btn relative mt-auto w-full bg-stone-900 hover:bg-blue-600 text-white font-black py-5 rounded-2xl transition-all duration-300 uppercase tracking-widest text-sm text-center block"
+                >
+                  Register as Vendor
                 </Link>
               </div>
             </div>
 
-            {/* ── Sign-in link ── */}
             <div className="text-center mt-16 fade-up fade-up-4">
               <a href="#" className="signin-link inline-flex flex-col items-center group">
                 <span className="signin-sub text-stone-400 transition-colors uppercase font-bold tracking-[0.2em] text-xs mb-2">
@@ -212,7 +199,6 @@ export default function AhaarMitraOnboarding11() {
                 </span>
               </a>
             </div>
-
           </div>
         </main>
       </div>
