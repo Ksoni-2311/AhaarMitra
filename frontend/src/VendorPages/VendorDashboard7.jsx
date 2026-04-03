@@ -1,19 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-const mealTabs = [
-  { id: "breakfast", label: "Breakfast", icon: "☀️" },
-  { id: "lunch", label: "Lunch", icon: "🍽️" },
-  { id: "dinner", label: "Dinner", icon: "🌙" },
-];
-
-const initialMealTypes = [
-  { id: 1, icon: "☀️", label: "Breakfast", color: "text-amber-500" },
-  { id: 2, icon: "🍽️", label: "Lunch", color: "text-blue-500" },
-  { id: 3, icon: "🌙", label: "Dinner", color: "text-violet-500" },
-  { id: 4, icon: "🥐", label: "Snacks", color: "text-emerald-500" },
-];
+import {
+  getServiceConfig,
+  saveServiceConfig,
+} from "../services/vendorServiceConfigApi";
 
 const initialHubs = [
   "H-Block, Sector 63, Noida, UP",
@@ -27,6 +17,14 @@ const initialHubs = [
   "A-Block, Sector 12, Noida, UP",
   "Gaur City Mall, Greater Noida West",
 ];
+
+const initialMealTypes = [
+  { id: 1, icon: "☀️", label: "Breakfast", color: "text-amber-500" },
+  { id: 2, icon: "🍽️", label: "Lunch", color: "text-blue-500" },
+  { id: 3, icon: "🌙", label: "Dinner", color: "text-violet-500" },
+  { id: 4, icon: "🥐", label: "Snacks", color: "text-emerald-500" },
+];
+
 
 const initialCatalog = [
   {
@@ -55,6 +53,7 @@ const initialCatalog = [
   },
 ];
 
+
 const menuData = {
   mini: ["Paneer Butter Masala", "Phulka (2 pcs)", "Steamed Rice"],
   normal: [
@@ -70,6 +69,49 @@ const menuData = {
     "Sweet Lassi / Curd",
   ],
 };
+
+
+const defaultConfig = {
+ mealTypes: [...initialMealTypes],
+zones: [...initialHubs],
+  offerExpandedDelivery: false,
+  globalMaxExtraDistanceKm: 5,
+  serviceWindows: {
+    lunch: { startTime: "12:00", endTime: "14:30" },
+    dinner: { startTime: "19:30", endTime: "21:30" },
+    autoCutoffEnabled: true,
+    cutoffHours: 5,
+  },
+ pricingVariants: initialCatalog,
+  trialOffer: {
+    price: 49,
+    selectedTier: "Normal",
+    refundOnFirstOrder: true,
+    limitMeals: false,
+  },
+weeklyMenu: {
+  mini: [...menuData.mini],
+  normal: [...menuData.normal],
+  deluxe: [...menuData.deluxe],
+},
+};
+
+const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+const mealTabs = [
+  { id: "breakfast", label: "Breakfast", icon: "☀️" },
+  { id: "lunch", label: "Lunch", icon: "🍽️" },
+  { id: "dinner", label: "Dinner", icon: "🌙" },
+];
+
+
+
+
+
+
+
+
+
+
 
 const mealStatuses = [
   {
@@ -108,9 +150,9 @@ const mealStatuses = [
 
 function SectionLabel({ children }) {
   return (
-    <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 flex items-center justify-between">
+    <div className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 flex items-center justify-between">
       {children}
-    </p>
+    </div>
   );
 }
 
@@ -158,8 +200,7 @@ function IconBtn({ title, icon, danger = false, onClick }) {
 }
 
 // ─── Meal Types ───────────────────────────────────────────────────────────────
-function MealTypesCard() {
-  const [meals, setMeals] = useState(initialMealTypes);
+function MealTypesCard({ meals, setConfig }) {
   return (
     <Card className="p-6 flex flex-col h-full">
       <SectionLabel>
@@ -184,7 +225,12 @@ function MealTypesCard() {
                 title="Delete"
                 icon="🗑️"
                 danger
-                onClick={() => setMeals(meals.filter((x) => x.id !== m.id))}
+                onClick={() =>
+  setConfig((prev) => ({
+    ...prev,
+    mealTypes: prev.mealTypes.filter((x) => x.id !== m.id),
+  }))
+}
               />
             </div>
           </div>
@@ -201,8 +247,7 @@ function MealTypesCard() {
 }
 
 // ─── Service Zones ────────────────────────────────────────────────────────────
-function ServiceZonesCard() {
-  const [hubs, setHubs] = useState(initialHubs);
+function ServiceZonesCard({ hubs, setConfig }) {
   return (
     <Card className="p-6 flex flex-col h-full">
       <SectionLabel>
@@ -223,16 +268,23 @@ function ServiceZonesCard() {
             >
               📍
             </span>
-            <span className="text-[11px] font-medium text-gray-600 truncate flex-1">
-              {hub}
-            </span>
+           <span className="text-[11px] font-medium text-gray-600 truncate flex-1">
+  {typeof hub === "string"
+    ? hub
+    : `${hub.address}, ${hub.city}, ${hub.state} - ${hub.pincode}`}
+</span>
             <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <IconBtn title="Edit" icon="✏️" />
               <IconBtn
                 title="Delete"
                 icon="🗑️"
                 danger
-                onClick={() => setHubs(hubs.filter((_, j) => j !== i))}
+                onClick={() =>
+  setConfig((prev) => ({
+    ...prev,
+    zones: prev.zones.filter((_, j) => j !== i),
+  }))
+}
               />
             </div>
           </div>
@@ -247,74 +299,133 @@ function ServiceZonesCard() {
   );
 }
 
+
+
 // ─── Service Windows ──────────────────────────────────────────────────────────
-function ServiceWindowsCard() {
-  const [cutoffEnabled, setCutoffEnabled] = useState(true);
-  const [cutoffHours, setCutoffHours] = useState(5);
+function ServiceWindowsCard({ serviceWindows, setConfig }) {
+  const { lunch, dinner, autoCutoffEnabled, cutoffHours } = serviceWindows;
+
+  const updateWindow = (meal, field, value) => {
+    setConfig((prev) => ({
+      ...prev,
+      serviceWindows: {
+        ...prev.serviceWindows,
+        [meal]: {
+          ...prev.serviceWindows[meal],
+          [field]: value,
+        },
+      },
+    }));
+  };
+
+  const toggleCutoff = () => {
+    setConfig((prev) => ({
+      ...prev,
+      serviceWindows: {
+        ...prev.serviceWindows,
+        autoCutoffEnabled: !prev.serviceWindows.autoCutoffEnabled,
+      },
+    }));
+  };
+
+  const updateCutoffHours = (value) => {
+    setConfig((prev) => ({
+      ...prev,
+      serviceWindows: {
+        ...prev.serviceWindows,
+        cutoffHours: Number(value),
+      },
+    }));
+  };
+
   return (
     <Card className="p-6 flex flex-col h-full">
       <SectionLabel>
         <span>Service Windows &amp; Logistics</span>
         <span className="text-gray-300 text-sm">⏱</span>
       </SectionLabel>
+
       <div className="space-y-4 flex-1">
-        {/* Lunch */}
         <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
           <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-3">
             Lunch Delivery
           </p>
+
           <div className="flex gap-3">
-            {[
-              { label: "Start Time", val: "12:00" },
-              { label: "End Time", val: "14:30" },
-            ].map((t) => (
-              <div key={t.label} className="flex-1 space-y-1">
-                <label className="text-[8px] uppercase tracking-tighter text-gray-400">
-                  {t.label}
-                </label>
-                <input
-                  type="time"
-                  defaultValue={t.val}
-                  className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
-                />
-              </div>
-            ))}
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                Start Time
+              </label>
+              <input
+                type="time"
+                value={lunch.startTime}
+                onChange={(e) =>
+                  updateWindow("lunch", "startTime", e.target.value)
+                }
+                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+              />
+            </div>
+
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                End Time
+              </label>
+              <input
+                type="time"
+                value={lunch.endTime}
+                onChange={(e) =>
+                  updateWindow("lunch", "endTime", e.target.value)
+                }
+                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+              />
+            </div>
           </div>
         </div>
-        {/* Dinner */}
+
         <div className="p-4 bg-violet-50 rounded-xl border border-violet-100">
           <p className="text-[9px] font-black text-violet-500 uppercase tracking-widest mb-3">
             Dinner Delivery
           </p>
+
           <div className="flex gap-3">
-            {[
-              { label: "Start Time", val: "19:30" },
-              { label: "End Time", val: "21:30" },
-            ].map((t) => (
-              <div key={t.label} className="flex-1 space-y-1">
-                <label className="text-[8px] uppercase tracking-tighter text-gray-400">
-                  {t.label}
-                </label>
-                <input
-                  type="time"
-                  defaultValue={t.val}
-                  className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
-                />
-              </div>
-            ))}
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                Start Time
+              </label>
+              <input
+                type="time"
+                value={dinner.startTime}
+                onChange={(e) =>
+                  updateWindow("dinner", "startTime", e.target.value)
+                }
+                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+              />
+            </div>
+
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                End Time
+              </label>
+              <input
+                type="time"
+                value={dinner.endTime}
+                onChange={(e) =>
+                  updateWindow("dinner", "endTime", e.target.value)
+                }
+                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+              />
+            </div>
           </div>
         </div>
-        {/* Auto cutoff */}
+
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest">
               Global Auto-Cutoff
             </p>
-            <Toggle
-              active={cutoffEnabled}
-              onToggle={() => setCutoffEnabled(!cutoffEnabled)}
-            />
+            <Toggle active={autoCutoffEnabled} onToggle={toggleCutoff} />
           </div>
+
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[10px] font-bold text-gray-700 uppercase">
@@ -327,12 +438,13 @@ function ServiceWindowsCard() {
             <input
               type="number"
               value={cutoffHours}
-              onChange={(e) => setCutoffHours(Number(e.target.value))}
+              onChange={(e) => updateCutoffHours(e.target.value)}
               className="bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 font-bold w-16 text-center focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
             />
           </div>
         </div>
       </div>
+
       <div className="mt-4 p-4 bg-gray-50 border border-gray-100 rounded-xl">
         <p className="text-[10px] leading-relaxed text-gray-400 italic text-center">
           A 5-hour auto-cutoff is recommended to maximize user satisfaction and
@@ -344,10 +456,15 @@ function ServiceWindowsCard() {
 }
 
 // ─── Tiffin Catalog ───────────────────────────────────────────────────────────
-function TiffinCatalogCard() {
-  const [catalog, setCatalog] = useState(initialCatalog);
-  const update = (id, field, val) =>
-    setCatalog(catalog.map((c) => (c.id === id ? { ...c, [field]: val } : c)));
+function TiffinCatalogCard({ catalog, setConfig }) {
+  const update = (id, field, val) => {
+    setConfig((prev) => ({
+      ...prev,
+      pricingVariants: prev.pricingVariants.map((c) =>
+        c.id === id ? { ...c, [field]: val } : c
+      ),
+    }));
+  };
 
   return (
     <Card className="p-6">
@@ -414,11 +531,18 @@ function TiffinCatalogCard() {
 }
 
 // ─── Trial Offer ──────────────────────────────────────────────────────────────
-function TrialOfferCard() {
-  const [price, setPrice] = useState(49);
-  const [selectedTier, setSelectedTier] = useState("Normal");
-  const [refund, setRefund] = useState(true);
-  const [limitMeals, setLimitMeals] = useState(false);
+function TrialOfferCard({ trialOffer, setConfig }) {
+  const { price, selectedTier, refundOnFirstOrder, limitMeals } = trialOffer;
+
+const updateTrialOffer = (field, value) => {
+  setConfig((prev) => ({
+    ...prev,
+    trialOffer: {
+      ...prev.trialOffer,
+      [field]: value,
+    },
+  }));
+};
 
   return (
     <Card className="p-6">
@@ -439,7 +563,7 @@ function TrialOfferCard() {
           <input
             type="number"
             value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
+           onChange={(e) => updateTrialOffer("price", Number(e.target.value))}
             placeholder="Set price (e.g. 49)"
             className="w-full bg-white border border-blue-200 rounded-lg px-3 py-2 text-sm text-gray-700 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
           />
@@ -447,7 +571,7 @@ function TrialOfferCard() {
             {["Mini", "Normal", "Deluxe"].map((t) => (
               <button
                 key={t}
-                onClick={() => setSelectedTier(t)}
+              onClick={() => updateTrialOffer("selectedTier", t)}
                 className={`px-3 py-1 rounded-full text-[8px] font-black uppercase transition-all ${
                   selectedTier === t
                     ? "bg-blue-500 text-white border border-blue-500"
@@ -464,17 +588,18 @@ function TrialOfferCard() {
             Promotion Logic
           </p>
           {[
-            {
-              label: "Refund on 1st Order",
-              state: refund,
-              toggle: () => setRefund(!refund),
-            },
-            {
-              label: "Limit to Breakfast/Lunch",
-              state: limitMeals,
-              toggle: () => setLimitMeals(!limitMeals),
-            },
-          ].map((opt) => (
+  {
+    label: "Refund on 1st Order",
+    state: refundOnFirstOrder,
+    toggle: () =>
+      updateTrialOffer("refundOnFirstOrder", !refundOnFirstOrder),
+  },
+  {
+    label: "Limit to Breakfast/Lunch",
+    state: limitMeals,
+    toggle: () => updateTrialOffer("limitMeals", !limitMeals),
+  },
+].map((opt) => (
             <div
               key={opt.label}
               className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100"
@@ -492,14 +617,24 @@ function TrialOfferCard() {
 }
 
 // ─── Weekly Menu ──────────────────────────────────────────────────────────────
-function WeeklyMenuCard() {
-  const [activeDay, setActiveDay] = useState("WED");
-  const [activeMeal, setActiveMeal] = useState("lunch");
-  const [menus, setMenus] = useState(menuData);
+function WeeklyMenuCard({ weeklyMenu, setConfig }) {
+   const [activeDay, setActiveDay] = useState("WED");
+   const [activeMeal, setActiveMeal] = useState("lunch");
+const menus = {
+  mini: weeklyMenu?.mini || [],
+  normal: weeklyMenu?.normal || [],
+  deluxe: weeklyMenu?.deluxe || [],
+};
 
-  const removeItem = (tier, idx) =>
-    setMenus({ ...menus, [tier]: menus[tier].filter((_, i) => i !== idx) });
-
+  const removeItem = (tier, idx) => {
+  setConfig((prev) => ({
+    ...prev,
+    weeklyMenu: {
+      ...prev.weeklyMenu,
+      [tier]: prev.weeklyMenu[tier].filter((_, i) => i !== idx),
+    },
+  }));
+};
   const tierConfig = [
     {
       key: "mini",
@@ -776,12 +911,115 @@ function CancellationCard() {
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function VendorDashboard7() {
+
+  const [config, setConfig] = useState(defaultConfig);
+const [loading, setLoading] = useState(true);
+const [saving, setSaving] = useState(false);
+const [message, setMessage] = useState("");
+
+const handleSaveAll = async () => {
+  try {
+    setSaving(true);
+    setMessage("");
+
+    const res = await saveServiceConfig(config);
+
+setConfig({
+  ...defaultConfig,
+  ...res.data,
+  mealTypes: res.data?.mealTypes?.length
+    ? res.data.mealTypes
+    : defaultConfig.mealTypes,
+  zones: res.data?.zones?.length
+    ? res.data.zones
+    : defaultConfig.zones,
+  weeklyMenu: {
+    ...defaultConfig.weeklyMenu,
+    ...(res.data.weeklyMenu || {}),
+  },
+  serviceWindows: {
+    ...defaultConfig.serviceWindows,
+    ...(res.data.serviceWindows || {}),
+    lunch: {
+      ...defaultConfig.serviceWindows.lunch,
+      ...(res.data.serviceWindows?.lunch || {}),
+    },
+    dinner: {
+      ...defaultConfig.serviceWindows.dinner,
+      ...(res.data.serviceWindows?.dinner || {}),
+    },
+  },
+  trialOffer: {
+    ...defaultConfig.trialOffer,
+    ...(res.data.trialOffer || {}),
+  },
+});
+    setMessage("Saved successfully");
+  } catch (error) {
+    console.error(error);
+    setMessage(error.message);
+  } finally {
+    setSaving(false);
+  }
+};
+
+
+
   const navItems = [
     { label: "Finance", active: false },
     { label: "Order History", active: false },
     { label: "Services", active: true },
     { label: "Subscriber", active: false },
   ];
+  useEffect(() => {
+  const fetchConfig = async () => {
+    try {
+      setLoading(true);
+
+      const res = await getServiceConfig();
+
+      if (res.data) {
+     setConfig({
+  ...defaultConfig,
+  ...res.data,
+  mealTypes: res.data?.mealTypes?.length
+    ? res.data.mealTypes
+    : defaultConfig.mealTypes,
+  zones: res.data?.zones?.length
+    ? res.data.zones
+    : defaultConfig.zones,
+  weeklyMenu: {
+    ...defaultConfig.weeklyMenu,
+    ...(res.data.weeklyMenu || {}),
+  },
+  serviceWindows: {
+    ...defaultConfig.serviceWindows,
+    ...(res.data.serviceWindows || {}),
+    lunch: {
+      ...defaultConfig.serviceWindows.lunch,
+      ...(res.data.serviceWindows?.lunch || {}),
+    },
+    dinner: {
+      ...defaultConfig.serviceWindows.dinner,
+      ...(res.data.serviceWindows?.dinner || {}),
+    },
+  },
+  trialOffer: {
+    ...defaultConfig.trialOffer,
+    ...(res.data.trialOffer || {}),
+  },
+});
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchConfig();
+}, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -794,39 +1032,21 @@ export default function VendorDashboard7() {
         .uniform-card-height { height: 560px; }
       `}</style>
 
-      {/* Header */}
-      {/* <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-4 flex items-center justify-between gap-4">
-          <div className="shrink-0">
-            <div className="text-xl font-black tracking-tighter uppercase text-gray-900">AhaarMitra</div>
-            <div className="h-0.5 w-full bg-gradient-to-r from-blue-500 to-transparent rounded-full" />
-          </div>
-
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((n) => (
-              <a
-                key={n.label}
-                href="#"
-                className={`text-[11px] font-black uppercase tracking-widest transition-colors ${
-                  n.active
-                    ? "text-gray-900 border-b-2 border-blue-500 pb-0.5"
-                    : "text-gray-400 hover:text-gray-700"
-                }`}
-              >
-                {n.label}
-              </a>
-            ))}
-          </nav>
-
-          <a href="#" className="text-sm font-bold text-gray-400 hover:text-gray-700 transition-colors flex items-center gap-1.5 shrink-0">
-            <span className="text-base">⚙️</span>
-            <span className="hidden sm:inline">Settings</span>
-          </a>
-        </div>
-      </header> */}
+    
 
       {/* Main */}
       <main className="max-w-7xl mx-auto px-6 md:px-10 py-10 pt-24">
+        {loading && (
+  <div className="mb-4 text-sm font-semibold text-gray-500">
+    Loading service config...
+  </div>
+)}
+
+{message && (
+  <div className="mb-4 text-sm font-semibold text-blue-500">
+    {message}
+  </div>
+)}
         {/* Hero */}
         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
@@ -838,37 +1058,59 @@ export default function VendorDashboard7() {
               windows.
             </p>
           </div>
-          <button className="shrink-0 bg-blue-500 hover:bg-blue-600 text-white text-[10px] font-black py-3 px-8 rounded-xl transition-all uppercase tracking-widest shadow-md shadow-blue-200">
-            Save All Changes
-          </button>
+         <button
+  onClick={handleSaveAll}
+  disabled={saving}
+  className="shrink-0 bg-blue-500 hover:bg-blue-600 text-white text-[10px] font-black py-3 px-8 rounded-xl transition-all uppercase tracking-widest shadow-md shadow-blue-200 disabled:opacity-50"
+>
+  {saving ? "Saving..." : "Save All Changes"}
+</button>
         </div>
 
         {/* Top 3 cards - equal height */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
           <div className="uniform-card-height flex flex-col">
-            <MealTypesCard />
+           <MealTypesCard
+  meals={config.mealTypes}
+  setConfig={setConfig}
+/>
           </div>
           <div className="uniform-card-height flex flex-col">
-            <ServiceZonesCard />
+           <ServiceZonesCard
+  hubs={config.zones}
+  setConfig={setConfig}
+/>
           </div>
           <div className="uniform-card-height flex flex-col">
-            <ServiceWindowsCard />
+           <ServiceWindowsCard
+  serviceWindows={config.serviceWindows}
+  setConfig={setConfig}
+/>
           </div>
         </div>
 
         {/* Catalog + Trial */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-5">
           <div className="md:col-span-7">
-            <TiffinCatalogCard />
+           <TiffinCatalogCard
+  catalog={config.pricingVariants}
+  setConfig={setConfig}
+/>
           </div>
           <div className="md:col-span-5">
-            <TrialOfferCard />
+           <TrialOfferCard
+  trialOffer={config.trialOffer}
+  setConfig={setConfig}
+/>
           </div>
         </div>
 
         {/* Weekly Menu */}
         <div className="mb-5">
-          <WeeklyMenuCard />
+         <WeeklyMenuCard
+  weeklyMenu={config.weeklyMenu}
+  setConfig={setConfig}
+/>
         </div>
 
         {/* Cancellation */}
@@ -877,21 +1119,7 @@ export default function VendorDashboard7() {
         </div>
       </main>
 
-      {/* Footer */}
-      {/* <footer className="w-full py-8 px-6 md:px-10 border-t border-gray-100 bg-white mt-16">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-8">
-            {["Privacy Policy", "Terms of Service", "Support Portal"].map((l) => (
-              <a key={l} href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-[10px] font-bold uppercase tracking-widest">
-                {l}
-              </a>
-            ))}
-          </div>
-          <p className="text-gray-300 text-[10px] font-medium uppercase tracking-[0.2em]">
-            © 2024 AhaarMitra Analytics. Precision in Service Management.
-          </p>
-        </div>
-      </footer> */}
+     
     </div>
   );
 }
