@@ -123,8 +123,8 @@ const handleContinue = () => {
 };
   return (
     <>
-      <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+      {/* <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" /> */}
 
       <style>{`
         @keyframes fadeUp {
@@ -152,7 +152,6 @@ const handleContinue = () => {
           font-size: 0.875rem;
           outline: none;
           transition: border-color .2s, box-shadow .2s, background .2s;
-          font-family: 'Manrope', sans-serif;
         }
         .fi::placeholder { color: #9ca3af; font-weight: 500; }
         .fi:focus {
@@ -194,7 +193,7 @@ const handleContinue = () => {
 
       <div
         className="min-h-screen flex flex-col bg-stone-50 bg-dot text-stone-900"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
+        // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         <div className="flex-grow flex flex-col items-center py-12 lg:py-16 px-6">
           <div className="max-w-6xl w-full text-center mb-12">

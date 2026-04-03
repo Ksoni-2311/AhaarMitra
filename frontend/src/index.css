@@ -1,1 +1,15 @@
 @import "tailwindcss";
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+
+/* Hide scrollbar for all browsers */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  -ms-overflow-style: none;  /* IE, Edge */
+  scrollbar-width: none;     /* Firefox */
+}

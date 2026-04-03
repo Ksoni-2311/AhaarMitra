@@ -1,5 +1,4 @@
 import { useState } from "react";
-import VendorNavBar from "../components/VendorNavBar";
 
 // Google Fonts & Material Symbols loaded via index.html or global CSS
 // Add to your index.html:
@@ -608,7 +607,6 @@ export default function VendorDashboard7() {
   return (
     <div
       className="antialiased overflow-x-hidden min-h-screen bg-gray-50 pt-12"
-      style={{ fontFamily: "'Manrope', sans-serif" }}
     >
       {/* Background dot grid */}
       <div
