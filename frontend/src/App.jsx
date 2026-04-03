@@ -66,7 +66,7 @@ const App = () => {
   const timer = setTimeout(() => {
     setIsLoading(false);
     setIsAuthReady(true);
-  }, 2720);
+  }, 1);
 
   return () => clearTimeout(timer);
 }, []);
