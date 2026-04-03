@@ -22,6 +22,7 @@ import AhaarMitraSubscriptions from "./Userpages/AhaarMitraSubscriptions16.jsx";
 import AhaarMitraSupport from "./Userpages/AhaarMitraSupport17.jsx";
 import CustomerAccount from "./Userpages/CustomerAccount18.jsx";
 import MealTypePopUp from "./Userpages/MealTypePopUp19.jsx";
+import AddressPopUp20 from "./Userpages/AddressPopUp20.jsx";
 
 // Vendor Pages
 import RegisterProvider1 from "./VendorPages/RegisterProvider1.jsx";
@@ -115,6 +116,7 @@ const App = () => {
               <Route path="/17" element={<AhaarMitraSupport />} />
               <Route path="/18" element={<CustomerAccount />} />
               <Route path="/19" element={<MealTypePopUp />} />
+              <Route path="/20" element={<AddressPopUp20 />} />
 
               <Route
                 path="/subscription"
