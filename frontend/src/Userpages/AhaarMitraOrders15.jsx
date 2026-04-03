@@ -1,500 +1,685 @@
 import { useState } from "react";
 
-// Inject Poppins + Material Symbols
-const GlobalStyles = () => (
-  <>
-    {/* <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
-      rel="stylesheet"
-    /> */}
-    <style>{`
-      // * { font-family: 'Poppins', sans-serif; }
-      .material-symbols-outlined {
-        font-weight: normal;
-        font-style: normal;
-        font-size: 24px;
-        line-height: 1;
-        letter-spacing: normal;
-        text-transform: none;
-        display: inline-block;
-        white-space: nowrap;
-        word-wrap: normal;
-        direction: ltr;
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        user-select: none;
-      }
-      .order-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-      .order-card:hover { border-color: rgba(0,0,0,0.15) !important; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
-      ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: #e5e5e5; border-radius: 10px; }
-      ::-webkit-scrollbar-thumb:hover { background: #d4d4d4; }
-      .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-      .calendar-day {
-        aspect-ratio: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        font-weight: 700;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-family: 'Poppins', sans-serif;
-      }
-      .day-completed { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.3); }
-      .day-upcoming { background: rgba(0,0,0,0.03); color: #a3a3a3; border: 1px solid rgba(0,0,0,0.08); }
-      .day-skipped { background: rgba(239,68,68,0.06); color: #ef4444; border: 1px dashed rgba(239,68,68,0.35); text-decoration: line-through; }
-      .day-active { border: 1.5px solid #111; color: #111; background: rgba(0,0,0,0.07); }
-      .summary-panel { background: linear-gradient(145deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.01) 100%); }
-      .glass-card { background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0,0,0,0.07); }
-    `}</style>
-  </>
-);
+const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+const mealTabs = [
+  { id: "breakfast", label: "Breakfast", icon: "☀️" },
+  { id: "lunch", label: "Lunch", icon: "🍽️" },
+  { id: "dinner", label: "Dinner", icon: "🌙" },
+];
 
-const Icon = ({ name, className = "" }) => (
-  <span className={`material-symbols-outlined ${className}`}>{name}</span>
-);
+const initialMealTypes = [
+  { id: 1, icon: "☀️", label: "Breakfast", color: "text-amber-500" },
+  { id: 2, icon: "🍽️", label: "Lunch", color: "text-blue-500" },
+  { id: 3, icon: "🌙", label: "Dinner", color: "text-violet-500" },
+  { id: 4, icon: "🥐", label: "Snacks", color: "text-emerald-500" },
+];
 
-// --- Navbar ---
-const Navbar = () => (
-  <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-black/8 shadow-sm h-20 px-6 md:px-12 flex justify-between items-center">
-    <div className="text-2xl font-black text-gray-900 tracking-tighter">AhaarMitra</div>
-    <div className="hidden md:flex items-center gap-8 font-bold tracking-tight">
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Explore</a>
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Subscriptions</a>
-      <a className="text-gray-900 border-b-2 border-gray-900 pb-1" href="#">Orders</a>
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Support</a>
+const initialHubs = [
+  "H-Block, Sector 63, Noida, UP",
+  "Block C, Sector 18, Noida, UP",
+  "Sector 62, Electronic City, Noida",
+  "Indirapuram, Habitat Centre, GZB",
+  "Phase 2, Noida SEZ Main Road",
+  "Crossing Republik, NH-24, GZB",
+  "Sector 76, Metro Station Hub, Noida",
+  "Sector 44, Golf Course Road, Noida",
+  "A-Block, Sector 12, Noida, UP",
+  "Gaur City Mall, Greater Noida West",
+];
+
+const initialCatalog = [
+  { id: 1, name: "Mini Thali", desc: "2 Roti, 1 Sabzi (Primary), Rice", daily: 80, weekly: 500, monthly: 1800 },
+  { id: 2, name: "Normal Thali", desc: "3 Roti, 2 Sabzis (Both), Dal, Rice", daily: 120, weekly: 750, monthly: 2800 },
+  { id: 3, name: "Deluxe Thali", desc: "Roti, Paneer, Veg, Dal, Curd, Rice", daily: 180, weekly: 1100, monthly: 4000 },
+];
+
+const menuData = {
+  mini: ["Paneer Butter Masala", "Phulka (2 pcs)", "Steamed Rice"],
+  normal: ["Paneer Butter Masala", "Yellow Dal Tadka", "Phulka (3 pcs)", "Jeera Rice"],
+  deluxe: ["Paneer Butter Masala", "Mixed Vegetable Dry", "Butter Naan (2 pcs)", "Sweet Lassi / Curd"],
+};
+
+const mealStatuses = [
+  { id: "breakfast", label: "Breakfast", icon: "☀️", iconColor: "text-amber-500", time: "07:00 – 09:30", active: true },
+  { id: "lunch", label: "Lunch", icon: "🍽️", iconColor: "text-blue-500", time: "Manual cancellation applied", active: false },
+  { id: "dinner", label: "Dinner", icon: "🌙", iconColor: "text-violet-500", time: "19:30 – 21:30", active: true },
+  { id: "snacks", label: "Snacks", icon: "🥐", iconColor: "text-emerald-500", time: "16:30 – 18:00", active: true },
+];
+
+function SectionLabel({ children }) {
+  return (
+    <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 flex items-center justify-between">
+      {children}
+    </p>
+  );
+}
+
+function Card({ children, className = "" }) {
+  return (
+    <div className={`bg-white border border-gray-100 rounded-2xl shadow-sm ${className}`}>
+      {children}
     </div>
-    <div className="flex items-center gap-4 md:gap-6">
-      <div className="relative hidden sm:flex items-center bg-gray-100 rounded-full px-4 py-2 border border-gray-200">
-        <Icon name="search" className="text-gray-400 mr-2 text-xl" />
-        <input
-          className="bg-transparent border-none outline-none focus:ring-0 text-sm text-gray-700 w-40 lg:w-48 placeholder:text-gray-400"
-          placeholder="Search..."
-          type="text"
-        />
+  );
+}
+
+function Toggle({ active, onToggle, danger = false }) {
+  return (
+    <button
+      onClick={onToggle}
+      className={`w-10 h-5 rounded-full relative transition-all duration-200 focus:outline-none flex-shrink-0 ${
+        active ? (danger ? "bg-rose-500" : "bg-blue-500") : "bg-gray-200"
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-200 ${
+          active ? "right-0.5" : "left-0.5"
+        }`}
+      />
+    </button>
+  );
+}
+
+function IconBtn({ title, icon, danger = false, onClick }) {
+  return (
+    <button
+      title={title}
+      onClick={onClick}
+      className={`text-xs p-1.5 rounded-lg transition-all ${
+        danger
+          ? "text-gray-300 hover:text-rose-500 hover:bg-rose-50"
+          : "text-gray-300 hover:text-gray-600 hover:bg-gray-100"
+      }`}
+    >
+      {icon}
+    </button>
+  );
+}
+
+// ─── Meal Types ───────────────────────────────────────────────────────────────
+function MealTypesCard() {
+  const [meals, setMeals] = useState(initialMealTypes);
+  return (
+    <Card className="p-6 flex flex-col h-full">
+      <SectionLabel>
+        <span>Meal Types &amp; Frequency</span>
+        <span className="text-gray-300">•••</span>
+      </SectionLabel>
+      <div className="flex flex-col gap-3 flex-1">
+        {meals.map((m) => (
+          <div
+            key={m.id}
+            className="group flex items-center justify-between px-4 py-3.5 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-100 transition-all"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{m.icon}</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-700">{m.label}</span>
+            </div>
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <IconBtn title="Edit" icon="✏️" />
+              <IconBtn title="Delete" icon="🗑️" danger onClick={() => setMeals(meals.filter((x) => x.id !== m.id))} />
+            </div>
+          </div>
+        ))}
       </div>
-      <button className="text-gray-400 hover:text-gray-700 transition-all duration-300">
-        <Icon name="notifications" />
+      <button className="mt-4 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+        <span className="text-base">+</span> Add New Service
       </button>
-      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
-        <img
-          alt="User Profile"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y"
-        />
-      </div>
-    </div>
-  </nav>
-);
+    </Card>
+  );
+}
 
-// --- Calendar ---
-const calendarDays1 = [
-  { day: 20, type: "day-completed" }, { day: 21, type: "day-completed" },
-  { day: 22, type: "day-completed" }, { day: 23, type: "day-completed" },
-  { day: 24, type: "day-completed" }, { day: 25, type: "day-skipped" },
-  { day: 26, type: "day-skipped" }, { day: 27, type: "day-completed" },
-  { day: 28, type: "day-active" }, { day: 29, type: "day-upcoming" },
-  { day: 30, type: "day-upcoming" }, { day: 31, type: "day-upcoming" },
-  { day: 1, type: "day-upcoming opacity-30" }, { day: 2, type: "day-upcoming opacity-30" },
-];
-
-const calendarDays2 = [
-  { day: 20, type: "day-completed" }, { day: 21, type: "day-completed" },
-  { day: 22, type: "day-completed" }, { day: 23, type: "day-completed" },
-  { day: 24, type: "day-completed" }, { day: 25, type: "day-completed" },
-  { day: 26, type: "day-completed" }, { day: 27, type: "day-completed" },
-  { day: 28, type: "day-active" }, { day: 29, type: "day-upcoming" },
-  { day: 30, type: "day-upcoming" }, { day: 31, type: "day-upcoming" },
-  { day: 1, type: "day-upcoming opacity-30" }, { day: 2, type: "day-upcoming opacity-30" },
-];
-
-const CalendarWidget = ({ days, mealsLeft, daysLeft, daysLeftColor, summaryItems }) => (
-  <div className="w-full lg:w-80 shrink-0">
-    <div className="flex flex-col mb-4">
-      <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-700 mb-2">
-        Schedule: May 2024 - Aug 2024
-      </h4>
-      <div className="flex gap-2">
-        <button className="px-3 py-1.5 rounded-lg bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-gray-700 transition-all">
-          Start: May 1
-        </button>
-        <button className="px-3 py-1.5 rounded-lg bg-gray-100 border border-gray-200 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-gray-800 hover:bg-gray-200 transition-all">
-          Ends: Aug 31
-        </button>
-      </div>
-    </div>
-    <div className="p-4 bg-gray-50 rounded-2xl border border-gray-200">
-      <div className="flex justify-between items-center mb-4 px-1">
-        <span className="text-xs font-bold text-gray-700">May 2024</span>
-        <div className="flex gap-2">
-          <Icon name="chevron_left" className="text-lg text-gray-300 cursor-pointer hover:text-gray-600" />
-          <Icon name="chevron_right" className="text-lg text-gray-300 cursor-pointer hover:text-gray-600" />
-        </div>
-      </div>
-      <div className="calendar-grid mb-1">
-        {["M","T","W","T","F","S","S"].map((d,i) => (
-          <div key={i} className="text-[9px] font-black text-gray-300 text-center uppercase">{d}</div>
-        ))}
-      </div>
-      <div className="calendar-grid">
-        {days.map((d, i) => (
-          <div key={i} className={`calendar-day ${d.type}`}>{d.day}</div>
-        ))}
-      </div>
-      <div className="mt-6 pt-4 border-t border-gray-200 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">Meals Remaining</span>
-            <span className="text-xl font-black text-gray-900">{mealsLeft}</span>
-          </div>
-          <div className="flex flex-col items-end">
-            <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">Days Left</span>
-            <span className={`text-xl font-black ${daysLeftColor}`}>{daysLeft}</span>
-          </div>
-        </div>
-        <div className="summary-panel rounded-xl border border-gray-200 p-3 space-y-3">
-          {summaryItems.map((item, i) => (
-            <div key={i} className={`flex items-center gap-3 ${item.opacity ? "opacity-30" : ""}`}>
-              <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
-                <Icon name={item.icon} className={`text-base ${item.iconColor}`} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-black text-gray-700">{item.label}</span>
-                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">{item.sub}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// --- Delivery Slot Card ---
-const SlotCard = ({ slot, time, icon, menu, disabled }) => (
-  <div className={`bg-gray-50 rounded-xl p-5 border border-gray-200 relative group overflow-hidden ${disabled ? "opacity-50 grayscale" : ""}`}>
-    <div className="flex justify-between items-start mb-4">
-      <div>
-        <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{slot}</div>
-        <div className="text-xl font-black text-gray-900">{time.main} <span className="text-xs font-bold text-gray-400 uppercase">{time.ampm}</span></div>
-      </div>
-      <Icon name={icon} className="text-gray-300 text-2xl" />
-    </div>
-    <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Menu Preview</div>
-    <div className="text-sm font-bold text-gray-700 leading-snug">{menu}</div>
-    <div className="mt-4 pt-4 border-t border-gray-200 flex gap-2">
-      {disabled ? (
-        <button className="w-full py-2 rounded-lg bg-gray-100 text-gray-400 text-[9px] font-black uppercase tracking-widest cursor-not-allowed border border-gray-200">
-          Slot Inactive
-        </button>
-      ) : (
-        <>
-          <button className="flex-1 py-2 rounded-lg bg-red-50 text-red-500 text-[9px] font-black uppercase tracking-widest hover:bg-red-100 transition-all flex items-center justify-center gap-1.5 border border-red-200">
-            <Icon name="block" className="text-sm" /> Skip
-          </button>
-          <button className="px-3 py-2 rounded-lg bg-gray-100 text-gray-500 text-[9px] font-black uppercase tracking-widest hover:bg-gray-200 transition-all border border-gray-200">
-            <Icon name="edit" className="text-sm" />
-          </button>
-        </>
-      )}
-    </div>
-  </div>
-);
-
-// --- Active Subscription Card ---
-const SubscriptionCard = ({ vendor, id, badge, badgeColor, planLabel, iconName, iconColor, slots, summaryProps }) => (
-  <div className="order-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-    <div className="p-6 md:p-10 flex flex-col lg:flex-row gap-8 lg:gap-12">
-      <div className="flex-1 flex flex-col">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center">
-            <Icon name={iconName} className={`text-3xl ${iconColor}`} />
-          </div>
-          <div>
-            <h3 className="font-black text-2xl tracking-tight text-gray-900">{vendor}</h3>
-            <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">ID: {id}</div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-0.5 border border-gray-200 rounded">
-                {planLabel}
-              </span>
-              <span className={`text-[10px] font-black uppercase tracking-widest ${badgeColor}`}>{badge}</span>
+// ─── Service Zones ────────────────────────────────────────────────────────────
+function ServiceZonesCard() {
+  const [hubs, setHubs] = useState(initialHubs);
+  return (
+    <Card className="p-6 flex flex-col h-full">
+      <SectionLabel>
+        <span>Service Reach &amp; Zones</span>
+        <span className="text-gray-300 text-sm">📍</span>
+      </SectionLabel>
+      <p className="text-[8px] font-black uppercase tracking-widest text-gray-400 mb-2">Configured Service Hubs</p>
+      <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scroll">
+        {hubs.map((hub, i) => (
+          <div
+            key={i}
+            className="group flex items-center gap-2.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all"
+          >
+            <span className={`text-sm ${i === 0 ? "text-blue-500" : "text-gray-300"}`}>📍</span>
+            <span className="text-[11px] font-medium text-gray-600 truncate flex-1">{hub}</span>
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <IconBtn title="Edit" icon="✏️" />
+              <IconBtn title="Delete" icon="🗑️" danger onClick={() => setHubs(hubs.filter((_, j) => j !== i))} />
             </div>
           </div>
+        ))}
+      </div>
+      <button className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+        <span className="text-sm">📍+</span> Add Hub Address
+      </button>
+    </Card>
+  );
+}
+
+// ─── Service Windows ──────────────────────────────────────────────────────────
+function ServiceWindowsCard() {
+  const [cutoffEnabled, setCutoffEnabled] = useState(true);
+  const [cutoffHours, setCutoffHours] = useState(5);
+  return (
+    <Card className="p-6 flex flex-col h-full">
+      <SectionLabel>
+        <span>Service Windows &amp; Logistics</span>
+        <span className="text-gray-300 text-sm">⏱</span>
+      </SectionLabel>
+      <div className="space-y-4 flex-1">
+        {/* Lunch */}
+        <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+          <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-3">Lunch Delivery</p>
+          <div className="flex gap-3">
+            {[{ label: "Start Time", val: "12:00" }, { label: "End Time", val: "14:30" }].map((t) => (
+              <div key={t.label} className="flex-1 space-y-1">
+                <label className="text-[8px] uppercase tracking-tighter text-gray-400">{t.label}</label>
+                <input
+                  type="time"
+                  defaultValue={t.val}
+                  className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          {slots.map((slot, i) => (
-            <SlotCard key={i} {...slot} />
-          ))}
+        {/* Dinner */}
+        <div className="p-4 bg-violet-50 rounded-xl border border-violet-100">
+          <p className="text-[9px] font-black text-violet-500 uppercase tracking-widest mb-3">Dinner Delivery</p>
+          <div className="flex gap-3">
+            {[{ label: "Start Time", val: "19:30" }, { label: "End Time", val: "21:30" }].map((t) => (
+              <div key={t.label} className="flex-1 space-y-1">
+                <label className="text-[8px] uppercase tracking-tighter text-gray-400">{t.label}</label>
+                <input
+                  type="time"
+                  defaultValue={t.val}
+                  className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex">
-          <button className="w-full py-4 bg-gray-50 border border-gray-200 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-gray-100 transition-colors flex items-center justify-center gap-3 text-gray-600">
-            <Icon name="chat" className="text-xl" /> Contact Vendor
-          </button>
+        {/* Auto cutoff */}
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest">Global Auto-Cutoff</p>
+            <Toggle active={cutoffEnabled} onToggle={() => setCutoffEnabled(!cutoffEnabled)} />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[10px] font-bold text-gray-700 uppercase">Hours Before Delivery Start</p>
+              <p className="text-[8px] text-gray-400 uppercase tracking-tighter mt-0.5">Applies to all windows</p>
+            </div>
+            <input
+              type="number"
+              value={cutoffHours}
+              onChange={(e) => setCutoffHours(Number(e.target.value))}
+              className="bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 font-bold w-16 text-center focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
+            />
+          </div>
         </div>
       </div>
-      <CalendarWidget {...summaryProps} />
-    </div>
-  </div>
-);
+      <div className="mt-4 p-4 bg-gray-50 border border-gray-100 rounded-xl">
+        <p className="text-[10px] leading-relaxed text-gray-400 italic text-center">
+          A 5-hour auto-cutoff is recommended to maximize user satisfaction and optimize logistics flow.
+        </p>
+      </div>
+    </Card>
+  );
+}
 
-// --- Subscription 1: Shree Tiffin ---
-const sub1 = {
-  vendor: "Shree Tiffin Services",
-  id: "AM-2024-STS-0182",
-  badge: "Active",
-  badgeColor: "text-green-600",
-  planLabel: "Standard Veg Plan",
-  iconName: "lunch_dining",
-  iconColor: "text-amber-500",
-  slots: [
-    { slot: "Lunch Slot", time: { main: "Today, 12:45", ampm: "PM" }, icon: "light_mode", menu: "Paneer Bhurji, 4x Roti, Dal Tadka & Salad" },
-    { slot: "Dinner Slot", time: { main: "Today, 08:30", ampm: "PM" }, icon: "dark_mode", menu: "Mixed Veg Curry, 4x Roti, Curd & Pickle" },
-  ],
-  summaryProps: {
-    days: calendarDays1,
-    mealsLeft: 42,
-    daysLeft: 21,
-    daysLeftColor: "text-amber-500",
-    summaryItems: [
-      { icon: "light_mode", iconColor: "text-amber-500", label: "21 Lunch Meals Left", sub: "Until Jun 18" },
-      { icon: "dark_mode", iconColor: "text-blue-400", label: "21 Dinner Meals Left", sub: "Until Jun 18" },
-    ],
-  },
-};
-
-// --- Subscription 2: Morning Brews ---
-const sub2 = {
-  vendor: "Morning Brews",
-  id: "AM-2024-MBR-9941",
-  badge: "Next delivery soon",
-  badgeColor: "text-amber-500",
-  planLabel: "Daily Espresso Bundle",
-  iconName: "local_cafe",
-  iconColor: "text-blue-500",
-  slots: [
-    { slot: "Morning Slot", time: { main: "Today, 08:15", ampm: "AM" }, icon: "coffee", menu: "Double Shot Latte & Oat Cookie" },
-    { slot: "Evening Slot", time: { main: "Today, 04:30", ampm: "PM" }, icon: "bakery_dining", menu: "N/A - Weekly Plan Only", disabled: true },
-  ],
-  summaryProps: {
-    days: calendarDays2,
-    mealsLeft: 12,
-    daysLeft: 12,
-    daysLeftColor: "text-blue-500",
-    summaryItems: [
-      { icon: "coffee", iconColor: "text-blue-400", label: "12 Morning Meals Left", sub: "Until Jun 09" },
-      { icon: "bakery_dining", iconColor: "text-gray-400", label: "0 Evening Meals Left", sub: "Not Subscribed", opacity: true },
-    ],
-  },
-};
-
-// --- Past Orders Table ---
-const pastOrders = [
-  {
-    date: "May 24, 2024", orderId: "AM-ORD-2024-5512",
-    vendorIcon: "restaurant", vendor: "Tadka House", items: "Paneer Tikka, Garlic Naan x2",
-    mealIcon: "dark_mode", meal: "Dinner",
-    statusIcon: "check_circle", statusColor: "text-green-600", status: "Delivered",
-    time: "08:42 PM",
-    stars: 4,
-  },
-  {
-    date: "May 23, 2024", orderId: "AM-ORD-2024-5489",
-    vendorIcon: "set_meal", vendor: "Ocean Delights", items: "Grilled Sea Bass, Asparagus",
-    mealIcon: "light_mode", meal: "Lunch",
-    statusIcon: "cancel", statusColor: "text-red-400", status: "Cancelled",
-    time: "01:15 PM",
-    stars: 0,
-  },
-];
-
-const Stars = ({ count }) => (
-  <div className="flex items-center gap-0.5">
-    {[1,2,3,4,5].map(n => (
-      <Icon key={n} name="star" className={`text-sm ${n <= count ? "text-amber-400" : "text-gray-200"}`} />
-    ))}
-  </div>
-);
-
-const PastOrdersSection = () => {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const filters = ["All", "Delivered", "Cancelled", "Skipped"];
-  const filterColors = { Delivered: "text-green-600 border-green-500", Cancelled: "text-red-500 border-red-500", Skipped: "text-gray-500 border-gray-400" };
+// ─── Tiffin Catalog ───────────────────────────────────────────────────────────
+function TiffinCatalogCard() {
+  const [catalog, setCatalog] = useState(initialCatalog);
+  const update = (id, field, val) =>
+    setCatalog(catalog.map((c) => (c.id === id ? { ...c, [field]: val } : c)));
 
   return (
-    <section>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <h2 className="text-xl font-bold text-gray-900">Past Orders History</h2>
-        <div className="flex items-center gap-6">
-          <div className="flex items-center bg-gray-100 px-2 py-1 rounded-full border border-gray-200">
-            {filters.map((f) => (
+    <Card className="p-6">
+      <SectionLabel>
+        <span>Tiffin Catalog &amp; Pricing</span>
+        <div className="flex gap-3">
+          <span className="text-gray-300 cursor-pointer hover:text-gray-600">🔍</span>
+          <span className="text-gray-300 cursor-pointer hover:text-gray-600">≡</span>
+        </div>
+      </SectionLabel>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+              <th className="pb-3 text-left">Tiffin Variant</th>
+              <th className="pb-3 text-left">Daily (₹)</th>
+              <th className="pb-3 text-left">Weekly (₹)</th>
+              <th className="pb-3 text-left">Monthly (₹)</th>
+              <th className="pb-3" />
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-50">
+            {catalog.map((item) => (
+              <tr key={item.id}>
+                <td className="py-3.5">
+                  <p className="text-xs font-bold text-gray-800">{item.name}</p>
+                  <p className="text-[9px] text-gray-400 uppercase tracking-tight mt-0.5">{item.desc}</p>
+                </td>
+                {["daily", "weekly", "monthly"].map((f) => (
+                  <td className="py-3.5 pr-4" key={f}>
+                    <input
+                      type="number"
+                      value={item[f]}
+                      onChange={(e) => update(item.id, f, Number(e.target.value))}
+                      className="w-20 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                    />
+                  </td>
+                ))}
+                <td className="py-3.5 text-right">
+                  <button className="text-gray-300 hover:text-gray-600 text-sm transition-colors p-1.5 rounded-lg hover:bg-gray-100">⚙️</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button className="mt-4 w-full py-2.5 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+        <span>+</span> Add New Tiffin Variant
+      </button>
+    </Card>
+  );
+}
+
+// ─── Trial Offer ──────────────────────────────────────────────────────────────
+function TrialOfferCard() {
+  const [price, setPrice] = useState(49);
+  const [selectedTier, setSelectedTier] = useState("Normal");
+  const [refund, setRefund] = useState(true);
+  const [limitMeals, setLimitMeals] = useState(false);
+
+  return (
+    <Card className="p-6">
+      <SectionLabel>
+        <span>Trial Offer Configuration</span>
+        <span className="text-gray-300">⭐</span>
+      </SectionLabel>
+      <div className="space-y-5">
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h4 className="text-xs font-black uppercase text-blue-500 mb-1">Standard Trial Price</h4>
+            </div>
+            <div className="text-2xl font-black text-gray-800">₹{price}</div>
+          </div>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+            placeholder="Set price (e.g. 49)"
+            className="w-full bg-white border border-blue-200 rounded-lg px-3 py-2 text-sm text-gray-700 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+          />
+          <div className="flex flex-wrap gap-2">
+            {["Mini", "Normal", "Deluxe"].map((t) => (
               <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
-                className={`px-5 py-2 text-[10px] font-black uppercase tracking-widest transition-all
-                  ${activeFilter === f
-                    ? f === "All"
-                      ? "text-gray-900 border-b-2 border-gray-900"
-                      : `border-b-2 ${filterColors[f]}`
-                    : "text-gray-400 hover:text-gray-700"
-                  }`}
+                key={t}
+                onClick={() => setSelectedTier(t)}
+                className={`px-3 py-1 rounded-full text-[8px] font-black uppercase transition-all ${
+                  selectedTier === t
+                    ? "bg-blue-500 text-white border border-blue-500"
+                    : "bg-white text-gray-400 border border-gray-200 hover:border-blue-300"
+                }`}
               >
-                {f}
+                {t}
               </button>
             ))}
           </div>
-          <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-700 px-2 transition-all">
-            <Icon name="tune" className="text-lg" />
+        </div>
+        <div className="space-y-2">
+          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Promotion Logic</p>
+          {[
+            { label: "Refund on 1st Order", state: refund, toggle: () => setRefund(!refund) },
+            { label: "Limit to Breakfast/Lunch", state: limitMeals, toggle: () => setLimitMeals(!limitMeals) },
+          ].map((opt) => (
+            <div
+              key={opt.label}
+              className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100"
+            >
+              <span className="text-[10px] uppercase font-bold text-gray-600">{opt.label}</span>
+              <Toggle active={opt.state} onToggle={opt.toggle} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+// ─── Weekly Menu ──────────────────────────────────────────────────────────────
+function WeeklyMenuCard() {
+  const [activeDay, setActiveDay] = useState("WED");
+  const [activeMeal, setActiveMeal] = useState("lunch");
+  const [menus, setMenus] = useState(menuData);
+
+  const removeItem = (tier, idx) =>
+    setMenus({ ...menus, [tier]: menus[tier].filter((_, i) => i !== idx) });
+
+  const tierConfig = [
+    { key: "mini", label: "Mini Thali Components", tag: "Fixed Menu", accent: "emerald", border: "border-emerald-200", ring: "border-emerald-400" },
+    { key: "normal", label: "Normal Thali Components", tag: "Standard", accent: "blue", border: "border-blue-200", ring: "border-blue-400" },
+    { key: "deluxe", label: "Deluxe Thali Components", tag: "Premium", accent: "violet", border: "border-violet-200", ring: "border-violet-400" },
+  ];
+
+  const accentText = { emerald: "text-emerald-500", blue: "text-blue-500", violet: "text-violet-500" };
+  const accentBg = { emerald: "bg-emerald-50", blue: "bg-blue-50", violet: "bg-violet-50" };
+  const accentLeft = { emerald: "border-l-emerald-400", blue: "border-l-blue-400", violet: "border-l-violet-400" };
+
+  return (
+    <Card className="p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400">Weekly Menu Customizer</p>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
+            <span className="text-blue-500 text-sm">📅</span>
+            <span className="text-[9px] font-black uppercase text-gray-500">Oct 21 – Oct 27</span>
+          </div>
+          <button className="text-gray-400 hover:text-gray-600 text-sm transition-colors p-1.5 rounded-lg hover:bg-gray-100">⬇️</button>
+        </div>
+      </div>
+
+      {/* Day Chips */}
+      <div className="flex gap-1.5 mb-6 overflow-x-auto pb-2 border-b border-gray-100">
+        {days.map((d) => (
+          <button
+            key={d}
+            onClick={() => setActiveDay(d)}
+            className={`flex-1 min-w-[2.5rem] text-center py-2 rounded-lg text-[10px] font-bold border transition-all ${
+              activeDay === d
+                ? "bg-blue-500 text-white border-blue-500 shadow-sm shadow-blue-200"
+                : "bg-gray-50 text-gray-400 border-gray-100 hover:bg-gray-100"
+            }`}
+          >
+            {d}
+          </button>
+        ))}
+      </div>
+
+      {/* Meal Tab */}
+      <div className="flex justify-center mb-8">
+        <div className="inline-flex items-center bg-gray-50 p-1.5 rounded-full border border-gray-200 gap-1">
+          {mealTabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveMeal(tab.id)}
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border ${
+                activeMeal === tab.id
+                  ? "bg-white text-gray-800 border-gray-200 shadow-sm"
+                  : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
+              }`}
+            >
+              <span className="text-sm">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Menu Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {tierConfig.map((tier, ti) => (
+          <div key={tier.key} className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className={`flex items-center gap-2 ${accentText[tier.accent]}`}>
+                <span className="text-lg">{ti === 0 ? "🌿" : ti === 1 ? "🍽️" : "✨"}</span>
+                <h5 className="text-[9px] font-black uppercase tracking-[0.15em]">{tier.label}</h5>
+              </div>
+              <span className="text-[8px] font-bold text-gray-300 uppercase tracking-tight">{tier.tag}</span>
+            </div>
+            <div className="space-y-1.5">
+              {menus[tier.key].map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`group flex items-center justify-between p-3 bg-gray-50 rounded-xl border transition-all ${
+                    idx === 0 ? `border-l-2 ${accentLeft[tier.accent]} border-t-0 border-r-0 border-b-0 bg-${tier.accent}-50 ${tier.border}` : "border-gray-100 hover:border-gray-200"
+                  }`}
+                  style={idx === 0 ? { borderLeftWidth: "2px" } : {}}
+                >
+                  <span className="text-xs font-semibold text-gray-700">{item}</span>
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <IconBtn title="Delete" icon="🗑️" danger onClick={() => removeItem(tier.key, idx)} />
+                    <button className="text-gray-200 hover:text-gray-400 text-xs p-1 transition-colors">⠿</button>
+                  </div>
+                </div>
+              ))}
+              <button className="w-full py-2 flex items-center justify-center gap-1.5 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+                <span>+</span> Add Item
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+// ─── Cancellation Panel ───────────────────────────────────────────────────────
+function CancellationCard() {
+  const [statuses, setStatuses] = useState(mealStatuses);
+  const [selectedDate, setSelectedDate] = useState("2024-10-23");
+
+  const toggleMeal = (id) =>
+    setStatuses(statuses.map((m) => (m.id === id ? { ...m, active: !m.active } : m)));
+
+  return (
+    <Card className="p-6">
+      <SectionLabel>
+        <span>Meal Cancellation &amp; Outage Control</span>
+        <span className="text-gray-300 text-sm">📅</span>
+      </SectionLabel>
+
+      {/* Date picker */}
+      <div className="max-w-xl mx-auto mb-8">
+        <div className="bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden">
+          <div className="p-6 pb-3">
+            <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 text-center">
+              Step 1: Select Target Date
+            </p>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 text-sm z-10">📅</span>
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-4 py-3.5 text-base font-black text-gray-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 outline-none transition-all cursor-pointer"
+              />
+            </div>
+          </div>
+          <div className="px-6 pb-6 pt-3 bg-white/60 border-t border-gray-100">
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1 bg-rose-50 rounded-full border border-rose-200">
+                <span className="text-rose-500 text-xs">⚠️</span>
+                <p className="text-[9px] font-black text-rose-500 uppercase tracking-widest">
+                  Step 2: Instant Global Overwrite
+                </p>
+              </div>
+              <button className="w-full bg-rose-500 hover:bg-rose-600 text-white text-[11px] font-black py-4 px-8 rounded-xl transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-3 group border border-rose-400">
+                <span className="text-lg group-hover:scale-110 transition-transform inline-block">🚫</span>
+                Cancel All Meals for Selected Day
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Meal status grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {statuses.map((meal) => (
+          <div
+            key={meal.id}
+            className={`p-5 rounded-2xl border transition-all ${
+              !meal.active
+                ? "border-rose-300 bg-rose-50 ring-1 ring-rose-200"
+                : "border-gray-100 bg-gray-50 hover:border-gray-200"
+            }`}
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <span className={`text-2xl block ${!meal.active ? "opacity-40" : ""}`}>{meal.icon}</span>
+                <h4 className={`text-xs font-black uppercase tracking-widest mt-2 ${!meal.active ? "text-gray-400" : "text-gray-800"}`}>
+                  {meal.label}
+                </h4>
+              </div>
+              <span
+                className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full border ${
+                  meal.active
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-600"
+                    : "bg-rose-100 border-rose-300 text-rose-500"
+                }`}
+              >
+                {meal.active ? "Active" : "Inactive"}
+              </span>
+            </div>
+            <p
+              className={`text-[10px] mb-4 uppercase tracking-tighter font-medium ${
+                !meal.active ? "text-rose-400" : "text-gray-400"
+              }`}
+            >
+              {meal.active ? `Service Window: ${meal.time}` : meal.time}
+            </p>
+            <button
+              onClick={() => toggleMeal(meal.id)}
+              className={`w-full py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border ${
+                meal.active
+                  ? "bg-white text-gray-400 border-gray-200 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-500"
+                  : "bg-white text-gray-400 border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-600"
+              }`}
+            >
+              <span className="text-sm">{meal.active ? "🚫" : "↩️"}</span>
+              {meal.active ? `Cancel ${meal.label}` : `Resume ${meal.label}`}
+            </button>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
+export default function AhaarMitraOrders15() {
+  const navItems = [
+    { label: "Finance", active: false },
+    { label: "Order History", active: false },
+    { label: "Services", active: true },
+    { label: "Subscriber", active: false },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <style>{`
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+        input[type='date']::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.5; }
+        .uniform-card-height { height: 560px; }
+      `}</style>
+
+      {/* Header */}
+      {/* <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-4 flex items-center justify-between gap-4">
+          <div className="shrink-0">
+            <div className="text-xl font-black tracking-tighter uppercase text-gray-900">AhaarMitra</div>
+            <div className="h-0.5 w-full bg-gradient-to-r from-blue-500 to-transparent rounded-full" />
+          </div>
+
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((n) => (
+              <a
+                key={n.label}
+                href="#"
+                className={`text-[11px] font-black uppercase tracking-widest transition-colors ${
+                  n.active
+                    ? "text-gray-900 border-b-2 border-blue-500 pb-0.5"
+                    : "text-gray-400 hover:text-gray-700"
+                }`}
+              >
+                {n.label}
+              </a>
+            ))}
+          </nav>
+
+          <a href="#" className="text-sm font-bold text-gray-400 hover:text-gray-700 transition-colors flex items-center gap-1.5 shrink-0">
+            <span className="text-base">⚙️</span>
+            <span className="hidden sm:inline">Settings</span>
+          </a>
+        </div>
+      </header> */}
+
+      {/* Main */}
+      <main className="max-w-7xl mx-auto px-6 md:px-10 py-10 pt-24">
+        {/* Hero */}
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-3">
+              Service <span className="text-blue-500">Manager.</span>
+            </h1>
+            <p className="text-gray-400 text-base max-w-xl">
+              Configure your meal offerings, pricing schedules, and service windows.
+            </p>
+          </div>
+          <button className="shrink-0 bg-blue-500 hover:bg-blue-600 text-white text-[10px] font-black py-3 px-8 rounded-xl transition-all uppercase tracking-widest shadow-md shadow-blue-200">
+            Save All Changes
           </button>
         </div>
-      </div>
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-gray-100 bg-gray-50">
-                {["Order Date","Vendor & Items","Meal Type","Status","Timestamp","Rating"].map(h => (
-                  <th key={h} className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {pastOrders.map((o, i) => (
-                <tr key={i} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-5">
-                    <div className="text-sm font-bold text-gray-800">{o.date}</div>
-                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">ID: {o.orderId}</div>
-                  </td>
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0">
-                        <Icon name={o.vendorIcon} className="text-sm text-gray-400" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-bold text-gray-800">{o.vendor}</div>
-                        <div className="text-[10px] text-gray-400 font-medium truncate max-w-[200px]">{o.items}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-5">
-                    <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-gray-100">
-                      <Icon name={o.mealIcon} className="text-xs text-gray-400" />
-                      <span className="text-[9px] font-black uppercase tracking-widest text-gray-600">{o.meal}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-5">
-                    <div className={`inline-flex items-center gap-1.5 ${o.statusColor}`}>
-                      <Icon name={o.statusIcon} className="text-[14px]" />
-                      <span className="text-[9px] font-black uppercase tracking-widest">{o.status}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-5">
-                    <div className="text-[11px] font-bold text-gray-500">{o.time}</div>
-                  </td>
-                  <td className="px-6 py-5">
-                    {o.stars > 0
-                      ? <Stars count={o.stars} />
-                      : <span className="text-[9px] font-black uppercase tracking-widest text-gray-300 italic">N/A</span>
-                    }
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Page 1 of 4</span>
-          <div className="flex gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:text-gray-700 transition-colors">
-              <Icon name="chevron_left" className="text-lg" />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-900 text-white text-[10px] font-black">1</button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-[10px] font-black hover:bg-gray-100 text-gray-700">2</button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:text-gray-700 transition-colors">
-              <Icon name="chevron_right" className="text-lg" />
-            </button>
+
+        {/* Top 3 cards - equal height */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+          <div className="uniform-card-height flex flex-col">
+            <MealTypesCard />
+          </div>
+          <div className="uniform-card-height flex flex-col">
+            <ServiceZonesCard />
+          </div>
+          <div className="uniform-card-height flex flex-col">
+            <ServiceWindowsCard />
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
 
-// --- Footer ---
-const Footer = () => (
-  <footer className="w-full py-12 px-6 md:px-12 mt-auto border-t border-gray-200 bg-gray-50">
-    <div className="grid grid-cols-2 md:grid-cols-4 items-start gap-8 w-full max-w-7xl mx-auto">
-      <div className="flex flex-col gap-4">
-        <div className="text-lg font-bold text-gray-900">AhaarMitra</div>
-        <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-relaxed">
-          The Premium Digital Hearth for Modern Nutrition.
-        </p>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h4 className="text-gray-700 text-[10px] font-bold uppercase tracking-widest mb-1">Legal</h4>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Privacy Policy</a>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Terms of Service</a>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h4 className="text-gray-700 text-[10px] font-bold uppercase tracking-widest mb-1">Support</h4>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Contact Support</a>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Partner with Us</a>
-      </div>
-      <div className="flex flex-col gap-4 items-end">
-        <div className="flex gap-4">
-          <Icon name="brand_awareness" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl" />
-          <Icon name="share" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl" />
-          <Icon name="public" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl" />
+        {/* Catalog + Trial */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-5">
+          <div className="md:col-span-7">
+            <TiffinCatalogCard />
+          </div>
+          <div className="md:col-span-5">
+            <TrialOfferCard />
+          </div>
         </div>
-        <div className="text-gray-400 text-[9px] font-medium uppercase tracking-widest text-right">
-          © 2024 AhaarMitra Editorial. All rights reserved.
+
+        {/* Weekly Menu */}
+        <div className="mb-5">
+          <WeeklyMenuCard />
         </div>
-      </div>
-    </div>
-  </footer>
-);
 
-// --- Root ---
-export default function AhaarMitraOrders15() {
-  return (
-    <div className="antialiased min-h-screen flex flex-col bg-white text-gray-900">
-      <GlobalStyles />
-      <main className="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto w-full">
-        {/* Page Header */}
-        <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-3 text-gray-900">Order Management</h1>
-            <p className="text-gray-400 font-medium">Manage your active meal subscriptions and view full order history.</p>
-          </div>
-          <div className="flex gap-3">
-            <button className="px-6 py-3 bg-gray-900 text-white text-xs font-black uppercase tracking-widest rounded-full hover:bg-gray-700 transition-all flex items-center gap-2 shadow-lg shadow-gray-900/10">
-              <Icon name="calendar_add_on" className="text-lg" /> New Subscription
-            </button>
-          </div>
-        </header>
-
-        {/* Active Subscriptions */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold flex items-center gap-3 text-gray-700">
-              <Icon name="verified" className="text-amber-500" />
-              Active Subscriptions (2)
-            </h2>
-          </div>
-          <div className="flex flex-col gap-6">
-            <SubscriptionCard {...sub1} />
-            <SubscriptionCard {...sub2} />
-          </div>
-        </section>
-
-        {/* Past Orders */}
-        <PastOrdersSection />
+        {/* Cancellation */}
+        <div>
+          <CancellationCard />
+        </div>
       </main>
-      {/* <Footer /> */}
+
+      {/* Footer */}
+      {/* <footer className="w-full py-8 px-6 md:px-10 border-t border-gray-100 bg-white mt-16">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-8">
+            {["Privacy Policy", "Terms of Service", "Support Portal"].map((l) => (
+              <a key={l} href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-[10px] font-bold uppercase tracking-widest">
+                {l}
+              </a>
+            ))}
+          </div>
+          <p className="text-gray-300 text-[10px] font-medium uppercase tracking-[0.2em]">
+            © 2024 AhaarMitra Analytics. Precision in Service Management.
+          </p>
+        </div>
+      </footer> */}
     </div>
   );
 }
