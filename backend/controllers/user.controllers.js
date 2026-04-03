@@ -45,13 +45,23 @@ export const registerUser = async (req, res) => {
         email,
         phone,
         password: hashedPassword,
-        registrationStep: 2
+
+        ...(req.file && {
+          profilePic: {
+            url: req.file.path,
+            public_id: req.file.filename,
+          }
+        }),
+
+        registrationStep: 2,
       },
       { new: true }
     );
 
     res.json({ step: 2, user });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 };
