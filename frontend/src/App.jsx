@@ -7,6 +7,7 @@ import Footer from "./components/Footer.jsx";
 import { AnimatePresence, motion } from "framer-motion";
 
 // User Pages
+import LandingPage from "./Userpages/LandingPage0.jsx";
 import ConfigurePlan4 from "./Userpages/ConfigurePlan4.jsx";
 import AhaarMitraMultiAddress10 from "./Userpages/AhaarMitraMultiAddress10.jsx";
 import TiffinSeeker9 from "./Userpages/TiffinSeeker9.jsx";
@@ -22,12 +23,13 @@ import AhaarMitraSubscriptions from "./Userpages/AhaarMitraSubscriptions16.jsx";
 import AhaarMitraSupport from "./Userpages/AhaarMitraSupport17.jsx";
 import CustomerAccount from "./Userpages/CustomerAccount18.jsx";
 
-  
+
 import MealTypePopUp from "./VendorPages/MealTypePopUp19.jsx";
 import AddressPopUp from "./VendorPages/AddressPopUp20.jsx";
 import CancelLunch from "./VendorPages/CancelLunch21.jsx";
 import AddTiffin from "./VendorPages/AddTiffin22.jsx";
 import CancelAllMeals from "./VendorPages/CancelAllMeals23.jsx";
+import Additem from "./VendorPages/AddItem24.jsx";
 
 // Vendor Pages
 import RegisterProvider1 from "./VendorPages/RegisterProvider1.jsx";
@@ -68,7 +70,7 @@ const App = () => {
   const timer = setTimeout(() => {
     setIsLoading(false);
     setIsAuthReady(true);
-  }, 1);
+  }, 1);// change to 2720 after testing
 
   return () => clearTimeout(timer);
 }, []);
@@ -107,6 +109,7 @@ const App = () => {
 
               {/* User Routes */}
               <Route path="/explore" element={<TiffinSeeker9 />} />
+              <Route path="/0" element={<LandingPage />} />
               <Route path="/1" element={<VendorDetails1 />} />
               <Route path="/2" element={<TiffinTrial2 />} />
               <Route path="/3" element={<CheckoutConfirmation3 />} />
@@ -128,7 +131,7 @@ const App = () => {
               <Route path="/21" element={<CancelLunch />} />
               <Route path="/22" element={<AddTiffin />} />
               <Route path="/23" element={<CancelAllMeals />} />
-
+              <Route path="/24" element={<Additem />} />
 
               <Route path="/subscription" element={<AhaarMitraSubscriptions />} />
               <Route path="/support" element={<AhaarMitraSupport />} />
