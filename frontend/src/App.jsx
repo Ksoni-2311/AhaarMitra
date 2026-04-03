@@ -46,7 +46,7 @@ const App = () => {
   );
 
   // 👤 AUTH STATE (TEMP - replace later)
-  const isLoggedIn = false; // change to auth later
+  const isLoggedIn = true; // change to auth later
   const isVendor = false; // change based on role
 
   // 🧠 DETECT VENDOR ROUTES
@@ -110,6 +110,10 @@ const App = () => {
               <Route path="/13" element={<TiffinSeekerRegistration13 />} />
               <Route path="/14" element={<DeliveryAddress14 />} />
               <Route path="/orders" element={<AhaarMitraOrders15 />} />
+              <Route path="/16" element={<AhaarMitraSubscriptions />} />
+              <Route path="/17" element={<AhaarMitraSupport />} />
+              <Route path="/18" element={<CustomerAccount />} />
+
               <Route
                 path="/subscription"
                 element={<AhaarMitraSubscriptions />}
