@@ -142,7 +142,7 @@ export default function MealTypePopUp19() {
         {/* Footer */}
         <div className="px-8 pb-8 pt-2 flex gap-3">
           <button
-            onClick={() => navigate("/v7")}
+            onClick={() => navigate("/orders")}
             className="flex-1 py-4 rounded-2xl border-2 border-gray-100 text-[11px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50"
           >
             Cancel

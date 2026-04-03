@@ -238,9 +238,11 @@ function ServiceZonesCard() {
           </div>
         ))}
       </div>
-      <button className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
-        <span className="text-sm">📍+</span> Add Hub Address
-      </button>
+      <Link to="/20">
+        <button className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+          <span className="text-sm">📍+</span> Add Hub Address
+        </button>
+      </Link>
     </Card>
   );
 }
@@ -402,9 +404,11 @@ function TiffinCatalogCard() {
           </tbody>
         </table>
       </div>
-      <button className="mt-4 w-full py-2.5 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
-        <span>+</span> Add New Tiffin Variant
-      </button>
+      <Link to="/22" className="w-full">
+        <button className="mt-4 w-full py-2.5 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+          <span>+</span> Add New Tiffin Variant
+        </button>
+      </Link>
     </Card>
   );
 }
@@ -696,12 +700,14 @@ function CancellationCard() {
                   Step 2: Instant Global Overwrite
                 </p>
               </div>
-              <button className="w-full bg-rose-500 hover:bg-rose-600 text-white text-[11px] font-black py-4 px-8 rounded-xl transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-3 group border border-rose-400">
-                <span className="text-lg group-hover:scale-110 transition-transform inline-block">
-                  🚫
-                </span>
-                Cancel All Meals for Selected Day
-              </button>
+              <Link to="/23">
+                <button className="w-full bg-rose-500 hover:bg-rose-600 text-white text-[11px] font-black py-4 px-8 rounded-xl transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-3 group border border-rose-400">
+                  <span className="text-lg group-hover:scale-110 transition-transform inline-block">
+                    🚫
+                  </span>
+                  Cancel All Meals for Selected Day
+                </button>
+              </Link>
             </div>
           </div>
         </div>
