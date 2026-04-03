@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/user.routes.js';
 import dotenv from "dotenv";
-import OTP from './routes/otp.js';
+
 import vendorRoutes from './routes/vendor.routes.js';
+import vendorServiceRoutes from './controllers/vendor.config.routes.js';
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.use(
 );
 app.use("/api/user",userRoutes);
 app.use("/api/vendor",vendorRoutes);
+app.use("/api/vendor", vendorServiceRoutes);
 
 
 

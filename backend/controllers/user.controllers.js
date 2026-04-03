@@ -26,16 +26,13 @@ export const selectRole = async (req, res) => {
 // STEP 2: Registration
 export const registerUser = async (req, res) => {
   try {
-    console.log("HEADERS:", req.headers);
-    console.log("USER:", req.user);
-
     if (!req.user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, phone, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !phone || !password) {
       return res.status(400).json({ message: "All fields required" });
     }
 
@@ -47,13 +44,13 @@ export const registerUser = async (req, res) => {
         name,
         email,
         phone,
+        password: hashedPassword,
         registrationStep: 2
       },
       { new: true }
     );
 
     res.json({ step: 2, user });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
