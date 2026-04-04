@@ -8,40 +8,44 @@ const useVendorStore = create((set) => ({
   loading: false,
 
   registerVendor: async (formData) => {
-    try {
-      set({ loading: true });
+  try {
+    set({ loading: true });
 
-      const res = await axiosInstance.post(
-        "http://localhost:8080/api/vendor/register",
-        formData
-      );
+    const res = await axiosInstance.post(
+      "/vendor/register",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data", // 🔥 REQUIRED
+        },
+      }
+    );
 
-      const data = res.data;
+    const data = res.data;
 
-      // ✅ Show success message
-      alert(data.message);
+    // ✅ save token
+    localStorage.setItem("token", data.token);
 
-      // ✅ Save token (optional but important)
-      localStorage.setItem("token", data.token);
+    set({
+      token: data.token,
+      vendor: data.vendor,
+      isAuthenticated: true,
+      loading: false,
+    });
 
-      set({ loading: false });
+    return { success: true };
 
-      // ✅ store token
-      localStorage.setItem("token", data.token);
-      return { success: true, data };
+  } catch (error) {
+    set({ loading: false });
 
-    } catch (error) {
-      set({ loading: false });
+    const message =
+      error.response?.data?.message || "Something went wrong";
 
-      // ✅ Handle backend error message
-      const message =
-        error.response?.data?.message || "Something went wrong";
+    alert(message);
 
-      alert(message);
-
-      return { success: false };
-    }
-  },
+    return { success: false };
+  }
+},
 
   saveBusiness: async ({ businessName, type, address, gstNumber, fssaiNumber }) => {
     try {

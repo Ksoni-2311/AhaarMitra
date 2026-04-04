@@ -5,6 +5,10 @@ const vendorSchema = new mongoose.Schema({
   email: String,
   phone: { type: String, unique: true },
   password:String,
+  profilePic: {
+    url: String,
+    public_id: String,
+  },
 
   isOtpVerified: { type: Boolean, default: false },
 

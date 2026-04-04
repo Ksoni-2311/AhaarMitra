@@ -377,6 +377,43 @@ function IconBtn({ title, icon, danger = false, onClick }) {
 /* ------------------------------- COMPONENTS ------------------------------- */
 
 function MealTypesCard({ meals, setConfig }) {
+  const availableMeals = ["breakfast", "lunch", "dinner", "snacks"];
+
+  const toggleMeal = (mealName) => {
+    setConfig((prev) => ({
+      ...prev,
+      mealTypes: prev.mealTypes.map((meal) =>
+        meal.name === mealName
+          ? { ...meal, isActive: !meal.isActive }
+          : meal
+      ),
+    }));
+  };
+
+  const removeMeal = (mealName) => {
+    setConfig((prev) => ({
+      ...prev,
+      mealTypes: prev.mealTypes.filter((meal) => meal.name !== mealName),
+    }));
+  };
+
+  const addMissingMeal = (mealName) => {
+    setConfig((prev) => ({
+      ...prev,
+      mealTypes: [
+        ...prev.mealTypes,
+        {
+          name: mealName,
+          isActive: true,
+        },
+      ],
+    }));
+  };
+
+  const missingMeals = availableMeals.filter(
+    (mealName) => !meals.some((meal) => meal.name === mealName)
+  );
+
   return (
     <Card className="p-6 flex flex-col h-full">
       <SectionLabel>
@@ -400,33 +437,88 @@ function MealTypesCard({ meals, setConfig }) {
                 </span>
               </div>
 
-              <Toggle
-                active={m.isActive}
-                onToggle={() =>
-                  setConfig((prev) => ({
-                    ...prev,
-                    mealTypes: prev.mealTypes.map((x) =>
-                      x.name === m.name ? { ...x, isActive: !x.isActive } : x
-                    ),
-                  }))
-                }
-              />
+              <div className="flex items-center gap-2">
+                <Toggle
+                  active={m.isActive}
+                  onToggle={() => toggleMeal(m.name)}
+                />
+
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                  <IconBtn
+                    title="Delete"
+                    icon="🗑️"
+                    danger
+                    onClick={() => removeMeal(m.name)}
+                  />
+                </div>
+              </div>
             </div>
           );
         })}
-      </div>
 
-      <Link
-        to="/19"
-        className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
-      >
-        <span className="text-sm">📍+</span> Add Hub Address
-      </Link>
+        {missingMeals.length > 0 && (
+          <div className="mt-2 space-y-2">
+            <p className="text-[8px] font-black uppercase tracking-widest text-gray-400">
+              Add Missing Meal Types
+            </p>
+
+            {missingMeals.map((mealName) => {
+              const meta = mealMeta[mealName] || {
+                icon: "🍴",
+                label: mealName,
+              };
+
+              return (
+                <button
+                  key={mealName}
+                  type="button"
+                  onClick={() => addMissingMeal(mealName)}
+                  className="w-full py-2.5 px-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+                >
+                  <span className="text-sm">{meta.icon}</span>
+                  Add {meta.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </Card>
   );
 }
 
 function ServiceZonesCard({ hubs, setConfig }) {
+  const addZone = () => {
+    setConfig((prev) => ({
+      ...prev,
+      zones: [
+        ...prev.zones,
+        {
+          address: "",
+          city: "",
+          state: "",
+          pincode: "",
+        },
+      ],
+    }));
+  };
+
+  const updateZoneField = (index, field, value) => {
+    setConfig((prev) => ({
+      ...prev,
+      zones: prev.zones.map((zone, i) =>
+        i === index ? { ...zone, [field]: value } : zone
+      ),
+    }));
+  };
+
+  const removeZone = (index) => {
+    setConfig((prev) => ({
+      ...prev,
+      zones: prev.zones.filter((_, i) => i !== index),
+    }));
+  };
+
   return (
     <Card className="p-6 flex flex-col h-full">
       <SectionLabel>
@@ -438,52 +530,92 @@ function ServiceZonesCard({ hubs, setConfig }) {
         Configured Service Hubs
       </p>
 
-      <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scroll">
+      <div className="flex-1 overflow-y-auto space-y-3 pr-1 custom-scroll">
         {hubs.map((hub, i) => (
           <div
             key={i}
-            className="group flex items-center gap-2.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all"
+            className="group p-3 rounded-xl bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all"
           >
-            <span
-              className={`text-sm ${i === 0 ? "text-blue-500" : "text-gray-300"}`}
-            >
-              📍
-            </span>
+            <div className="flex items-start gap-2">
+              <span
+                className={`text-sm mt-2 ${
+                  i === 0 ? "text-blue-500" : "text-gray-300"
+                }`}
+              >
+                📍
+              </span>
 
-            <span className="text-[11px] font-medium text-gray-600 truncate flex-1">
-              {`${hub.address}, ${hub.city}, ${hub.state} - ${hub.pincode}`}
-            </span>
+              <div className="flex-1 space-y-2">
+                <input
+                  type="text"
+                  placeholder="Address"
+                  value={hub.address}
+                  onChange={(e) =>
+                    updateZoneField(i, "address", e.target.value)
+                  }
+                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                />
 
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <IconBtn title="Edit" icon="✏️" />
-              <IconBtn
-                title="Delete"
-                icon="🗑️"
-                danger
-                onClick={() =>
-                  setConfig((prev) => ({
-                    ...prev,
-                    zones: prev.zones.filter((_, j) => j !== i),
-                  }))
-                }
-              />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <input
+                    type="text"
+                    placeholder="City"
+                    value={hub.city}
+                    onChange={(e) => updateZoneField(i, "city", e.target.value)}
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="State"
+                    value={hub.state}
+                    onChange={(e) =>
+                      updateZoneField(i, "state", e.target.value)
+                    }
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Pincode"
+                    value={hub.pincode}
+                    onChange={(e) =>
+                      updateZoneField(i, "pincode", e.target.value)
+                    }
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                  />
+                </div>
+
+                {hub.address && (
+                  <p className="text-[10px] text-gray-500 font-medium">
+                    {hub.address}, {hub.city}, {hub.state} - {hub.pincode}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <IconBtn
+                  title="Delete"
+                  icon="🗑️"
+                  danger
+                  onClick={() => removeZone(i)}
+                />
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      <Link to="/20">
-        <button
-          type="button"
-          className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
-        >
-          <span className="text-sm">📍+</span> Add Hub Address
-        </button>
-      </Link>
+      <button
+        type="button"
+        onClick={addZone}
+        className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+      >
+        <span className="text-sm">📍+</span> Add Hub Address
+      </button>
     </Card>
   );
 }
-
 function ServiceWindowsCard({ serviceWindows, setConfig }) {
   const { lunch, dinner } = serviceWindows;
 

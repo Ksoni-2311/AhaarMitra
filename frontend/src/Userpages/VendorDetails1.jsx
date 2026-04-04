@@ -1,223 +1,591 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const VendorDetails1 = () => {
+const Star = ({ filled }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill={filled ? "#F59E0B" : "none"}
+    stroke="#F59E0B"
+    strokeWidth={filled ? 0 : 1.5}
+    className="w-4 h-4"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+    />
+  </svg>
+);
+
+const CheckCircle = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="#22C55E"
+    className="w-4 h-4 shrink-0"
+  >
+    <path
+      fillRule="evenodd"
+      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+export default function TiffinTrial2() {
+  const [activeTab, setActiveTab] = useState("explore");
+
+  const ratings = [
+    { label: "5 Stars", pct: "85%", w: "85%", opacity: "100" },
+    { label: "4 Stars", pct: "10%", w: "10%", opacity: "80" },
+    { label: "3 Stars", pct: "3%", w: "3%", opacity: "60" },
+    { label: "2 Stars", pct: "1.5%", w: "1.5%", opacity: "40" },
+    { label: "1 Star", pct: "0.5%", w: "0.5%", opacity: "20" },
+  ];
+
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white text-gray-900 font-[Manrope]">
+    <div
+      className="min-h-screen bg-gray-50 font-sans text-gray-900"
+      style={{ fontFamily: "'Manrope', sans-serif" }}
+    >
+      {/* Google Fonts */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
 
-      {/* Hero */}
-      <section className="relative h-[300px] mt-16 overflow-hidden">
-        <img
-          src="https://assets.gqindia.com/photos/6086c49078866ae25e37741e/1:1/w_1080,h_1080,c_limit/Tiffin%20Service%20COVID.jpeg"
-          className="w-full h-full object-cover scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-
-        <div className="absolute bottom-12 left-12 text-white max-w-2xl">
-          <div className="flex gap-3 mb-4">
-            <span className="bg-amber-500 text-white px-3 py-1 text-xs rounded-full font-semibold shadow">
-              3 ACTIVE OFFERS
-            </span>
-            <span className="bg-white/20 px-3 py-1 text-xs rounded-full backdrop-blur-md">
-              PREMIUM PARTNER
-            </span>
-          </div>
-
-          <h1 className="text-6xl font-black tracking-tight leading-tight">
-            Shree Tiffin Services
-          </h1>
-
-          <p className="text-white/80 mt-3 text-lg">
-            Authentic Home-Style Comfort, Elevated for Your Daily Table.
-          </p>
+      {/* NAV */}
+      {/* <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm h-16 px-8 md:px-12 flex justify-between items-center">
+        <div className="text-xl font-black text-gray-900 tracking-tighter">AhaarMitra</div>
+        <div className="hidden md:flex items-center gap-8 font-bold">
+          {["Explore", "Subscriptions", "Orders", "Support"].map((item) => (
+            <a
+              key={item}
+              href="#"
+              onClick={() => setActiveTab(item.toLowerCase())}
+              className={`text-sm transition-colors pb-1 ${
+                activeTab === item.toLowerCase()
+                  ? "text-gray-900 border-b-2 border-amber-500"
+                  : "text-gray-400 hover:text-gray-700"
+              }`}
+            >
+              {item}
+            </a>
+          ))}
         </div>
-      </section>
+        <div className="flex items-center gap-4">
+          <div className="relative flex items-center bg-gray-100 rounded-full px-4 py-2 border border-gray-200">
+            <svg className="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+            </svg>
+            <input
+              className="bg-transparent border-none focus:outline-none text-sm text-gray-700 w-36 placeholder:text-gray-400"
+              placeholder="Search cuisines..."
+            />
+          </div>
+          <button className="text-gray-400 hover:text-gray-700 transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
+          <button className="text-gray-400 hover:text-gray-700 transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </button>
+          <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-amber-400">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y"
+              alt="User"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </nav> */}
 
-      {/* Main */}
-      <div className="max-w-7xl mx-auto px-12 py-14 grid grid-cols-12 gap-12">
+      <main className="pt-16">
+        {/* HERO */}
+        <section className="relative h-[520px] w-full overflow-hidden">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBmIchnkIkoQGR77HPKNPe8Mi87AWVXdlxtSOo0_aqUzxSiao8g8wNuB6MLnue5hBiJqoCqYqYf_QwyAx8srHTmiWQLzDoSpBgjo79alSoDbXQZ1BxnJSwyVy8He4b-CbkpWuTgncU4YcUKtpcr-pZOyPo1hbVYNmqrmfArc3zZZuFPXAiqx6A5bpLRmZEtfGqskXEk_ur5KQcptvlknPuRIA86F4SmByElS4qXuo1rcrzcBC2SHCGJ1fTtaHQtFIc92CaW3sgiyX"
+            alt="Gourmet Tiffin"
+            className="w-full h-full object-cover"
+          />
+          {/* Light overlay instead of dark */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/80 to-transparent" />
 
-        {/* LEFT */}
-        <div className="col-span-8 space-y-12">
+          <div className="absolute bottom-10 left-8 md:left-12 right-8 md:right-12 flex flex-col md:flex-row justify-between items-end gap-6">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase border border-amber-300">
+                  Verified Vendor
+                </span>
+                <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase border border-gray-200">
+                  Premium Partner
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-gray-900 mb-3">
+                Shree Tiffin Services
+              </h1>
+              <div className="flex items-center gap-3 whitespace-nowrap text-gray-600 mb-4">
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <svg
+                    className="w-4 h-4 text-amber-500"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
+                  </svg>
+                  <span className="text-sm font-medium">
+                    B-42, Sector 62, Noida, UP 201301
+                  </span>
+                </div>
 
-          {/* Stats */}
-          <div className="flex gap-12 border-b border-gray-200 pb-10">
-            <div>
-              <h2 className="text-4xl font-black">4.5 ⭐</h2>
-              <p className="text-xs text-gray-500 mt-1">1.2K REVIEWS</p>
+                <span className="text-gray-300 shrink-0">•</span>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <svg
+                    className="w-4 h-4 text-amber-500"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                  </svg>
+                  <span className="text-sm font-medium">+91 98765 43210</span>
+                </div>
+
+                <span className="text-gray-300 shrink-0">•</span>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <svg
+                    className="w-4 h-4 text-amber-500"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                  </svg>
+                  <span className="text-sm font-medium">
+                    shreetiffin@ahaarmitra.com
+                  </span>
+                </div>
+
+                <span className="text-gray-300 shrink-0">•</span>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <svg
+                    className="w-4 h-4 text-amber-500"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                  </svg>
+                  <span className="text-sm font-bold text-gray-800">
+                    2,450+ Active Subscribers
+                  </span>
+                </div>
+              </div>
+              <p className="text-base text-gray-500 font-medium italic">
+                "Authentic Home-Style Comfort, Elevated for Your Daily Table."
+              </p>
             </div>
 
-            <div>
-              <h2 className="text-4xl font-black">2.5km</h2>
-              <p className="text-xs text-gray-500 mt-1">DELIVERY RADIUS</p>
-            </div>
-
-            <div>
-              <h2 className="text-4xl font-black text-green-600">
-                Pure Veg
-              </h2>
-              <p className="text-xs text-gray-500 mt-1">DIETARY TYPE</p>
-            </div>
-            <div>
-              <button className="px-6 py-2 bg-[#FE9A00] text-white rounded-lg font-semibold uppercase hover:bg-[#e88a00] transition">
-                Menu
-              </button>
-              <p className="text-xs uppercase text-gray-500 mt-1">See Menu</p>
+            <div className="flex items-center gap-4 bg-white/80 backdrop-blur-md rounded-2xl px-6 py-4 border border-gray-200 shadow-sm shrink-0">
+              <div className="text-right">
+                <div className="text-4xl font-black text-gray-900">4.8</div>
+                <div className="flex text-amber-400 mt-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} filled />
+                  ))}
+                </div>
+              </div>
+              <div className="h-12 w-px bg-gray-200" />
+              <div className="text-right">
+                <div className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                  Overall
+                </div>
+                <div className="text-xs font-bold text-gray-600">
+                  Subscriber Rating
+                </div>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Facilities */}
-          <div>
-            <h2 className="text-2xl font-black mb-6">
-              Vendor Special Facilities
-            </h2>
+        {/* MAIN CONTENT */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+          {/* THALI & MEAL VARIANTS */}
+          <section className="mb-20">
+            <div className="mb-10">
+              <h2 className="text-3xl font-black tracking-tight text-gray-900 mb-2">
+                Thali &amp; Meal Variants
+              </h2>
+              <p className="text-gray-400 text-sm font-bold uppercase tracking-widest">
+                Compare and select your daily dining experience
+              </p>
+            </div>
 
-            <div className="grid grid-cols-3 gap-6">
-              {[
-                "1-hour cancellation",
-                "No-contact delivery",
-                "Subscription flexibility"
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 text-center border border-gray-100"
+            <div className="space-y-3">
+              {/* Header row */}
+              <div className="hidden md:grid grid-cols-12 gap-4 px-8 py-4 bg-gray-100 rounded-t-xl border border-gray-200 items-center">
+                <div className="col-span-5 text-xs font-black uppercase tracking-widest text-gray-400">
+                  Variant &amp; Menu
+                </div>
+                <div className="col-span-2 text-center text-xs font-black uppercase tracking-widest text-gray-400">
+                  Trial
+                </div>
+                <div className="col-span-2 text-center text-xs font-black uppercase tracking-widest text-gray-400">
+                  Weekly
+                </div>
+                <div className="col-span-3 text-center text-xs font-black uppercase tracking-widest text-gray-400">
+                  Monthly
+                </div>
+              </div>
+
+              {/* Mini Thali */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center px-8 py-8 bg-white border border-gray-200 hover:border-amber-300 hover:shadow-md transition-all rounded-xl">
+                <div className="col-span-1 md:col-span-5 flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-200">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuD98o098_qVpAtUoG6XfIeY4Z-3-E0m7R9H8W7A5C2-O6G_E8D5R2_A1S8T5Z2S7A=s512"
+                      alt="Mini Thali"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-lg font-bold text-gray-900">
+                        Mini Thali
+                      </h3>
+                      <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded font-bold uppercase tracking-widest border border-gray-200">
+                        Light
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-500 font-medium">
+                      2 Hand-rolled Roti, Jeera Rice, Dal Tadka, Seasonal Sabzi.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-span-1 md:col-span-2 text-center">
+                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
+                    Daily
+                  </span>
+                  <span className="text-xl font-black text-gray-700">₹85</span>
+                </div>
+                <div className="col-span-1 md:col-span-2 text-center">
+                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
+                    Weekly
+                  </span>
+                  <span className="text-xl font-black text-gray-700">₹550</span>
+                </div>
+                <div className="col-span-1 md:col-span-3 text-center bg-amber-50 py-4 rounded-lg border border-amber-200">
+                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
+                    Monthly
+                  </span>
+                  <span className="text-3xl font-black text-amber-600">
+                    ₹2100
+                  </span>
+                  <div className="text-xs font-bold text-amber-500 uppercase tracking-widest mt-1">
+                    Recommended Plan
+                  </div>
+                </div>
+              </div>
+
+              {/* Executive Thali */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center px-8 py-8 bg-white border border-gray-200 hover:border-amber-300 hover:shadow-md transition-all rounded-xl">
+                <div className="col-span-1 md:col-span-5 flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-200 relative">
+                    <img
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHmD6X-qXn7H-R1N7U9B3W4L8O2Z1-A5S-C4D8G7F9H5J3-K1L0-P2Q4R6S=s512"
+                      alt="Executive Thali"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-0 right-0 bg-amber-500 text-white text-xs font-black px-1.5 py-0.5 uppercase">
+                      Best
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-lg font-bold text-gray-900">
+                        Executive Thali
+                      </h3>
+                      {/* <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-bold uppercase tracking-widest">
+                        Full Meal
+                      </span> */}
+                    </div>
+                    <p className="text-sm text-gray-500 font-medium">
+                      4 Rotis, Pulao, Dal Fry, Special Sabzi, Paneer Dish, Curd,
+                      Salad.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-span-1 md:col-span-2 text-center">
+                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
+                    Daily
+                  </span>
+                  <span className="text-xl font-black text-gray-700">₹140</span>
+                </div>
+                <div className="col-span-1 md:col-span-2 text-center">
+                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
+                    Weekly
+                  </span>
+                  <span className="text-xl font-black text-gray-700">₹900</span>
+                </div>
+                <div className="col-span-1 md:col-span-3 text-center bg-amber-50 py-4 rounded-lg border border-amber-300">
+                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
+                    Monthly
+                  </span>
+                  <span className="text-3xl font-black text-amber-600">
+                    ₹3500
+                  </span>
+                  <div className="text-xs font-bold text-amber-500 uppercase tracking-widest mt-1">
+                    Value Plus Offer
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* DELIVERY SCHEDULE */}
+          <section className="mb-20">
+            <div className="flex items-center gap-4 mb-8">
+              <h2 className="text-2xl font-black tracking-tight text-gray-900">
+                Delivery Schedule
+              </h2>
+              <span className="h-px flex-1 bg-gray-200" />
+            </div>
+
+            {/* Cancellation warning */}
+            <div className="mb-8 w-full p-5 bg-red-50 border border-red-200 rounded-xl flex items-center gap-4">
+              <div className="bg-red-500 p-2 rounded-lg shrink-0">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <div className="mb-3 text-amber-500 text-2xl">⚡</div>
-                  <h4 className="font-semibold text-lg">{item}</h4>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Standard premium service feature
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="text-red-600 text-xs font-black uppercase tracking-widest mb-1">
+                  Single Cancellation Policy
+                </h4>
+                <p className="text-base font-bold text-gray-800 tracking-tight">
+                  Cancellation Deadline: 3 hours prior to any service start
+                  time.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Lunch */}
+              <div className="bg-white p-8 rounded-xl">
+                <div className="flex justify-between items-start mb-6">
+                  <span className="text-4xl">☀️</span>
+                  <div className="text-right">
+                    <span className="text-xs font-black text-amber-600 uppercase tracking-widest">
+                      Lunch Service
+                    </span>
+                    <div className="text-2xl font-black text-gray-900">
+                      12:00 PM - 03:00 PM
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-400 text-sm font-medium">
+                  Daily fresh hot meals delivered to your doorstep.
+                </p>
+              </div>
+
+              {/* Dinner */}
+              <div className="bg-white p-8 rounded-xl">
+                <div className="flex justify-between items-start mb-6">
+                  <span className="text-4xl">🌙</span>
+                  <div className="text-right">
+                    <span className="text-xs font-black text-indigo-500 uppercase tracking-widest">
+                      Dinner Service
+                    </span>
+                    <div className="text-2xl font-black text-gray-900">
+                      08:00 PM - 10:00 PM
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-400 text-sm font-medium">
+                  Relax with a wholesome home-cooked dinner experience.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* KEY FEEDBACK SUMMARY */}
+          <section className="mb-20">
+            <div className="flex flex-wrap justify-between items-end gap-4 mb-8">
+              <h2 className="text-2xl font-black tracking-tight text-gray-900">
+                Key Feedback Summary
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                <span className="bg-green-50 text-green-600 px-4 py-1.5 rounded-full text-xs font-bold border border-green-200">
+                  Always Punctual
+                </span>
+                <span className="bg-purple-50 text-purple-600 px-4 py-1.5 rounded-full text-xs font-bold border border-purple-200">
+                  Delicious Curries
+                </span>
+                <span className="bg-amber-50 text-amber-600 px-4 py-1.5 rounded-full text-xs font-bold border border-amber-200">
+                  Hygienic
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm space-y-4 mb-8">
+              {ratings.map(({ label, pct, w }) => (
+                <div key={label} className="flex items-center gap-4">
+                  <span className="text-xs font-bold w-14 text-gray-400">
+                    {label}
+                  </span>
+                  <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-amber-400 rounded-full transition-all"
+                      style={{ width: w }}
+                    />
+                  </div>
+                  <span className="text-xs font-bold w-12 text-right text-gray-700">
+                    {pct}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button className="flex-1 bg-gray-900 text-white font-black py-5 rounded-xl text-sm uppercase tracking-widest shadow-lg hover:bg-amber-500 transition-all flex items-center justify-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                Order a Trial
+              </button>
+
+              <button className="flex-1 bg-gray-900 text-white font-black py-5 rounded-xl text-sm uppercase tracking-widest shadow-lg hover:bg-amber-500 transition-all flex items-center justify-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+                Build My Plan
+              </button>
+            </div>
+          </section>
+
+          {/* SUBSCRIBE SECTION */}
+          {/* <section className="mb-8">
+            <div className="bg-white p-8 md:p-10 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden">
+              <div className="absolute -top-16 -right-16 w-64 h-64 bg-amber-100 rounded-full opacity-40 blur-3xl pointer-events-none" />
+              <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
+                <div className="flex-1">
+                  <div className="inline-block px-3 py-1 bg-amber-100 text-amber-600 rounded-full text-xs font-black uppercase tracking-widest mb-4 border border-amber-200">
+                    Limited Offer
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-black mb-5 tracking-tighter text-gray-900">
+                    Ready to Subscribe?{" "}
+                    <br />
+                    <span className="text-amber-500">Customize Your Journey</span>
+                  </h2>
+                  <p className="text-gray-500 mb-8 max-w-md text-sm leading-relaxed">
+                    Tailor your meals, delivery timings, and subscription period for a hassle-free home-style dining experience.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      "2 Meals per Day",
+                      "Stainless Steel Tiffins",
+                      "Pause Anytime",
+                      "Weekly Menu Flip",
+                    ].map((feature) => (
+                      <div key={feature} className="flex items-center gap-2 text-sm text-gray-600 font-medium">
+                        <CheckCircle />
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="w-full md:w-80 bg-gray-50 p-8 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center">
+                  <div className="text-center mb-8">
+                    <span className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">
+                      Standard Plan Starts At
+                    </span>
+                    <div className="flex items-end justify-center gap-2">
+                      <span className="text-5xl font-black text-gray-900 tracking-tighter">₹2700</span>
+                      <span className="text-sm text-gray-400 font-bold mb-1">/ Month</span>
+                    </div>
+                    <div className="mt-2 text-green-600 text-xs font-bold uppercase tracking-widest">
+                      Save 15% on subscriptions
+                    </div>
+                  </div>
+                  <button className="w-full bg-amber-500 text-white font-black py-4 rounded-lg text-base shadow-md shadow-amber-200 hover:bg-amber-600 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 mb-4">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Build My Plan
+                  </button>
+                  <p className="text-xs text-center text-gray-400 uppercase font-black tracking-widest">
+                    No commitments • Cancel anytime
                   </p>
                 </div>
+              </div>
+            </div>
+          </section> */}
+        </div>
+      </main>
+
+      {/* FOOTER */}
+      {/* <footer className="w-full py-12 px-8 md:px-12 border-t border-gray-200 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 items-start gap-8">
+          <div className="flex flex-col gap-4">
+            <div className="text-lg font-black text-gray-900 tracking-tighter uppercase">AhaarMitra</div>
+            <p className="text-xs text-gray-400 uppercase tracking-widest leading-relaxed">
+              The Premium Digital Hearth for Modern Nutrition.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            <h4 className="text-gray-900 text-xs font-black uppercase tracking-widest mb-2">Legal</h4>
+            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Privacy Policy</a>
+            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Terms of Service</a>
+          </div>
+          <div className="flex flex-col gap-3">
+            <h4 className="text-gray-900 text-xs font-black uppercase tracking-widest mb-2">Support</h4>
+            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Contact Support</a>
+            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Partner with Us</a>
+          </div>
+          <div className="flex flex-col gap-4 items-end">
+            <div className="flex gap-4">
+              {["📣", "🔗", "🌐"].map((icon, i) => (
+                <span key={i} className="text-gray-400 hover:text-gray-700 cursor-pointer transition-colors text-lg">
+                  {icon}
+                </span>
               ))}
             </div>
-          </div>
-
-          {/* Delivery */}
-          <div>
-            <h2 className="text-2xl font-black mb-6">
-              Typical Delivery Windows
-            </h2>
-
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-lg transition">
-                <h3 className="font-bold text-lg mb-3">Lunch Service</h3>
-                <p className="text-sm text-gray-500">
-                  Weekdays: 12:00 PM - 01:00 PM
-                </p>
-                <p className="text-sm text-gray-500">
-                  Weekends: 12:30 PM - 01:30 PM
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 hover:shadow-lg transition">
-                <h3 className="font-bold text-lg mb-3">Dinner Service</h3>
-                <p className="text-sm text-gray-500">
-                  Weekdays: 07:00 PM - 08:00 PM
-                </p>
-                <p className="text-sm text-gray-500">
-                  Weekends: 07:30 PM - 08:30 PM
-                </p>
-              </div>
+            <div className="text-gray-400 text-xs font-medium uppercase tracking-wide text-right">
+              © 2026 AhaarMitra Editorial. All rights reserved.
             </div>
           </div>
-
-          {/* Feedback */}
-          <div>
-            <h2 className="text-2xl font-black mb-6">
-              Key Feedback Summary
-            </h2>
-
-            <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100 space-y-4">
-              {[
-                ["5 Star", "85%"],
-                ["4 Star", "10%"],
-                ["3 Star", "3%"],
-                ["2 Star", "1.5%"],
-                ["1 Star", "0.5%"]
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <span className="text-xs w-16 text-gray-500">
-                    {item[0]}
-                  </span>
-                  <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-black to-gray-600 w-[80%]" />
-                  </div>
-                  <span className="text-xs font-semibold">{item[1]}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Testimonials */}
-          <div>
-            <h2 className="text-2xl font-black mb-6">
-              Customer Testimonials
-            </h2>
-
-            <div className="space-y-6">
-              <div className="bg-white p-5 rounded-xl shadow border border-gray-100">
-                <p className="font-semibold mb-2">Aarav Sharma ⭐⭐⭐⭐⭐</p>
-                <p className="text-sm text-gray-600 italic">
-                  "The quality of Phulkas is just like home..."
-                </p>
-              </div>
-
-              <div className="bg-white p-5 rounded-xl shadow border border-gray-100">
-                <p className="font-semibold mb-2">Priya Patel ⭐⭐⭐⭐</p>
-                <p className="text-sm text-gray-600 italic">
-                  "Very consistent service and perfect spice level."
-                </p>
-              </div>
-            </div>
-          </div>
-
         </div>
-
-        {/* RIGHT */}
-        <div className="col-span-4 space-y-6">
-
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-amber-200">
-            <p className="text-xs text-amber-600 font-semibold">LIMITED TIME</p>
-            <h2 className="text-3xl font-black mt-1">50% OFF</h2>
-            <button className="mt-4 w-full bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 transition shadow">
-              CLAIM DEAL
-            </button>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
-            <h2 className="font-bold mb-4">
-              Trial Customization ₹99
-            </h2>
-
-            <Link to={"/2"}>
-            <button className="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">
-              Customize Trial →
-            </button>
-              </Link>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
-            <h2 className="font-bold mb-4">
-              Subscribe ₹2999/month
-            </h2>
-    
-            <Link to={"/4"}>
-            <button className="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition">
-              Subscribe Now →
-            </button></Link>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
-            <h3 className="font-bold mb-3">Contact</h3>
-            <p className="text-sm">📞 +91 98765 43210</p>
-            <p className="text-sm">📧 shreetiffin@ahaarmitra.com</p>
-          </div>
-
-        </div>
-
-      </div>
-
-     
+      </footer> */}
     </div>
   );
-};
-
-export default VendorDetails1;
+}
