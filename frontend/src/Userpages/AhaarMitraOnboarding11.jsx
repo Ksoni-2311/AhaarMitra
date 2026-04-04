@@ -94,7 +94,7 @@ export default function AhaarMitraOnboarding11() {
         <header className="w-full px-6 text-center">
           <div className="inline-block mb-4 fade-up fade-up-1">
             <div className="text-3xl font-black text-stone-900 tracking-tighter uppercase">
-              <img className="h-30" src={AhaarMitraLogo} alt="AHAARMITRA" />
+              <img className="h-15 m-6" src={AhaarMitraLogo} alt="AHAARMITRA" />
             </div>
             <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent rounded-full" />
           </div>
@@ -198,6 +198,8 @@ export default function AhaarMitraOnboarding11() {
                   Sign In to your Dashboard
                 </span>
               </a>
+            </div>
+            <div className="m-24">
             </div>
           </div>
         </main>

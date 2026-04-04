@@ -6,7 +6,7 @@ export default function LandingNav() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 1000) {
         setShow(true);
       } else {
         setShow(false);

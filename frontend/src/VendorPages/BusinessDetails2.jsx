@@ -34,10 +34,10 @@ const BusinessDetails2 = () => {
   };
 
   return (
-    <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black font-[Manrope]">
+    <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black">
 
       {/* Header */}
-      <header className="w-full pt-10 pb-6 px-8 flex justify-between items-center border-b border-black/5 bg-white/70 backdrop-blur-xl sticky top-0 z-50">
+      {/* <header className="w-full pt-10 pb-6 px-8 flex justify-between items-center border-b border-black/5 bg-white/70 backdrop-blur-xl sticky top-0 z-50">
         <div>
           <div className="text-2xl font-black tracking-tighter uppercase">
             AhaarMitra
@@ -51,7 +51,7 @@ const BusinessDetails2 = () => {
         >
           ← Back to Personal Details
         </button>
-      </header>
+      </header> */}
 
       {/* Main */}
       <main className="min-h-[calc(100vh-160px)] grid grid-cols-1 lg:grid-cols-2">
@@ -150,9 +150,9 @@ const BusinessDetails2 = () => {
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-10 px-8 border-t border-black/5 bg-white text-center text-black/50 text-xs">
+      {/* <footer className="w-full py-10 px-8 border-t border-black/5 bg-white text-center text-black/50 text-xs">
         © 2024 AhaarMitra
-      </footer>
+      </footer> */}
 
     </div>
   );

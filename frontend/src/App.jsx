@@ -40,6 +40,7 @@ import CulinaryTrends5 from "./VendorPages/CulinaryTrends5.jsx";
 import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
 import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
+import VendorProfile from "./VendorPages/VendorProfile9.jsx";
 
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
@@ -55,7 +56,7 @@ const App = () => {
   );
 
   // 👤 AUTH STATE (TEMP - replace later)
-  const isLoggedIn = false; // change to auth later
+  const isLoggedIn = true; // change to auth later
   const isVendor = false; // change based on role
 
   // 🧠 DETECT VENDOR ROUTES
@@ -146,7 +147,8 @@ const App = () => {
               <Route path="/v5" element={<CulinaryTrends5 />} />
               <Route path="/v6" element={<SuccessIntelligence6 />} />
               <Route path="/v7" element={<VendorDashboard7 />} />
-              {/* <Route path="/v8" element={<VendorFinance8 />} /> */}
+              <Route path="/v8" element={<VendorFinance8 />} />
+              <Route path="/v9" element={<VendorProfile />} />
             </Routes>
           </div>
 

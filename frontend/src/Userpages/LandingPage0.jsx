@@ -142,27 +142,32 @@ function ScrollZoomHero() {
             opacity: textOpacity,
             y: textY,
           }}
-          className="absolute inset-0 flex flex-col items-center justify-center -translate-y-16 md:-translate-y-24 text-center px-4"
+          className="absolute inset-0 flex flex-col items-center justify-center -translate-y-16 md:-translate-y-24 text-center px-4 top-32"
         >
           <img
             src={ahaarmitraLogo}
             alt="Ahaar Mitra"
             className="w-[610px] md:w-[810px] lg:w-[930px] object-contain"
           />
+          <div className="h-40"></div>
+          <div className="mt-4 px-6 py-4 rounded-xl bg-white/20 backdrop-blur-md text-center">
+            {/* Text */}
+            <p className="text-white text-sm md:text-base max-w-xl mx-auto leading-tight">
+              Har din ghar jaisa swaad — connecting home chefs with people who
+              crave authentic meals.
+            </p>
 
-          <p className="text-gray-200 text-sm md:text-base max-w-xl leading-tight mt-1">
-            Har din ghar jaisa swaad — connecting home chefs with people who
-            crave authentic meals.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 mt-5">
-            <button className="px-6 py-3 bg-gray-900 text-white font-bold rounded-full text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
-              I am a Customer
-            </button>
-
-            <button className="px-6 py-3 bg-gray-900 text-white font-bold rounded-full text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
-              I am a Vendor
-            </button>
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 mt-4 justify-center items-center">
+              <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
+                Login
+              </button>
+              <Link to="/11">
+                <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
+                  Sign Up
+                </button>
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>

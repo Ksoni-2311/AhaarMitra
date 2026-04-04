@@ -33,10 +33,10 @@ const PayoutSetup3 = () => {
   };
 
   return (
-    <div className="antialiased min-h-screen bg-white text-black font-[Manrope]">
+    <div className="antialiased min-h-screen bg-white text-black]">
 
       {/* Header */}
-      <header className="w-full pt-10 pb-6 px-8 flex justify-between items-center border-b">
+      {/* <header className="w-full pt-10 pb-6 px-8 flex justify-between items-center border-b">
         <div>
           <div className="text-2xl font-black uppercase">AhaarMitra</div>
         </div>
@@ -47,10 +47,10 @@ const PayoutSetup3 = () => {
         >
           ← Back to Business Details
         </button>
-      </header>
+      </header> */}
 
       {/* Main */}
-      <main className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-100px)]">
+      <main className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
 
         {/* Left */}
         <section className="p-8 lg:p-20 flex flex-col justify-center bg-blue-50">

@@ -213,9 +213,9 @@ export default function TiffinTrial2() {
         </section>
 
         {/* MAIN CONTENT */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-2">
           {/* THALI & MEAL VARIANTS */}
-          <section className="mb-20">
+          <section className="mb-2">
             <div className="mb-10">
               <h2 className="text-3xl font-black tracking-tight text-gray-900 mb-2">
                 Thali &amp; Meal Variants
@@ -551,41 +551,15 @@ export default function TiffinTrial2() {
             </div>
           </section> */}
         </div>
-      </main>
-
-      {/* FOOTER */}
-      {/* <footer className="w-full py-12 px-8 md:px-12 border-t border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 items-start gap-8">
-          <div className="flex flex-col gap-4">
-            <div className="text-lg font-black text-gray-900 tracking-tighter uppercase">AhaarMitra</div>
-            <p className="text-xs text-gray-400 uppercase tracking-widest leading-relaxed">
-              The Premium Digital Hearth for Modern Nutrition.
+        <div className="max-w-7xl mx-auto px-6 md:px-12 pb-10">
+          <div className="w-full p-4 bg-red-50 border border-red-200 rounded-xl text-center">
+            <p className="text-sm font-semibold text-red-600">
+              Note: Trial tiffins contain approximately half the quantity of a
+              regular daily meal.
             </p>
           </div>
-          <div className="flex flex-col gap-3">
-            <h4 className="text-gray-900 text-xs font-black uppercase tracking-widest mb-2">Legal</h4>
-            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Terms of Service</a>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h4 className="text-gray-900 text-xs font-black uppercase tracking-widest mb-2">Support</h4>
-            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Contact Support</a>
-            <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-xs font-medium uppercase tracking-widest">Partner with Us</a>
-          </div>
-          <div className="flex flex-col gap-4 items-end">
-            <div className="flex gap-4">
-              {["📣", "🔗", "🌐"].map((icon, i) => (
-                <span key={i} className="text-gray-400 hover:text-gray-700 cursor-pointer transition-colors text-lg">
-                  {icon}
-                </span>
-              ))}
-            </div>
-            <div className="text-gray-400 text-xs font-medium uppercase tracking-wide text-right">
-              © 2026 AhaarMitra Editorial. All rights reserved.
-            </div>
-          </div>
         </div>
-      </footer> */}
+      </main>
     </div>
   );
 }
