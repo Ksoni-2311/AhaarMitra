@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const RegisterProvider1 = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = React.useState({
     firstName: "",
     lastName: "",
@@ -12,11 +13,9 @@ const RegisterProvider1 = () => {
     password: "",
   });
 
-
   const fullName = `${formData.firstName} ${formData.lastName}`.trim();
 
   const { registerVendor } = useVendorStore();
-
 
   // 🔹 Handle Change
   const handleChange = (e) => {
@@ -32,16 +31,23 @@ const RegisterProvider1 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await registerVendor({
-      name: fullName,
-      ...formData,
-    });
+    const data = new FormData();
 
-    console.log(formData);
+    data.append("name", fullName);
+    data.append("email", formData.email);
+    data.append("phone", formData.phone);
+    data.append("password", formData.password);
 
-    // ✅ Navigate only if backend says success
-    if (res?.success) {
-      navigate("/v2");
+    try {
+      const res = await registerVendor(data);
+
+      if (res?.success) {
+        alert("✅ Step 1 completed successfully!");
+        navigate("/v2");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
     }
   };
 
@@ -87,6 +93,7 @@ const RegisterProvider1 = () => {
                   onChange={handleChange}
                   className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                   placeholder="First Name"
+                  required
                 />
                 <input
                   name="lastName"
@@ -94,16 +101,19 @@ const RegisterProvider1 = () => {
                   onChange={handleChange}
                   className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                   placeholder="Last Name"
+                  required
                 />
               </div>
 
               {/* Email */}
               <input
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                 placeholder="Email Address"
+                required
               />
 
               {/* Phone */}
@@ -113,6 +123,7 @@ const RegisterProvider1 = () => {
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                 placeholder="+91 9876543210"
+                required
               />
 
               {/* Password */}
@@ -123,13 +134,13 @@ const RegisterProvider1 = () => {
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                 placeholder="Password"
+                required
               />
 
               {/* Submit */}
               <button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-500 text-white py-5 rounded-2xl font-black uppercase"
-                onclick={handleSubmit}
               >
                 Next Step
               </button>

@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs'
 export const registerVendorController = async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
+
     console.log(req.body);
     
     //  Validation
@@ -15,7 +16,6 @@ export const registerVendorController = async (req, res) => {
       });
     }
 
-    // ✅ Check existing vendor
     const existingVendor = await Vendor.findOne({
       $or: [{ email }, { phone }],
     });
@@ -26,18 +26,26 @@ export const registerVendorController = async (req, res) => {
       });
     }
 
-    // ✅ Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ✅ Create vendor
+    // ✅ HANDLE IMAGE
+    let profilePic = {};
+
+    if (req.file) {
+      profilePic = {
+        url: req.file.path,        // from Cloudinary
+        public_id: req.file.filename,
+      };
+    }
+
     const vendor = await Vendor.create({
       name,
       email,
       phone,
       password: hashedPassword,
+      profilePic, // 👈 SAVE HERE
     });
 
-    // ✅ Generate token
     const token = jwt.sign(
       { id: vendor._id },
       process.env.JWT_SECRET,
@@ -117,3 +125,83 @@ export const saveBank = async (req, res) => {
 
   res.json({ message: "Registration completed ✅" });
 }
+
+export const loginVendor = async (req, res) => {
+  try {
+    console.log("login route hit");
+    
+    const { emailorphone, password } = req.body;
+    console.log(req.body);
+    
+    // ✅ Validate input
+    if (!emailorphone && !password) {
+      return res.status(400).json({
+        message: "Email/Phone and password are required",
+      });
+    }
+
+    // ✅ Find vendor by email OR phone
+    const vendor = await Vendor.findOne({
+      $or: [{ email: emailorphone }, { phone: emailorphone }],
+    });
+
+    if (!vendor) {
+      return res.status(404).json({
+        message: "Vendor not found",
+      });
+    }
+
+    // ✅ Compare password
+    const isMatch = await bcrypt.compare(password, vendor.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+      });
+    }
+
+    // ✅ Generate JWT token
+    const token = jwt.sign(
+      { id: vendor._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // ✅ Send response
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      vendor: {
+        id: vendor._id,
+        name: vendor.name,
+        email: vendor.email,
+        phone: vendor.phone,
+      },
+    });
+
+  } catch (error) {
+    console.error("Error in login route:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+export const getAllVendors = async (req, res) => {
+  try {
+    const vendors = await Vendor.find()
+      .sort({ createdAt: -1 }) // newest first
+      .limit(50); // optional limit
+
+    res.status(200).json({
+      success: true,
+      count: vendors.length,
+      vendors,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch vendors",
+    });
+  }
+};

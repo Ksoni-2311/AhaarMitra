@@ -8,6 +8,7 @@ import vendorServiceRoutes from './routes/vendor.config.routes.js';
 
 dotenv.config();
 const app = express();
+import orderRoutes from "./routes/order.routes.js";
 
 
 app.use(express.json());
@@ -20,7 +21,7 @@ app.use(
 app.use("/api/user",userRoutes);
 app.use("/api/vendor",vendorRoutes);
 app.use("/api/vendor", vendorServiceRoutes);
-
+app.use("/api/orders", orderRoutes);
 
 
 app.get('/',(req,res) => {

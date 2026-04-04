@@ -4,24 +4,23 @@ const vendorSchema = new mongoose.Schema({
   name: String,
   email: String,
   phone: { type: String, unique: true },
-  password:String,
+  password: String,
   profilePic: {
     url: String,
     public_id: String,
   },
-
   isOtpVerified: { type: Boolean, default: false },
 
   business: {
-  type: {
-    businessName: String,
-    type: String,
-    address: String,
-    gstNumber: String,
-    fssaiNumber: String,
+    type: {
+      businessName: String,
+      type: String,
+      address: String,
+      gstNumber: String,
+      fssaiNumber: String,
+    },
+    default: {},
   },
-  default: {},
-},
 
   bank: {
     accountHolderName: String,
@@ -37,7 +36,7 @@ const vendorSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-},{ timestamps: true });
+}, { timestamps: true });
 
 export default mongoose.model("Vendor", vendorSchema);
 

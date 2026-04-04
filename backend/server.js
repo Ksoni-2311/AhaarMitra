@@ -1,7 +1,7 @@
 import app from "./app.js";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
-import vendorModel from "./models/vendor.model.js";
+// import vendorModel from "./models/vendor.model.js";
 dotenv.config();
 
 connectDB();

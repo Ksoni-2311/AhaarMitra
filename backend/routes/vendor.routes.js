@@ -3,13 +3,24 @@ import {
   saveBusiness,
   saveBank,
   registerVendorController,
+  loginVendor,
+  getAllVendors,
 } from "../controllers/vendor.controller.js";
 import { vendorMiddleware } from "../middleware/vendorMiddleware.js";
-
+import {upload} from '../middleware/multer.js'
 const router = express.Router();
 
-router.post("/register", registerVendorController);
-router.post("/business", vendorMiddleware, saveBusiness);
+router.post("/register",registerVendorController );
+router.post(
+  "/business",
+  vendorMiddleware,              // 🔥 FIRST
+  upload.single("profilePic"), // 🔥 SECOND
+  saveBusiness
+);
 router.post("/bank", vendorMiddleware, saveBank);
+router.post("/login", loginVendor);
+router.get("/all", getAllVendors);
+
+// router.post("/logout", vendorMiddleware, saveBank);
 
 export default router;

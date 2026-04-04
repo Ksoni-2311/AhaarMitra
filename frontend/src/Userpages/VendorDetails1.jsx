@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+=======
+import { useState,useEffect } from "react";
+import useVendorStore from "../stores/vendor.store.js";
+import {useParams} from 'react-router-dom'
+
+>>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
 const Star = ({ filled }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -33,8 +40,41 @@ const CheckCircle = () => (
   </svg>
 );
 
+<<<<<<< HEAD
 export default function VendorDetails1() {
   const [activeTab, setActiveTab] = useState("explore");
+=======
+export default function TiffinTrial2() {
+  // const [activeTab, setActiveTab] = useState("explore");
+  const { id } = useParams();
+
+  const {
+    selectedVendor,
+    vendorConfig,
+    getVendorFullDetails,
+    loading,
+  } = useVendorStore();
+
+  useEffect(() => {
+    if (id) getVendorFullDetails(id);
+  }, [id]);
+
+  if (loading) return <div className="p-10">Loading...</div>;
+const getTodayKey = () => {
+  return new Date()
+    .toLocaleDateString("en-US", { weekday: "long" })
+    .toLowerCase();
+};
+const todayKey = "monday";
+console.log(todayKey);
+
+const business = selectedVendor?.business || {};
+const config = vendorConfig || {};
+
+const pricing = config?.pricingVariants || [];
+const weeklyMenu = config?.weeklyMenu || {};
+const todayMenu = weeklyMenu?.[todayKey];
+>>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
 
   const ratings = [
     { label: "5 Stars", pct: "85%", w: "85%", opacity: "100" },
@@ -127,7 +167,7 @@ export default function VendorDetails1() {
                 </span>
               </div>
               <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-gray-900 mb-3">
-                Shree Tiffin Services
+                {business.businessName || "Vendor Name"}
               </h1>
               <div className="flex items-center gap-3 whitespace-nowrap text-gray-600 mb-4">
                 <div className="flex items-center gap-1.5 shrink-0">
@@ -139,7 +179,7 @@ export default function VendorDetails1() {
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
                   </svg>
                   <span className="text-sm font-medium">
-                    B-42, Sector 62, Noida, UP 201301
+                    {business.address || "Vendor Address"}
                   </span>
                 </div>
 
@@ -153,7 +193,7 @@ export default function VendorDetails1() {
                   >
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                   </svg>
-                  <span className="text-sm font-medium">+91 98765 43210</span>
+                  <span className="text-sm font-medium">+91 {business.phone || ""}</span>
                 </div>
 
                 <span className="text-gray-300 shrink-0">•</span>
@@ -226,23 +266,8 @@ export default function VendorDetails1() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              {/* Header row */}
-              <div className="hidden md:grid grid-cols-12 gap-4 px-8 py-4 bg-gray-100 rounded-t-xl border border-gray-200 items-center">
-                <div className="col-span-5 text-xs font-black uppercase tracking-widest text-gray-400">
-                  Variant &amp; Menu
-                </div>
-                <div className="col-span-2 text-center text-xs font-black uppercase tracking-widest text-gray-400">
-                  Trial
-                </div>
-                <div className="col-span-2 text-center text-xs font-black uppercase tracking-widest text-gray-400">
-                  Weekly
-                </div>
-                <div className="col-span-3 text-center text-xs font-black uppercase tracking-widest text-gray-400">
-                  Monthly
-                </div>
-              </div>
 
+<<<<<<< HEAD
               {/* Mini Thali */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center px-8 py-8 bg-white border border-gray-200 hover:border-amber-300 hover:shadow-md transition-all rounded-xl">
                 <div className="col-span-1 md:col-span-5 flex items-center gap-6">
@@ -354,8 +379,130 @@ export default function VendorDetails1() {
                   </div>
                 </div>
               </div>
+=======
+<div className="max-w-7xl mx-auto px-6 md:px-12 pb-16">
+
+  <h2 className="text-3xl font-black mb-10">
+    Today’s Menu
+  </h2>
+
+  {!todayMenu ? (
+    <p>No menu available for today</p>
+  ) : (
+    Object.entries(todayMenu).map(([mealType, variants]) => (
+      <div key={mealType} className="mb-8">
+
+        {/* MEAL TITLE */}
+        <h3 className="text-xl font-bold capitalize mb-4 text-gray-800">
+          {mealType}
+        </h3>
+
+        {/* VARIANTS */}
+        <div className="grid md:grid-cols-3 gap-6">
+
+          {Object.entries(variants).map(([type, items]) => (
+            <div
+              key={type}
+              className="bg-white p-5 border border-gray-200 rounded-xl shadow-sm"
+            >
+
+              <h4 className="font-bold capitalize mb-3 text-gray-900">
+                {type}
+              </h4>
+
+              {items && items.length > 0 ? (
+                <ul className="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                  {items.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-400 text-sm">
+                  No items available
+                </p>
+              )}
+
+>>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
             </div>
+          ))}
+
+        </div>
+      </div>
+    ))
+  )}
+
+</div>
           </section>
+
+<div className="max-w-6xl mx-auto px-6 pb-16">
+
+  <h2 className="text-3xl font-black mb-10">
+    Thali & Meal Variants
+  </h2>
+
+  <div className="space-y-6">
+
+    {pricing?.map((variant, index) => (
+      <div
+        key={index}
+        className="bg-white border rounded-2xl p-6 shadow-sm flex flex-col md:flex-row justify-between gap-6"
+      >
+        {/* LEFT SIDE */}
+        <div className="flex gap-4">
+
+          {/* IMAGE (optional placeholder) */}
+          <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-sm">
+            Img
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold">
+              {variant.variantName}
+            </h3>
+
+            {/* COMPONENTS */}
+            <p className="text-gray-500 text-sm mt-1">
+              {variant.components?.join(", ")}
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE PRICING */}
+        <div className="flex flex-col md:flex-row gap-6 items-center md:items-end">
+
+          {/* DAILY */}
+          <div className="text-center">
+            <p className="text-xs text-gray-400 uppercase">Trial</p>
+            <p className="text-lg font-bold">
+              ₹{variant.dailyPrice}
+            </p>
+          </div>
+
+          {/* WEEKLY */}
+          <div className="text-center">
+            <p className="text-xs text-gray-400 uppercase">Weekly</p>
+            <p className="text-lg font-bold">
+              ₹{variant.weeklyPrice}
+            </p>
+          </div>
+
+          {/* MONTHLY (Highlighted) */}
+          <div className="bg-orange-50 border border-orange-200 px-6 py-3 rounded-xl text-center">
+            <p className="text-2xl font-black text-orange-600">
+              ₹{variant.monthlyPrice}
+            </p>
+            <p className="text-xs text-orange-500 font-bold uppercase">
+              Recommended
+            </p>
+          </div>
+
+        </div>
+      </div>
+    ))}
+
+  </div>
+</div>
+
 
           {/* DELIVERY SCHEDULE */}
           <section className="mb-20">

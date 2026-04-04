@@ -1,6 +1,6 @@
 import React from "react";
 import ahaarmitraLogo from "../../assets/ahaarMitraLogo.svg";
-
+import { Link } from "react-router-dom";
 const PublicNavBar = () => {
   return (
     <div className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 h-16 px-6 md:px-12 flex items-center">
@@ -30,9 +30,12 @@ const PublicNavBar = () => {
         </button>
 
         {/* Sign Up */}
-        <button className="text-sm font-semibold bg-black text-white px-4 py-2 rounded-full hover:bg-amber-500 transition-all">
+        <Link
+          to="/11"
+          className="text-sm font-semibold bg-black text-white px-4 py-2 rounded-full hover:bg-amber-500 transition-all"
+        >
           Sign Up
-        </button>
+        </Link>
       </div>
     </div>
   );
