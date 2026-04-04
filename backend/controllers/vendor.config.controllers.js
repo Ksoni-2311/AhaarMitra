@@ -3,7 +3,8 @@ import VendorServiceConfig from "../models/VendorServiceConfig.js"
 export const getVendorServiceConfig = async (req, res) => {
   try {
     const vendorId = req.user.id;
-
+    console.log("getv1call");
+    
     const config = await VendorServiceConfig.findOne({ vendor: vendorId });
 
     if (!config) {
@@ -13,7 +14,8 @@ export const getVendorServiceConfig = async (req, res) => {
         data: null,
       });
     }
-
+    console.log(res);
+    
     res.status(200).json({
       success: true,
       data: config,
@@ -31,6 +33,8 @@ export const getVendorServiceConfig = async (req, res) => {
 export const upsertVendorServiceConfig = async (req, res) => {
   try {
     const vendorId = req.user.id;
+    console.log("getvcall▬");
+    console.log(vendorId);
 
     const {
       mealTypes,
@@ -42,7 +46,8 @@ export const upsertVendorServiceConfig = async (req, res) => {
       trialOffer,
       weeklyMenu,
     } = req.body;
-
+    console.log(req.body);
+    
     const updatedConfig = await VendorServiceConfig.findOneAndUpdate(
       { vendor: vendorId },
       {
@@ -82,6 +87,7 @@ export const updatePricingVariants = async (req, res) => {
   try {
     const vendorId = req.user.id;
     const { pricingVariants } = req.body;
+    console.log("getv3call▬");
 
     const config = await VendorServiceConfig.findOneAndUpdate(
       { vendor: vendorId },
@@ -107,13 +113,15 @@ export const updateWeeklyMenu = async (req, res) => {
   try {
     const vendorId = req.user.id;
     const { weeklyMenu } = req.body;
+    console.log("getv1call4");
 
     const config = await VendorServiceConfig.findOneAndUpdate(
       { vendor: vendorId },
       { weeklyMenu },
       { new: true, upsert: true, runValidators: true }
     );
-
+    console.log("data saved in updateweekly");
+    
     res.status(200).json({
       success: true,
       message: "Weekly menu updated successfully",

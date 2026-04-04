@@ -3,6 +3,8 @@ const BASE_URL = "http://localhost:8080/api/vendor";
 const getToken = () => localStorage.getItem("token");
 
 export const getServiceConfig = async () => {
+    console.log("data hit");
+    
   const res = await fetch(`${BASE_URL}/service-config`, {
     method: "GET",
     headers: {
