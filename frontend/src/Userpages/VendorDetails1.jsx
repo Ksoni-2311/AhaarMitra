@@ -63,7 +63,7 @@ export default function VendorDetails1() {
           <div className="absolute bottom-10 left-8 right-8 flex flex-col md:flex-row justify-between items-end gap-6">
             <div>
               <h1 className="text-4xl font-black">
-                {business.businessName || "Vendor Name"}
+                {business?.businessName || "Vendor Name"}
               </h1>
               <p>{business.address}</p>
             </div>

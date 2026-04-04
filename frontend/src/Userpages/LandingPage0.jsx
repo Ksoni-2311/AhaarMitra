@@ -15,46 +15,48 @@ import Footer from "../components/Footer";
 /* ================= FIXED VENDORS ================= */
 
 const vendors = [
-  {
-    id: "69d0dc68871831a749f47b21",
-    name: "Maa Ke Haath Ka Khana",
-    rating: "4.9",
-    price: "₹99",
-    subs: "1,248",
-    badges: [
-      { label: "Top Rated", color: "bg-amber-500 text-black" },
-      { label: "Pure Veg", color: "bg-black text-white" },
-    ],
-    img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775295716/aaharmitra/business/zbtkysnt2wdbvjhiel2y.jpg",
-  },
-  {
-    id: "69d0d38e871831a749f47aff",
-    name: "Swad Ghar Ka",
-    rating: "4.8",
-    price: "₹149",
-    subs: "842",
-    badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3JZIL2VyoUmdoQ-pqft4aLQl0MjVCq8jVA&s",
-  },
-  {
-    id: "3",
-    name: "Gharam Rasoi",
-    rating: "4.7",
-    price: "₹179",
-    subs: "2,105",
-    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
-    img: LandingImage,
-  },
-  {
-    id: "4", // ✅ FIXED duplicate id
-    name: "Swaad Ghar Tiffins",
-    rating: "4.7",
-    price: "₹179",
-    subs: "1,105",
-    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvBP2wpne32lKxUkchKIe3u_9DhtQ5iGchfA&s",
-  },
+{
+id: "69d0dc68871831a749f47b21",
+name: "Maa Ke Haath Ka Khana",
+rating: "4.9",
+price: "₹99",
+subs: "1,248",
+badges: [
+{ label: "Top Rated", color: "bg-amber-500 text-black" },
+{ label: "Pure Veg", color: "bg-black text-white" },
+],
+img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775295716/aaharmitra/business/zbtkysnt2wdbvjhiel2y.jpg",
+},
+{
+id: "69d0d38e871831a749f47aff",
+name: "Swad Ghar Ka",
+rating: "4.8",
+price: "₹149",
+subs: "842",
+badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
+img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3JZIL2VyoUmdoQ-pqft4aLQl0MjVCq8jVA&s",
+},
+{
+id: "3",
+name: "Gharam Rasoi",
+rating: "4.7",
+price: "₹179",
+subs: "2,105",
+badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
+img: LandingImage,
+},
+{
+id: "4",
+name: "Swaad Ghar Tiffins",
+rating: "4.7",
+price: "₹179",
+subs: "1,105",
+badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
+img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvBP2wpne32lKxUkchKIe3u_9DhtQ5iGchfA&s",
+},
 ];
+
+
 
 /* ================= MAIN ================= */
 
