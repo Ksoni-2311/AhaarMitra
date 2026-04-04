@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import AhaarMitraLogo from "../assets/AhaarMitraLogo.png";
 
 export default function TiffinSeekerRegistration13() {
   const navigate = useNavigate();
@@ -134,12 +136,16 @@ export default function TiffinSeekerRegistration13() {
       `}</style>
 
       <div
-        className="min-h-screen flex flex-col items-center justify-center bg-stone-50 bg-dot py-20 px-6 text-stone-900"
+        className="min-h-screen flex flex-col items-center justify-center bg-stone-50 bg-dot pt-8 pb-20 px-6 text-stone-900"
         // style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         <div className="max-w-md w-full text-center mb-10">
-          <div className="text-2xl font-black text-stone-900 tracking-tighter mb-8 fade-up fu-1">
-            AhaarMitra
+          <div className="mb-8 fade-up fu-1 flex justify-center">
+            <img
+              src={AhaarMitraLogo}
+              alt="AhaarMitra Logo"
+              className="h-10 object-contain"
+            />
           </div>
 
           <div className="fade-up fu-2 inline-flex items-center gap-4 bg-white border border-stone-200 shadow-sm px-6 py-2.5 rounded-full mb-10">
@@ -283,28 +289,6 @@ export default function TiffinSeekerRegistration13() {
             </div>
           </div>
         </div>
-
-        <footer className="w-full py-8 px-6 border-t border-stone-200 mt-16">
-          <div className="max-w-md mx-auto flex flex-col md:flex-row justify-between items-center gap-4 opacity-50">
-            <div className="text-[10px] font-black tracking-widest uppercase text-stone-500">
-              © 2024 AhaarMitra
-            </div>
-            <div className="flex gap-6">
-              <a
-                href="#"
-                className="text-[10px] font-black tracking-widest uppercase text-stone-500 hover:text-stone-900 transition-colors"
-              >
-                Privacy
-              </a>
-              <a
-                href="#"
-                className="text-[10px] font-black tracking-widest uppercase text-stone-500 hover:text-stone-900 transition-colors"
-              >
-                Help
-              </a>
-            </div>
-          </div>
-        </footer>
       </div>
     </>
   );

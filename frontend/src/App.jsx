@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "./components/NavBar.jsx";
-import VendorNavBar from "./components/VendorNavBar";
-import PublicNavBar from "./components/PublicNavBar";
+import VendorNavBar from "./components/VendorNavBar.jsx";
+import PublicNavBar from "./components/PublicNavBar.jsx";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import Footer from "./components/Footer.jsx";
@@ -30,7 +30,7 @@ import AddressPopUp from "./VendorPages/AddressPopUp20.jsx";
 import CancelLunch from "./VendorPages/CancelLunch21.jsx";
 import AddTiffin from "./VendorPages/AddTiffin22.jsx";
 import CancelAllMeals from "./VendorPages/CancelAllMeals23.jsx";
-import Additem from "./VendorPages/AddItem24.jsx";
+import AddItem from "./VendorPages/AddItem24.jsx";
 
 // Vendor Pages
 import RegisterProvider1 from "./VendorPages/RegisterProvider1.jsx";
@@ -40,20 +40,20 @@ import SuccessIntelligence6 from "./VendorPages/SuccessIntelligence6.jsx";
 import CulinaryTrends5 from "./VendorPages/CulinaryTrends5.jsx";
 import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
-<<<<<<< HEAD
-import VendorAllInfo from "./VendorPages/VendorAllInfo.jsx";
-=======
+
+
 import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
 import VendorProfile from "./VendorPages/VendorProfile9.jsx";
-<<<<<<< HEAD
 import VendorDash from "./VendorPages/VendorDashboard10.jsx";
-=======
->>>>>>> 057770ed2b9e6b3c502b5a8e2c4a1ccc21bb1e74
->>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
+
+import Tempr from "./Userpages/tempr.jsx";
+
+import Ex from "./Userpages/Ex.jsx";
 
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
 import Loader from "./components/Loader.jsx";
+import VendorLogin10 from "./VendorPages/VendorLogin10.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -64,15 +64,9 @@ const App = () => {
     location.pathname.startsWith(route)
   );
 
-<<<<<<< HEAD
-  // 👤 AUTH STATE (TEMP)
-  const isLoggedIn = false;
-  const isVendor = false;
-=======
   // 👤 AUTH STATE (TEMP - replace later)
   const isLoggedIn = true; // change to auth later
   const isVendor = false; // change based on role
->>>>>>> 057770ed2b9e6b3c502b5a8e2c4a1ccc21bb1e74
 
   // 🧠 DETECT VENDOR ROUTES
   const vendorRoutes = ["/v4", "/v5", "/v6", "/v7"];
@@ -143,7 +137,7 @@ const App = () => {
               <Route path="/21" element={<CancelLunch />} />
               <Route path="/22" element={<AddTiffin />} />
               <Route path="/23" element={<CancelAllMeals />} />
-              <Route path="/24" element={<Additem />} />
+              <Route path="/24" element={<AddItem />} />
 
               <Route path="/subscription" element={<AhaarMitraSubscriptions />} />
               <Route path="/support" element={<AhaarMitraSupport />} />
@@ -157,16 +151,14 @@ const App = () => {
               <Route path="/v5" element={<CulinaryTrends5 />} />
               <Route path="/v6" element={<SuccessIntelligence6 />} />
               <Route path="/v7" element={<VendorDashboard7 />} />
-<<<<<<< HEAD
-              <Route path="/v9" element={<VendorAllInfo />} />
-=======
               <Route path="/v8" element={<VendorFinance8 />} />
+
               <Route path="/v9" element={<VendorProfile />} />
-<<<<<<< HEAD
-              <Route path="/v10" element={<VendorDash />} />
-=======
->>>>>>> 057770ed2b9e6b3c502b5a8e2c4a1ccc21bb1e74
->>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
+
+              <Route path="/v10" element={<VendorLogin10 />} />
+              <Route path="/ex" element={<Ex />} />
+
+              <Route path="/tempr" element={<Tempr />} />
             </Routes>
           </div>
 

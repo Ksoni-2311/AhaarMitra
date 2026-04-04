@@ -63,12 +63,31 @@ const Icon = ({ name, className = "" }) => (
 // --- Navbar ---
 const Navbar = () => (
   <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-black/8 shadow-sm h-20 px-6 md:px-12 flex justify-between items-center">
-    <div className="text-2xl font-black text-gray-900 tracking-tighter">AhaarMitra</div>
+    <div className="text-2xl font-black text-gray-900 tracking-tighter">
+      AhaarMitra
+    </div>
     <div className="hidden md:flex items-center gap-8 font-bold tracking-tight">
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Explore</a>
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Subscriptions</a>
-      <a className="text-gray-900 border-b-2 border-gray-900 pb-1" href="#">Orders</a>
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Support</a>
+      <a
+        className="text-gray-400 hover:text-gray-900 transition-colors"
+        href="#"
+      >
+        Explore
+      </a>
+      <a
+        className="text-gray-400 hover:text-gray-900 transition-colors"
+        href="#"
+      >
+        Subscriptions
+      </a>
+      <a className="text-gray-900 border-b-2 border-gray-900 pb-1" href="#">
+        Orders
+      </a>
+      <a
+        className="text-gray-400 hover:text-gray-900 transition-colors"
+        href="#"
+      >
+        Support
+      </a>
     </div>
     <div className="flex items-center gap-4 md:gap-6">
       <div className="relative hidden sm:flex items-center bg-gray-100 rounded-full px-4 py-2 border border-gray-200">
@@ -94,26 +113,46 @@ const Navbar = () => (
 
 // --- Calendar ---
 const calendarDays1 = [
-  { day: 20, type: "day-completed" }, { day: 21, type: "day-completed" },
-  { day: 22, type: "day-completed" }, { day: 23, type: "day-completed" },
-  { day: 24, type: "day-completed" }, { day: 25, type: "day-skipped" },
-  { day: 26, type: "day-skipped" }, { day: 27, type: "day-completed" },
-  { day: 28, type: "day-active" }, { day: 29, type: "day-upcoming" },
-  { day: 30, type: "day-upcoming" }, { day: 31, type: "day-upcoming" },
-  { day: 1, type: "day-upcoming opacity-30" }, { day: 2, type: "day-upcoming opacity-30" },
+  { day: 20, type: "day-completed" },
+  { day: 21, type: "day-completed" },
+  { day: 22, type: "day-completed" },
+  { day: 23, type: "day-completed" },
+  { day: 24, type: "day-completed" },
+  { day: 25, type: "day-skipped" },
+  { day: 26, type: "day-skipped" },
+  { day: 27, type: "day-completed" },
+  { day: 28, type: "day-active" },
+  { day: 29, type: "day-upcoming" },
+  { day: 30, type: "day-upcoming" },
+  { day: 31, type: "day-upcoming" },
+  { day: 1, type: "day-upcoming opacity-30" },
+  { day: 2, type: "day-upcoming opacity-30" },
 ];
 
 const calendarDays2 = [
-  { day: 20, type: "day-completed" }, { day: 21, type: "day-completed" },
-  { day: 22, type: "day-completed" }, { day: 23, type: "day-completed" },
-  { day: 24, type: "day-completed" }, { day: 25, type: "day-completed" },
-  { day: 26, type: "day-completed" }, { day: 27, type: "day-completed" },
-  { day: 28, type: "day-active" }, { day: 29, type: "day-upcoming" },
-  { day: 30, type: "day-upcoming" }, { day: 31, type: "day-upcoming" },
-  { day: 1, type: "day-upcoming opacity-30" }, { day: 2, type: "day-upcoming opacity-30" },
+  { day: 20, type: "day-completed" },
+  { day: 21, type: "day-completed" },
+  { day: 22, type: "day-completed" },
+  { day: 23, type: "day-completed" },
+  { day: 24, type: "day-completed" },
+  { day: 25, type: "day-completed" },
+  { day: 26, type: "day-completed" },
+  { day: 27, type: "day-completed" },
+  { day: 28, type: "day-active" },
+  { day: 29, type: "day-upcoming" },
+  { day: 30, type: "day-upcoming" },
+  { day: 31, type: "day-upcoming" },
+  { day: 1, type: "day-upcoming opacity-30" },
+  { day: 2, type: "day-upcoming opacity-30" },
 ];
 
-const CalendarWidget = ({ days, mealsLeft, daysLeft, daysLeftColor, summaryItems }) => (
+const CalendarWidget = ({
+  days,
+  mealsLeft,
+  daysLeft,
+  daysLeftColor,
+  summaryItems,
+}) => (
   <div className="w-full lg:w-80 shrink-0">
     <div className="flex flex-col mb-4">
       <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-gray-700 mb-2">
@@ -132,40 +171,71 @@ const CalendarWidget = ({ days, mealsLeft, daysLeft, daysLeftColor, summaryItems
       <div className="flex justify-between items-center mb-4 px-1">
         <span className="text-xs font-bold text-gray-700">May 2024</span>
         <div className="flex gap-2">
-          <Icon name="chevron_left" className="text-lg text-gray-300 cursor-pointer hover:text-gray-600" />
-          <Icon name="chevron_right" className="text-lg text-gray-300 cursor-pointer hover:text-gray-600" />
+          <Icon
+            name="chevron_left"
+            className="text-lg text-gray-300 cursor-pointer hover:text-gray-600"
+          />
+          <Icon
+            name="chevron_right"
+            className="text-lg text-gray-300 cursor-pointer hover:text-gray-600"
+          />
         </div>
       </div>
       <div className="calendar-grid mb-1">
-        {["M","T","W","T","F","S","S"].map((d,i) => (
-          <div key={i} className="text-[9px] font-black text-gray-300 text-center uppercase">{d}</div>
+        {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+          <div
+            key={i}
+            className="text-[9px] font-black text-gray-300 text-center uppercase"
+          >
+            {d}
+          </div>
         ))}
       </div>
       <div className="calendar-grid">
         {days.map((d, i) => (
-          <div key={i} className={`calendar-day ${d.type}`}>{d.day}</div>
+          <div key={i} className={`calendar-day ${d.type}`}>
+            {d.day}
+          </div>
         ))}
       </div>
       <div className="mt-6 pt-4 border-t border-gray-200 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">Meals Remaining</span>
-            <span className="text-xl font-black text-gray-900">{mealsLeft}</span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">
+              Meals Remaining
+            </span>
+            <span className="text-xl font-black text-gray-900">
+              {mealsLeft}
+            </span>
           </div>
           <div className="flex flex-col items-end">
-            <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">Days Left</span>
-            <span className={`text-xl font-black ${daysLeftColor}`}>{daysLeft}</span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">
+              Days Left
+            </span>
+            <span className={`text-xl font-black ${daysLeftColor}`}>
+              {daysLeft}
+            </span>
           </div>
         </div>
         <div className="summary-panel rounded-xl border border-gray-200 p-3 space-y-3">
           {summaryItems.map((item, i) => (
-            <div key={i} className={`flex items-center gap-3 ${item.opacity ? "opacity-30" : ""}`}>
+            <div
+              key={i}
+              className={`flex items-center gap-3 ${item.opacity ? "opacity-30" : ""}`}
+            >
               <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
-                <Icon name={item.icon} className={`text-base ${item.iconColor}`} />
+                <Icon
+                  name={item.icon}
+                  className={`text-base ${item.iconColor}`}
+                />
               </div>
               <div className="flex flex-col">
-                <span className="text-xs font-black text-gray-700">{item.label}</span>
-                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">{item.sub}</span>
+                <span className="text-xs font-black text-gray-700">
+                  {item.label}
+                </span>
+                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest">
+                  {item.sub}
+                </span>
               </div>
             </div>
           ))}
@@ -177,15 +247,26 @@ const CalendarWidget = ({ days, mealsLeft, daysLeft, daysLeftColor, summaryItems
 
 // --- Delivery Slot Card ---
 const SlotCard = ({ slot, time, icon, menu, disabled }) => (
-  <div className={`bg-gray-50 rounded-xl p-5 border border-gray-200 relative group overflow-hidden ${disabled ? "opacity-50 grayscale" : ""}`}>
+  <div
+    className={`bg-gray-50 rounded-xl p-5 border border-gray-200 relative group overflow-hidden ${disabled ? "opacity-50 grayscale" : ""}`}
+  >
     <div className="flex justify-between items-start mb-4">
       <div>
-        <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{slot}</div>
-        <div className="text-xl font-black text-gray-900">{time.main} <span className="text-xs font-bold text-gray-400 uppercase">{time.ampm}</span></div>
+        <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">
+          {slot}
+        </div>
+        <div className="text-xl font-black text-gray-900">
+          {time.main}{" "}
+          <span className="text-xs font-bold text-gray-400 uppercase">
+            {time.ampm}
+          </span>
+        </div>
       </div>
       <Icon name={icon} className="text-gray-300 text-2xl" />
     </div>
-    <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Menu Preview</div>
+    <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">
+      Menu Preview
+    </div>
     <div className="text-sm font-bold text-gray-700 leading-snug">{menu}</div>
     <div className="mt-4 pt-4 border-t border-gray-200 flex gap-2">
       {disabled ? (
@@ -207,7 +288,17 @@ const SlotCard = ({ slot, time, icon, menu, disabled }) => (
 );
 
 // --- Active Subscription Card ---
-const SubscriptionCard = ({ vendor, id, badge, badgeColor, planLabel, iconName, iconColor, slots, summaryProps }) => (
+const SubscriptionCard = ({
+  vendor,
+  id,
+  badge,
+  badgeColor,
+  planLabel,
+  iconName,
+  iconColor,
+  slots,
+  summaryProps,
+}) => (
   <div className="order-card bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
     <div className="p-6 md:p-10 flex flex-col lg:flex-row gap-8 lg:gap-12">
       <div className="flex-1 flex flex-col">
@@ -216,13 +307,21 @@ const SubscriptionCard = ({ vendor, id, badge, badgeColor, planLabel, iconName, 
             <Icon name={iconName} className={`text-3xl ${iconColor}`} />
           </div>
           <div>
-            <h3 className="font-black text-2xl tracking-tight text-gray-900">{vendor}</h3>
-            <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">ID: {id}</div>
+            <h3 className="font-black text-2xl tracking-tight text-gray-900">
+              {vendor}
+            </h3>
+            <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
+              ID: {id}
+            </div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 py-0.5 border border-gray-200 rounded">
                 {planLabel}
               </span>
-              <span className={`text-[10px] font-black uppercase tracking-widest ${badgeColor}`}>{badge}</span>
+              <span
+                className={`text-[10px] font-black uppercase tracking-widest ${badgeColor}`}
+              >
+                {badge}
+              </span>
             </div>
           </div>
         </div>
@@ -232,11 +331,9 @@ const SubscriptionCard = ({ vendor, id, badge, badgeColor, planLabel, iconName, 
           ))}
         </div>
         <div className="flex">
-          <Link to = "/v4">
           <button className="w-full py-4 bg-gray-50 border border-gray-200 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-gray-100 transition-colors flex items-center justify-center gap-3 text-gray-600">
             <Icon name="chat" className="text-xl" /> Contact Vendor
           </button>
-          </Link>
         </div>
       </div>
       <CalendarWidget {...summaryProps} />
@@ -254,8 +351,18 @@ const sub1 = {
   iconName: "lunch_dining",
   iconColor: "text-amber-500",
   slots: [
-    { slot: "Lunch Slot", time: { main: "Today, 12:45", ampm: "PM" }, icon: "light_mode", menu: "Paneer Bhurji, 4x Roti, Dal Tadka & Salad" },
-    { slot: "Dinner Slot", time: { main: "Today, 08:30", ampm: "PM" }, icon: "dark_mode", menu: "Mixed Veg Curry, 4x Roti, Curd & Pickle" },
+    {
+      slot: "Lunch Slot",
+      time: { main: "Today, 12:45", ampm: "PM" },
+      icon: "light_mode",
+      menu: "Paneer Bhurji, 4x Roti, Dal Tadka & Salad",
+    },
+    {
+      slot: "Dinner Slot",
+      time: { main: "Today, 08:30", ampm: "PM" },
+      icon: "dark_mode",
+      menu: "Mixed Veg Curry, 4x Roti, Curd & Pickle",
+    },
   ],
   summaryProps: {
     days: calendarDays1,
@@ -263,8 +370,18 @@ const sub1 = {
     daysLeft: 21,
     daysLeftColor: "text-amber-500",
     summaryItems: [
-      { icon: "light_mode", iconColor: "text-amber-500", label: "21 Lunch Meals Left", sub: "Until Jun 18" },
-      { icon: "dark_mode", iconColor: "text-blue-400", label: "21 Dinner Meals Left", sub: "Until Jun 18" },
+      {
+        icon: "light_mode",
+        iconColor: "text-amber-500",
+        label: "21 Lunch Meals Left",
+        sub: "Until Jun 18",
+      },
+      {
+        icon: "dark_mode",
+        iconColor: "text-blue-400",
+        label: "21 Dinner Meals Left",
+        sub: "Until Jun 18",
+      },
     ],
   },
 };
@@ -279,8 +396,19 @@ const sub2 = {
   iconName: "local_cafe",
   iconColor: "text-blue-500",
   slots: [
-    { slot: "Morning Slot", time: { main: "Today, 08:15", ampm: "AM" }, icon: "coffee", menu: "Double Shot Latte & Oat Cookie" },
-    { slot: "Evening Slot", time: { main: "Today, 04:30", ampm: "PM" }, icon: "bakery_dining", menu: "N/A - Weekly Plan Only", disabled: true },
+    {
+      slot: "Morning Slot",
+      time: { main: "Today, 08:15", ampm: "AM" },
+      icon: "coffee",
+      menu: "Double Shot Latte & Oat Cookie",
+    },
+    {
+      slot: "Evening Slot",
+      time: { main: "Today, 04:30", ampm: "PM" },
+      icon: "bakery_dining",
+      menu: "N/A - Weekly Plan Only",
+      disabled: true,
+    },
   ],
   summaryProps: {
     days: calendarDays2,
@@ -288,8 +416,19 @@ const sub2 = {
     daysLeft: 12,
     daysLeftColor: "text-blue-500",
     summaryItems: [
-      { icon: "coffee", iconColor: "text-blue-400", label: "12 Morning Meals Left", sub: "Until Jun 09" },
-      { icon: "bakery_dining", iconColor: "text-gray-400", label: "0 Evening Meals Left", sub: "Not Subscribed", opacity: true },
+      {
+        icon: "coffee",
+        iconColor: "text-blue-400",
+        label: "12 Morning Meals Left",
+        sub: "Until Jun 09",
+      },
+      {
+        icon: "bakery_dining",
+        iconColor: "text-gray-400",
+        label: "0 Evening Meals Left",
+        sub: "Not Subscribed",
+        opacity: true,
+      },
     ],
   },
 };
@@ -297,18 +436,30 @@ const sub2 = {
 // --- Past Orders Table ---
 const pastOrders = [
   {
-    date: "May 24, 2024", orderId: "AM-ORD-2024-5512",
-    vendorIcon: "restaurant", vendor: "Tadka House", items: "Paneer Tikka, Garlic Naan x2",
-    mealIcon: "dark_mode", meal: "Dinner",
-    statusIcon: "check_circle", statusColor: "text-green-600", status: "Delivered",
+    date: "May 24, 2024",
+    orderId: "AM-ORD-2024-5512",
+    vendorIcon: "restaurant",
+    vendor: "Tadka House",
+    items: "Paneer Tikka, Garlic Naan x2",
+    mealIcon: "dark_mode",
+    meal: "Dinner",
+    statusIcon: "check_circle",
+    statusColor: "text-green-600",
+    status: "Delivered",
     time: "08:42 PM",
     stars: 4,
   },
   {
-    date: "May 23, 2024", orderId: "AM-ORD-2024-5489",
-    vendorIcon: "set_meal", vendor: "Ocean Delights", items: "Grilled Sea Bass, Asparagus",
-    mealIcon: "light_mode", meal: "Lunch",
-    statusIcon: "cancel", statusColor: "text-red-400", status: "Cancelled",
+    date: "May 23, 2024",
+    orderId: "AM-ORD-2024-5489",
+    vendorIcon: "set_meal",
+    vendor: "Ocean Delights",
+    items: "Grilled Sea Bass, Asparagus",
+    mealIcon: "light_mode",
+    meal: "Lunch",
+    statusIcon: "cancel",
+    statusColor: "text-red-400",
+    status: "Cancelled",
     time: "01:15 PM",
     stars: 0,
   },
@@ -316,8 +467,12 @@ const pastOrders = [
 
 const Stars = ({ count }) => (
   <div className="flex items-center gap-0.5">
-    {[1,2,3,4,5].map(n => (
-      <Icon key={n} name="star" className={`text-sm ${n <= count ? "text-amber-400" : "text-gray-200"}`} />
+    {[1, 2, 3, 4, 5].map((n) => (
+      <Icon
+        key={n}
+        name="star"
+        className={`text-sm ${n <= count ? "text-amber-400" : "text-gray-200"}`}
+      />
     ))}
   </div>
 );
@@ -325,7 +480,11 @@ const Stars = ({ count }) => (
 const PastOrdersSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = ["All", "Delivered", "Cancelled", "Skipped"];
-  const filterColors = { Delivered: "text-green-600 border-green-500", Cancelled: "text-red-500 border-red-500", Skipped: "text-gray-500 border-gray-400" };
+  const filterColors = {
+    Delivered: "text-green-600 border-green-500",
+    Cancelled: "text-red-500 border-red-500",
+    Skipped: "text-gray-500 border-gray-400",
+  };
 
   return (
     <section>
@@ -338,11 +497,12 @@ const PastOrdersSection = () => {
                 key={f}
                 onClick={() => setActiveFilter(f)}
                 className={`px-5 py-2 text-[10px] font-black uppercase tracking-widest transition-all
-                  ${activeFilter === f
-                    ? f === "All"
-                      ? "text-gray-900 border-b-2 border-gray-900"
-                      : `border-b-2 ${filterColors[f]}`
-                    : "text-gray-400 hover:text-gray-700"
+                  ${
+                    activeFilter === f
+                      ? f === "All"
+                        ? "text-gray-900 border-b-2 border-gray-900"
+                        : `border-b-2 ${filterColors[f]}`
+                      : "text-gray-400 hover:text-gray-700"
                   }`}
               >
                 {f}
@@ -359,8 +519,20 @@ const PastOrdersSection = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
-                {["Order Date","Vendor & Items","Meal Type","Status","Timestamp","Rating"].map(h => (
-                  <th key={h} className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{h}</th>
+                {[
+                  "Order Date",
+                  "Vendor & Items",
+                  "Meal Type",
+                  "Status",
+                  "Timestamp",
+                  "Rating",
+                ].map((h) => (
+                  <th
+                    key={h}
+                    className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400"
+                  >
+                    {h}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -368,40 +540,65 @@ const PastOrdersSection = () => {
               {pastOrders.map((o, i) => (
                 <tr key={i} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-5">
-                    <div className="text-sm font-bold text-gray-800">{o.date}</div>
-                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">ID: {o.orderId}</div>
+                    <div className="text-sm font-bold text-gray-800">
+                      {o.date}
+                    </div>
+                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                      ID: {o.orderId}
+                    </div>
                   </td>
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-gray-100 border border-gray-200 flex items-center justify-center shrink-0">
-                        <Icon name={o.vendorIcon} className="text-sm text-gray-400" />
+                        <Icon
+                          name={o.vendorIcon}
+                          className="text-sm text-gray-400"
+                        />
                       </div>
                       <div>
-                        <div className="text-sm font-bold text-gray-800">{o.vendor}</div>
-                        <div className="text-[10px] text-gray-400 font-medium truncate max-w-[200px]">{o.items}</div>
+                        <div className="text-sm font-bold text-gray-800">
+                          {o.vendor}
+                        </div>
+                        <div className="text-[10px] text-gray-400 font-medium truncate max-w-[200px]">
+                          {o.items}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-5">
                     <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-gray-100">
-                      <Icon name={o.mealIcon} className="text-xs text-gray-400" />
-                      <span className="text-[9px] font-black uppercase tracking-widest text-gray-600">{o.meal}</span>
+                      <Icon
+                        name={o.mealIcon}
+                        className="text-xs text-gray-400"
+                      />
+                      <span className="text-[9px] font-black uppercase tracking-widest text-gray-600">
+                        {o.meal}
+                      </span>
                     </div>
                   </td>
                   <td className="px-6 py-5">
-                    <div className={`inline-flex items-center gap-1.5 ${o.statusColor}`}>
+                    <div
+                      className={`inline-flex items-center gap-1.5 ${o.statusColor}`}
+                    >
                       <Icon name={o.statusIcon} className="text-[14px]" />
-                      <span className="text-[9px] font-black uppercase tracking-widest">{o.status}</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest">
+                        {o.status}
+                      </span>
                     </div>
                   </td>
                   <td className="px-6 py-5">
-                    <div className="text-[11px] font-bold text-gray-500">{o.time}</div>
+                    <div className="text-[11px] font-bold text-gray-500">
+                      {o.time}
+                    </div>
                   </td>
                   <td className="px-6 py-5">
-                    {o.stars > 0
-                      ? <Stars count={o.stars} />
-                      : <span className="text-[9px] font-black uppercase tracking-widest text-gray-300 italic">N/A</span>
-                    }
+                    {o.stars > 0 ? (
+                      <Stars count={o.stars} />
+                    ) : (
+                      <span className="text-[9px] font-black uppercase tracking-widest text-gray-300 italic">
+                        N/A
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -409,13 +606,19 @@ const PastOrdersSection = () => {
           </table>
         </div>
         <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Page 1 of 4</span>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+            Page 1 of 4
+          </span>
           <div className="flex gap-2">
             <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:text-gray-700 transition-colors">
               <Icon name="chevron_left" className="text-lg" />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-900 text-white text-[10px] font-black">1</button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-[10px] font-black hover:bg-gray-100 text-gray-700">2</button>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-900 text-white text-[10px] font-black">
+              1
+            </button>
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-[10px] font-black hover:bg-gray-100 text-gray-700">
+              2
+            </button>
             <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:text-gray-700 transition-colors">
               <Icon name="chevron_right" className="text-lg" />
             </button>
@@ -437,20 +640,53 @@ const Footer = () => (
         </p>
       </div>
       <div className="flex flex-col gap-3">
-        <h4 className="text-gray-700 text-[10px] font-bold uppercase tracking-widest mb-1">Legal</h4>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Privacy Policy</a>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Terms of Service</a>
+        <h4 className="text-gray-700 text-[10px] font-bold uppercase tracking-widest mb-1">
+          Legal
+        </h4>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Privacy Policy
+        </a>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Terms of Service
+        </a>
       </div>
       <div className="flex flex-col gap-3">
-        <h4 className="text-gray-700 text-[10px] font-bold uppercase tracking-widest mb-1">Support</h4>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Contact Support</a>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest" href="#">Partner with Us</a>
+        <h4 className="text-gray-700 text-[10px] font-bold uppercase tracking-widest mb-1">
+          Support
+        </h4>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Contact Support
+        </a>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Partner with Us
+        </a>
       </div>
       <div className="flex flex-col gap-4 items-end">
         <div className="flex gap-4">
-          <Icon name="brand_awareness" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl" />
-          <Icon name="share" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl" />
-          <Icon name="public" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl" />
+          <Icon
+            name="brand_awareness"
+            className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl"
+          />
+          <Icon
+            name="share"
+            className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl"
+          />
+          <Icon
+            name="public"
+            className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors text-xl"
+          />
         </div>
         <div className="text-gray-400 text-[9px] font-medium uppercase tracking-widest text-right">
           © 2024 AhaarMitra Editorial. All rights reserved.
@@ -469,12 +705,17 @@ export default function AhaarMitraOrders15() {
         {/* Page Header */}
         <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-3 text-gray-900">Order Management</h1>
-            <p className="text-gray-400 font-medium">Manage your active meal subscriptions and view full order history.</p>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-3 text-gray-900">
+              Order Management
+            </h1>
+            <p className="text-gray-400 font-medium">
+              Manage your active meal subscriptions and view full order history.
+            </p>
           </div>
           <div className="flex gap-3">
             <button className="px-6 py-3 bg-gray-900 text-white text-xs font-black uppercase tracking-widest rounded-full hover:bg-gray-700 transition-all flex items-center gap-2 shadow-lg shadow-gray-900/10">
-              <Icon name="calendar_add_on" className="text-lg" /> New Subscription
+              <Icon name="calendar_add_on" className="text-lg" /> New
+              Subscription
             </button>
           </div>
         </header>

@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-=======
 import { useState,useEffect } from "react";
 import useVendorStore from "../stores/vendor.store.js";
 import {useParams} from 'react-router-dom'
 
->>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
 const Star = ({ filled }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -40,10 +34,6 @@ const CheckCircle = () => (
   </svg>
 );
 
-<<<<<<< HEAD
-export default function VendorDetails1() {
-  const [activeTab, setActiveTab] = useState("explore");
-=======
 export default function TiffinTrial2() {
   // const [activeTab, setActiveTab] = useState("explore");
   const { id } = useParams();
@@ -74,7 +64,6 @@ const config = vendorConfig || {};
 const pricing = config?.pricingVariants || [];
 const weeklyMenu = config?.weeklyMenu || {};
 const todayMenu = weeklyMenu?.[todayKey];
->>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
 
   const ratings = [
     { label: "5 Stars", pct: "85%", w: "85%", opacity: "100" },
@@ -267,119 +256,6 @@ const todayMenu = weeklyMenu?.[todayKey];
             </div>
 
 
-<<<<<<< HEAD
-              {/* Mini Thali */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center px-8 py-8 bg-white border border-gray-200 hover:border-amber-300 hover:shadow-md transition-all rounded-xl">
-                <div className="col-span-1 md:col-span-5 flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-200">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuD98o098_qVpAtUoG6XfIeY4Z-3-E0m7R9H8W7A5C2-O6G_E8D5R2_A1S8T5Z2S7A=s512"
-                      alt="Mini Thali"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-lg font-bold text-gray-900">
-                        Mini Thali
-                      </h3>
-                      <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded font-bold uppercase tracking-widest border border-gray-200">
-                        Light
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-500 font-medium">
-                      2 Hand-rolled Roti, Jeera Rice, Dal Tadka, Seasonal Sabzi.
-                    </p>
-                  </div>
-                </div>
-                <div className="col-span-1 md:col-span-2 text-center">
-                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
-                    Daily
-                  </span>
-                  <p className="text-lg font-bold">
-                    <span className="line-through text-gray-400 mr-2">
-                      ₹80
-                    </span>
-                    ₹40
-                  </p>
-                </div>
-                <div className="col-span-1 md:col-span-2 text-center">
-                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
-                    Weekly
-                  </span>
-                  <span className="text-xl font-black text-gray-700">₹550</span>
-                </div>
-                <div className="col-span-1 md:col-span-3 text-center bg-amber-50 py-4 rounded-lg border border-amber-200">
-                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
-                    Monthly
-                  </span>
-                  <span className="text-3xl font-black text-amber-600">
-                    ₹2100
-                  </span>
-                  <div className="text-xs font-bold text-amber-500 uppercase tracking-widest mt-1">
-                    Recommended Plan
-                  </div>
-                </div>
-              </div>
-
-              {/* Executive Thali */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center px-8 py-8 bg-white border border-gray-200 hover:border-amber-300 hover:shadow-md transition-all rounded-xl">
-                <div className="col-span-1 md:col-span-5 flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-200 relative">
-                    <img
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHmD6X-qXn7H-R1N7U9B3W4L8O2Z1-A5S-C4D8G7F9H5J3-K1L0-P2Q4R6S=s512"
-                      alt="Executive Thali"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-0 right-0 bg-amber-500 text-white text-xs font-black px-1.5 py-0.5 uppercase">
-                      Best
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-lg font-bold text-gray-900">
-                        Executive Thali
-                      </h3>
-                      {/* <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-bold uppercase tracking-widest">
-                        Full Meal
-                      </span> */}
-                    </div>
-                    <p className="text-sm text-gray-500 font-medium">
-                      4 Rotis, Pulao, Dal Fry, Special Sabzi, Paneer Dish, Curd,
-                      Salad.
-                    </p>
-                  </div>
-                </div>
-                <div className="col-span-1 md:col-span-2 text-center">
-                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
-                    Daily
-                  </span>
-                  <p className="text-lg font-bold">
-                    <span className="line-through text-gray-400 mr-2">
-                      ₹120
-                    </span>
-                    ₹60
-                  </p>
-                </div>
-                <div className="col-span-1 md:col-span-2 text-center">
-                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
-                    Weekly
-                  </span>
-                  <span className="text-xl font-black text-gray-700">₹900</span>
-                </div>
-                <div className="col-span-1 md:col-span-3 text-center bg-amber-50 py-4 rounded-lg border border-amber-300">
-                  <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
-                    Monthly
-                  </span>
-                  <span className="text-3xl font-black text-amber-600">
-                    ₹3500
-                  </span>
-                  <div className="text-xs font-bold text-amber-500 uppercase tracking-widest mt-1">
-                    Value Plus Offer
-                  </div>
-                </div>
-              </div>
-=======
 <div className="max-w-7xl mx-auto px-6 md:px-12 pb-16">
 
   <h2 className="text-3xl font-black mb-10">
@@ -422,7 +298,6 @@ const todayMenu = weeklyMenu?.[todayKey];
                 </p>
               )}
 
->>>>>>> 2d37cd0bddd535d0be9d0f30acd513b573d4b99c
             </div>
           ))}
 

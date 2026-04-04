@@ -134,7 +134,7 @@ function ScrollZoomHero() {
         {/* Overlay */}
         <motion.div
           style={{ opacity: overlayOpacity }}
-          className="absolute inset-0 bg-black"
+          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"
         />
 
         {/* Content */}
@@ -151,7 +151,7 @@ function ScrollZoomHero() {
             className="w-[610px] md:w-[810px] lg:w-[930px] object-contain"
           />
           <div className="h-40"></div>
-          <div className="mt-4 px-6 py-4 rounded-xl bg-[#FFE0B2]/60 backdrop-blur-md text-center">
+          <div className="mt-6 px-8 py-5 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/20 shadow-xl text-center ">
             {/* Text */}
             <p className="text-white text-sm md:text-base max-w-xl mx-auto leading-tight font-semibold">
               Har din ghar jaisa swaad — connecting home chefs with people who
@@ -159,16 +159,16 @@ function ScrollZoomHero() {
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 mt-4 justify-center items-center">
-              <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
-                Login
-              </button>
-              <Link to="/11">
-                <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
+            {/* Login (secondary) */}
+            
+            <button className="px-6 py-3 border border-white/40 text-white font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+              Login
+            </button>
+
+            {/* Sign Up (primary) */}
+            <button className="px-6 py-3 bg-amber-500 text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-400 transition-all shadow-lg">
+              Sign Up
+            </button>
           </div>
         </motion.div>
       </div>
