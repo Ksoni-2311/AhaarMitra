@@ -22,6 +22,13 @@ import AhaarMitraSubscriptions from "./Userpages/AhaarMitraSubscriptions16.jsx";
 import AhaarMitraSupport from "./Userpages/AhaarMitraSupport17.jsx";
 import CustomerAccount from "./Userpages/CustomerAccount18.jsx";
 
+  
+import MealTypePopUp from "./VendorPages/MealTypePopUp19.jsx";
+import AddressPopUp from "./VendorPages/AddressPopUp20.jsx";
+import CancelLunch from "./VendorPages/CancelLunch21.jsx";
+import AddTiffin from "./VendorPages/AddTiffin22.jsx";
+import CancelAllMeals from "./VendorPages/CancelAllMeals23.jsx";
+
 // Vendor Pages
 import RegisterProvider1 from "./VendorPages/RegisterProvider1.jsx";
 import BusinessDetails2 from "./VendorPages/BusinessDetails2.jsx";
@@ -35,6 +42,7 @@ import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
 import Loader from "./components/Loader.jsx";
+import VendorAllInfo from "./VendorPages/VendorAllInfo.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -46,7 +54,7 @@ const App = () => {
   );
 
   // 👤 AUTH STATE (TEMP - replace later)
-  const isLoggedIn = false; // change to auth later
+  const isLoggedIn = true; // change to auth later
   const isVendor = false; // change based on role
 
   // 🧠 DETECT VENDOR ROUTES
@@ -61,7 +69,7 @@ const App = () => {
   const timer = setTimeout(() => {
     setIsLoading(false);
     setIsAuthReady(true);
-  }, 2720);
+  }, 1);
 
   return () => clearTimeout(timer);
 }, []);
@@ -110,12 +118,23 @@ const App = () => {
               <Route path="/13" element={<TiffinSeekerRegistration13 />} />
               <Route path="/14" element={<DeliveryAddress14 />} />
               <Route path="/orders" element={<AhaarMitraOrders15 />} />
-              <Route
-                path="/subscription"
-                element={<AhaarMitraSubscriptions />}
-              />
+              <Route path="/16" element={<AhaarMitraSubscriptions />} />
+              <Route path="/17" element={<AhaarMitraSupport />} />
+              <Route path="/18" element={<CustomerAccount />} />
+
+
+
+              <Route path="/19" element={<MealTypePopUp />} />
+              <Route path="/20" element={<AddressPopUp />} />
+              <Route path="/21" element={<CancelLunch />} />
+              <Route path="/22" element={<AddTiffin />} />
+              <Route path="/23" element={<CancelAllMeals />} />
+
+
+              <Route path="/subscription" element={<AhaarMitraSubscriptions />} />
               <Route path="/support" element={<AhaarMitraSupport />} />
               <Route path="/account" element={<CustomerAccount />} />
+
 
               {/* Vendor Routes */}
               <Route path="/v1" element={<RegisterProvider1 />} />
@@ -125,11 +144,12 @@ const App = () => {
               <Route path="/v5" element={<CulinaryTrends5 />} />
               <Route path="/v6" element={<SuccessIntelligence6 />} />
               <Route path="/v7" element={<VendorDashboard7 />} />
+              <Route path="/v9" element={<VendorAllInfo />} />
               {/* <Route path="/v8" element={<VendorFinance8 />} /> */}
             </Routes>
           </div>
 
-          {/* FOOTER */}
+          {/* FOOTER */}  
           {!shouldHideNavbar && <Footer />}
         </motion.div>
       )}

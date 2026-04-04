@@ -8,8 +8,8 @@ export const registerVendorController = async (req, res) => {
     const { name, email, phone, password } = req.body;
 
     console.log(req.body);
-    console.log(req.file); // 👈 DEBUG
-
+    
+    //  Validation
     if (!name || !email || !phone || !password) {
       return res.status(400).json({
         message: "All fields are required",

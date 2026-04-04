@@ -22,7 +22,6 @@ app.use("/api/vendor",vendorRoutes);
 app.use("/api/vendor", vendorServiceRoutes);
 
 
-
 app.get('/',(req,res) => {
     res.send("you are on home page")
 });

@@ -11,7 +11,7 @@ const NavBar = () => {
   ];
   return (
     <div className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 h-16 px-50 md:px-12 flex justify-between items-center">
-      <div className=" lg:w-60 md:w-40 w-32">
+      <div className="lg:w-56 md:w-36 w-28">
         <img src={ahaarmitraLogo} alt="" />
       </div>
 

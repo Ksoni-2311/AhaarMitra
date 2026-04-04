@@ -1,298 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  getServiceConfig,
+  saveServiceConfig,
+} from "../services/vendorServiceConfigApi";
 
-// Google Fonts & Material Symbols loaded via index.html or global CSS
-// Add to your index.html:
-// <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-// <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-const Icon = ({ name, className = "" }) => (
-  <span className={`material-symbols-outlined ${className}`}>{name}</span>
-);
-
-// ─── Reusable primitives ────────────────────────────────────────────────────
-
-const Card = ({ children, className = "" }) => (
-  <div
-    className={`bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ${className}`}
-  >
-    {children}
-  </div>
-);
-
-const WidgetTitle = ({ label, right }) => (
-  <div className="flex items-center justify-between mb-4">
-    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-      {label}
-    </span>
-    {right}
-  </div>
-);
-
-const Toggle = ({ active }) => (
-  <div
-    className={`w-10 h-5 rounded-full relative transition-all cursor-pointer ${
-      active ? "bg-blue-600" : "bg-gray-200"
-    }`}
-  >
-    <div
-      className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all ${
-        active ? "right-0.5" : "left-0.5"
-      }`}
-    />
-  </div>
-);
-
-const BtnAdd = ({ icon, label }) => (
-  <button className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-gray-300 text-gray-400 text-[10px] font-black uppercase tracking-widest hover:border-gray-500 hover:text-gray-600 transition-all">
-    {icon && <Icon name={icon} className="text-base" />}
-    {label}
-  </button>
-);
-
-const ActionIcon = ({ name, danger = false }) => (
-  <Icon
-    name={name}
-    className={`text-lg cursor-pointer transition-colors ${
-      danger
-        ? "text-gray-300 hover:text-rose-500"
-        : "text-gray-300 hover:text-gray-700"
-    }`}
-  />
-);
-
-// ─── Meal Types Widget ───────────────────────────────────────────────────────
-
-const mealTypes = [
-  { icon: "wb_sunny", label: "Breakfast", color: "text-amber-500" },
-  { icon: "restaurant", label: "Lunch", color: "text-blue-500" },
-  { icon: "dark_mode", label: "Dinner", color: "text-purple-500" },
-  { icon: "bakery_dining", label: "Snacks", color: "text-emerald-500" },
+const initialHubs = [
+  "H-Block, Sector 63, Noida, UP",
+  "Block C, Sector 18, Noida, UP",
+  "Sector 62, Electronic City, Noida",
+  "Indirapuram, Habitat Centre, GZB",
+  "Phase 2, Noida SEZ Main Road",
+  "Crossing Republik, NH-24, GZB",
+  "Sector 76, Metro Station Hub, Noida",
+  "Sector 44, Golf Course Road, Noida",
+  "A-Block, Sector 12, Noida, UP",
+  "Gaur City Mall, Greater Noida West",
 ];
 
-const MealTypesWidget = () => (
-  <Card className="p-6 self-stretch">
-    <WidgetTitle
-      label="Meal Types & Frequency"
-      right={<Icon name="more_horiz" className="text-sm text-gray-400" />}
-    />
-    <div className="space-y-3">
-      {mealTypes.map(({ icon, label, color }) => (
-        <div
-          key={label}
-          className="group flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100 hover:border-gray-200 transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <Icon name={icon} className={`${color}`} />
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-800">
-              {label}
-            </span>
-          </div>
-          <div className="flex items-center gap-3 opacity-30 group-hover:opacity-100 transition-opacity">
-            <ActionIcon name="edit" />
-            <ActionIcon name="delete" danger />
-          </div>
-        </div>
-      ))}
-      <BtnAdd icon="add" label="Add New Service" />
-    </div>
-  </Card>
-);
-
-// ─── Service Reach Widget ────────────────────────────────────────────────────
-
-const hubs = [
-  { address: "H-Block, Sector 63, Noida, UP", active: true },
-  { address: "Block C, Sector 18, Noida, UP", active: false },
+const initialMealTypes = [
+  { id: 1, icon: "☀️", label: "Breakfast", color: "text-amber-500" },
+  { id: 2, icon: "🍽️", label: "Lunch", color: "text-blue-500" },
+  { id: 3, icon: "🌙", label: "Dinner", color: "text-violet-500" },
+  { id: 4, icon: "🥐", label: "Snacks", color: "text-emerald-500" },
 ];
 
-const ServiceReachWidget = () => {
-  const [distance, setDistance] = useState(15);
 
-  return (
-    <Card className="p-6 self-stretch">
-      <WidgetTitle
-        label="Service Reach & Zones"
-        right={<Icon name="map" className="text-sm text-gray-400" />}
-      />
-      <div className="space-y-6">
-        <div className="space-y-3">
-          <label className="text-[8px] uppercase font-black tracking-widest text-gray-400">
-            Configured Service Hubs
-          </label>
-          <div className="space-y-2">
-            {hubs.map(({ address, active }) => (
-              <div
-                key={address}
-                className="group flex items-center gap-3 p-2 bg-gray-50 rounded-lg border border-gray-100 hover:border-gray-200 transition-all"
-              >
-                <Icon
-                  name="location_on"
-                  className={`text-lg ${
-                    active ? "text-blue-500" : "text-gray-300"
-                  }`}
-                />
-                <span className="text-[11px] font-medium text-gray-700 truncate flex-1">
-                  {address}
-                </span>
-                <div className="flex items-center gap-1.5 opacity-30 group-hover:opacity-100 transition-opacity">
-                  <ActionIcon name="edit" />
-                  <ActionIcon name="delete" danger />
-                </div>
-              </div>
-            ))}
-          </div>
-          <BtnAdd icon="add_location" label="Add Hub Address" />
-        </div>
-
-        <div className="pt-4 border-t border-gray-100">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-gray-800">
-                Offer Expanded Delivery
-              </span>
-              <span className="text-[8px] text-gray-400 uppercase tracking-tight">
-                Applies to all configured hubs
-              </span>
-            </div>
-            <Toggle active={true} />
-          </div>
-
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-4">
-            <div className="flex justify-between items-center">
-              <label className="text-[9px] font-black text-blue-500 uppercase tracking-widest">
-                Global Max. Extra Distance
-              </label>
-              <span className="text-xs font-black text-gray-800">
-                {distance} KM
-              </span>
-            </div>
-            <input
-              type="range"
-              min="1"
-              max="50"
-              step="1"
-              value={distance}
-              onChange={(e) => setDistance(Number(e.target.value))}
-              className="w-full h-1.5 rounded-full bg-gray-200 appearance-none cursor-pointer accent-blue-500"
-            />
-            <div className="flex justify-between text-[8px] font-bold text-gray-400 uppercase">
-              <span>+1 KM</span>
-              <span>+50 KM</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-};
-
-// ─── Service Windows Widget ──────────────────────────────────────────────────
-
-const ServiceWindowsWidget = () => (
-  <Card className="p-6 self-stretch">
-    <WidgetTitle
-      label="Service Windows & Logistics"
-      right={<Icon name="timer" className="text-sm text-gray-400" />}
-    />
-    <div className="space-y-4">
-      {/* Lunch */}
-      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-4">
-        <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest">
-          Lunch Delivery
-        </p>
-        <div className="flex gap-3">
-          <div className="flex-1 space-y-1">
-            <label className="text-[8px] uppercase tracking-tighter text-gray-400">
-              Start Time
-            </label>
-            <input
-              type="time"
-              defaultValue="12:00"
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all"
-            />
-          </div>
-          <div className="flex-1 space-y-1">
-            <label className="text-[8px] uppercase tracking-tighter text-gray-400">
-              End Time
-            </label>
-            <input
-              type="time"
-              defaultValue="14:30"
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all"
-            />
-          </div>
-        </div>
-        <div className="pt-2 flex items-center justify-between">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              className="w-3 h-3 rounded border-gray-300 text-blue-500 focus:ring-0"
-            />
-            <span className="text-[10px] text-gray-500 uppercase">
-              Enable Auto-cutoff
-            </span>
-          </label>
-          <input
-            type="time"
-            defaultValue="10:00"
-            className="bg-white border border-gray-200 rounded px-2 py-0.5 text-[10px] text-gray-700 focus:outline-none focus:border-blue-400 w-16"
-          />
-        </div>
-      </div>
-
-      {/* Dinner */}
-      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-4">
-        <p className="text-[9px] font-black text-purple-500 uppercase tracking-widest">
-          Dinner Delivery
-        </p>
-        <div className="flex gap-3">
-          <div className="flex-1 space-y-1">
-            <label className="text-[8px] uppercase tracking-tighter text-gray-400">
-              Start Time
-            </label>
-            <input
-              type="time"
-              defaultValue="19:30"
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all"
-            />
-          </div>
-          <div className="flex-1 space-y-1">
-            <label className="text-[8px] uppercase tracking-tighter text-gray-400">
-              End Time
-            </label>
-            <input
-              type="time"
-              defaultValue="21:30"
-              className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all"
-            />
-          </div>
-        </div>
-        <div className="pt-2 flex items-center justify-between">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              defaultChecked
-              className="w-3 h-3 rounded border-gray-300 text-blue-500 focus:ring-0"
-            />
-            <span className="text-[10px] text-gray-500 uppercase">
-              Enable Auto-cutoff
-            </span>
-          </label>
-          <input
-            type="time"
-            defaultValue="16:00"
-            className="bg-white border border-gray-200 rounded px-2 py-0.5 text-[10px] text-gray-700 focus:outline-none focus:border-blue-400 w-16"
-          />
-        </div>
-      </div>
-    </div>
-  </Card>
-);
-
-// ─── Tiffin Catalog Widget ───────────────────────────────────────────────────
-
-const tiffins = [
+const initialCatalog = [
   {
+    id: 1,
     name: "Mini Thali",
     desc: "2 Roti, 1 Sabzi (Primary), Rice",
     daily: 80,
@@ -300,6 +36,7 @@ const tiffins = [
     monthly: 1800,
   },
   {
+    id: 2,
     name: "Normal Thali",
     desc: "3 Roti, 2 Sabzis (Both), Dal, Rice",
     daily: 120,
@@ -307,6 +44,7 @@ const tiffins = [
     monthly: 2800,
   },
   {
+    id: 3,
     name: "Deluxe Thali",
     desc: "Roti, Paneer, Veg, Dal, Curd, Rice",
     daily: 180,
@@ -315,234 +53,659 @@ const tiffins = [
   },
 ];
 
-const CatalogInput = ({ defaultValue }) => (
-  <input
-    type="number"
-    defaultValue={defaultValue}
-    className="w-20 py-1 bg-gray-50 border border-gray-200 rounded-lg px-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all"
-  />
-);
 
-const TiffinCatalogWidget = () => (
-  <Card className="p-6">
-    <WidgetTitle
-      label="Tiffin Catalog & Pricing"
-      right={
-        <div className="flex gap-2">
-          <Icon
-            name="search"
-            className="text-sm cursor-pointer text-gray-400 hover:text-gray-700 transition-colors"
-          />
-          <Icon
-            name="filter_list"
-            className="text-sm cursor-pointer text-gray-400 hover:text-gray-700 transition-colors"
-          />
-        </div>
-      }
-    />
-    <div className="overflow-x-auto">
-      <table className="w-full">
-        <thead>
-          <tr className="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
-            <th className="pb-3 text-left">Tiffin Variant</th>
-            <th className="pb-3 text-left">Daily (₹)</th>
-            <th className="pb-3 text-left">Weekly (₹)</th>
-            <th className="pb-3 text-left">Monthly (₹)</th>
-            <th className="pb-3" />
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-100">
-          {tiffins.map(({ name, desc, daily, weekly, monthly }) => (
-            <tr key={name}>
-              <td className="py-4">
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-gray-800">{name}</span>
-                  <span className="text-[8px] text-gray-400 uppercase tracking-tighter">
-                    {desc}
-                  </span>
-                </div>
-              </td>
-              <td className="py-4">
-                <CatalogInput defaultValue={daily} />
-              </td>
-              <td className="py-4">
-                <CatalogInput defaultValue={weekly} />
-              </td>
-              <td className="py-4">
-                <CatalogInput defaultValue={monthly} />
-              </td>
-              <td className="py-4 text-right">
-                <ActionIcon name="settings" />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <BtnAdd icon="post_add" label="Add New Tiffin Variant" />
-  </Card>
-);
+const menuData = {
+  mini: ["Paneer Butter Masala", "Phulka (2 pcs)", "Steamed Rice"],
+  normal: [
+    "Paneer Butter Masala",
+    "Yellow Dal Tadka",
+    "Phulka (3 pcs)",
+    "Jeera Rice",
+  ],
+  deluxe: [
+    "Paneer Butter Masala",
+    "Mixed Vegetable Dry",
+    "Butter Naan (2 pcs)",
+    "Sweet Lassi / Curd",
+  ],
+};
 
-// ─── Trial Offer Widget ──────────────────────────────────────────────────────
 
-const TrialOfferWidget = () => (
-  <Card className="p-6">
-    <WidgetTitle
-      label="Trial Offer Configuration"
-      right={<Icon name="stars" className="text-sm text-gray-400" />}
-    />
-    <div className="space-y-6">
-      <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h4 className="text-xs font-black uppercase text-blue-500 mb-1">
-              Standard Trial Price
-            </h4>
-            <p className="text-[9px] text-gray-400">&nbsp;</p>
-          </div>
-          <div className="text-2xl font-black text-gray-800">₹49</div>
-        </div>
-        <div className="space-y-4">
-          <input
-            type="number"
-            defaultValue={49}
-            placeholder="Set price (e.g. 49)"
-            className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200 transition-all"
-          />
-          <div className="flex flex-wrap gap-2">
-            {["Mini", "Normal", "Deluxe"].map((t) => (
-              <span
-                key={t}
-                className={`px-3 py-1 rounded-full text-[8px] font-black uppercase transition-all cursor-pointer ${
-                  t === "Normal"
-                    ? "bg-blue-100 border border-blue-300 text-blue-700"
-                    : "bg-gray-100 border border-gray-200 text-gray-400 hover:bg-gray-200"
-                }`}
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-          Promotion Logic
-        </p>
-        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
-          <span className="text-[10px] uppercase font-bold text-gray-700">
-            Refund on 1st Order
-          </span>
-          <Toggle active={true} />
-        </div>
-        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
-          <span className="text-[10px] uppercase font-bold text-gray-700">
-            Limit to Breakfast/Lunch
-          </span>
-          <Toggle active={false} />
-        </div>
-      </div>
-    </div>
-  </Card>
-);
-
-// ─── Weekly Menu Customizer ──────────────────────────────────────────────────
+const defaultConfig = {
+ mealTypes: [...initialMealTypes],
+zones: [...initialHubs],
+  offerExpandedDelivery: false,
+  globalMaxExtraDistanceKm: 5,
+  serviceWindows: {
+    lunch: { startTime: "12:00", endTime: "14:30" },
+    dinner: { startTime: "19:30", endTime: "21:30" },
+    autoCutoffEnabled: true,
+    cutoffHours: 5,
+  },
+ pricingVariants: initialCatalog,
+  trialOffer: {
+    price: 49,
+    selectedTier: "Normal",
+    refundOnFirstOrder: true,
+    limitMeals: false,
+  },
+weeklyMenu: {
+  mini: [...menuData.mini],
+  normal: [...menuData.normal],
+  deluxe: [...menuData.deluxe],
+},
+};
 
 const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 const mealTabs = [
-  { icon: "wb_sunny", label: "Breakfast" },
-  { icon: "restaurant", label: "Lunch" },
-  { icon: "dark_mode", label: "Dinner" },
+  { id: "breakfast", label: "Breakfast", icon: "☀️" },
+  { id: "lunch", label: "Lunch", icon: "🍽️" },
+  { id: "dinner", label: "Dinner", icon: "🌙" },
 ];
 
-const ComponentItem = ({ name, accent }) => (
-  <div
-    className={`p-3 bg-gray-50 rounded-xl border flex items-center justify-between group relative overflow-hidden ${
-      accent ? `border-${accent}-200` : "border-gray-100"
-    }`}
-  >
-    {accent && (
-      <div className={`absolute left-0 top-0 h-full w-0.5 bg-${accent}-500`} />
-    )}
-    <span className="text-xs font-bold text-gray-700">{name}</span>
-    <div className="flex items-center gap-2 opacity-30 group-hover:opacity-100 transition-opacity">
-      <ActionIcon name="delete" danger />
-      <ActionIcon name="drag_indicator" />
+
+
+
+
+
+
+
+
+
+
+const mealStatuses = [
+  {
+    id: "breakfast",
+    label: "Breakfast",
+    icon: "☀️",
+    iconColor: "text-amber-500",
+    time: "07:00 – 09:30",
+    active: true,
+  },
+  {
+    id: "lunch",
+    label: "Lunch",
+    icon: "🍽️",
+    iconColor: "text-blue-500",
+    time: "Manual cancellation applied",
+    active: false,
+  },
+  {
+    id: "dinner",
+    label: "Dinner",
+    icon: "🌙",
+    iconColor: "text-violet-500",
+    time: "19:30 – 21:30",
+    active: true,
+  },
+  {
+    id: "snacks",
+    label: "Snacks",
+    icon: "🥐",
+    iconColor: "text-emerald-500",
+    time: "16:30 – 18:00",
+    active: true,
+  },
+];
+
+function SectionLabel({ children }) {
+  return (
+    <div className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 flex items-center justify-between">
+      {children}
     </div>
-  </div>
-);
+  );
+}
 
-const thaliColumns = [
-  {
-    color: "text-emerald-500",
-    icon: "eco",
-    title: "Mini Thali Components",
-    badge: "Fixed Menu",
-    accent: null,
-    items: ["Paneer Butter Masala", "Phulka (2 pcs)", "Steamed Rice"],
-  },
-  {
-    color: "text-blue-500",
-    icon: "restaurant",
-    title: "Normal Thali Components",
-    badge: "Standard",
-    accent: "blue",
-    items: [
-      "Paneer Butter Masala",
-      "Yellow Dal Tadka",
-      "Phulka (3 pcs)",
-      "Jeera Rice",
-    ],
-  },
-  {
-    color: "text-purple-500",
-    icon: "auto_awesome",
-    title: "Deluxe Thali Components",
-    badge: "Premium",
-    accent: "purple",
-    items: [
-      "Paneer Butter Masala",
-      "Mixed Vegetable Dry",
-      "Butter Naan (2 pcs)",
-      "Sweet Lassi / Curd",
-    ],
-  },
-];
+function Card({ children, className = "" }) {
+  return (
+    <div
+      className={`bg-white border border-gray-100 rounded-2xl shadow-sm ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
 
-const WeeklyMenuWidget = () => {
-  const [activeDay, setActiveDay] = useState("WED");
-  const [activeMeal, setActiveMeal] = useState("Lunch");
+function Toggle({ active, onToggle, danger = false }) {
+  return (
+    <button
+      onClick={onToggle}
+      className={`w-10 h-5 rounded-full relative transition-all duration-200 focus:outline-none flex-shrink-0 ${
+        active ? (danger ? "bg-rose-500" : "bg-blue-500") : "bg-gray-200"
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-200 ${
+          active ? "right-0.5" : "left-0.5"
+        }`}
+      />
+    </button>
+  );
+}
+
+function IconBtn({ title, icon, danger = false, onClick }) {
+  return (
+    <button
+      title={title}
+      onClick={onClick}
+      className={`text-xs p-1.5 rounded-lg transition-all ${
+        danger
+          ? "text-gray-300 hover:text-rose-500 hover:bg-rose-50"
+          : "text-gray-300 hover:text-gray-600 hover:bg-gray-100"
+      }`}
+    >
+      {icon}
+    </button>
+  );
+}
+
+// ─── Meal Types ───────────────────────────────────────────────────────────────
+function MealTypesCard({ meals, setConfig }) {
+  return (
+    <Card className="p-6 flex flex-col h-full">
+      <SectionLabel>
+        <span>Meal Types &amp; Frequency</span>
+        <span className="text-gray-300">•••</span>
+      </SectionLabel>
+      <div className="flex flex-col gap-3 flex-1">
+        {meals.map((m) => (
+          <div
+            key={m.id}
+            className="group flex items-center justify-between px-4 py-3.5 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-100 transition-all"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{m.icon}</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                {m.label}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <IconBtn title="Edit" icon="✏️" />
+              <IconBtn
+                title="Delete"
+                icon="🗑️"
+                danger
+                onClick={() =>
+  setConfig((prev) => ({
+    ...prev,
+    mealTypes: prev.mealTypes.filter((x) => x.id !== m.id),
+  }))
+}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <Link
+        to="/19"
+        className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+      >
+        <span className="text-sm">📍+</span> Add Hub Address
+      </Link>
+    </Card>
+  );
+}
+
+// ─── Service Zones ────────────────────────────────────────────────────────────
+function ServiceZonesCard({ hubs, setConfig }) {
+  return (
+    <Card className="p-6 flex flex-col h-full">
+      <SectionLabel>
+        <span>Service Reach &amp; Zones</span>
+        <span className="text-gray-300 text-sm">📍</span>
+      </SectionLabel>
+      <p className="text-[8px] font-black uppercase tracking-widest text-gray-400 mb-2">
+        Configured Service Hubs
+      </p>
+      <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scroll">
+        {hubs.map((hub, i) => (
+          <div
+            key={i}
+            className="group flex items-center gap-2.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-100 transition-all"
+          >
+            <span
+              className={`text-sm ${i === 0 ? "text-blue-500" : "text-gray-300"}`}
+            >
+              📍
+            </span>
+           <span className="text-[11px] font-medium text-gray-600 truncate flex-1">
+  {typeof hub === "string"
+    ? hub
+    : `${hub.address}, ${hub.city}, ${hub.state} - ${hub.pincode}`}
+</span>
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <IconBtn title="Edit" icon="✏️" />
+              <IconBtn
+                title="Delete"
+                icon="🗑️"
+                danger
+                onClick={() =>
+  setConfig((prev) => ({
+    ...prev,
+    zones: prev.zones.filter((_, j) => j !== i),
+  }))
+}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <Link to="/20">
+        <button className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+          <span className="text-sm">📍+</span> Add Hub Address
+        </button>
+      </Link>
+    </Card>
+  );
+}
+
+
+
+// ─── Service Windows ──────────────────────────────────────────────────────────
+function ServiceWindowsCard({ serviceWindows, setConfig }) {
+  const { lunch, dinner, autoCutoffEnabled, cutoffHours } = serviceWindows;
+
+  const updateWindow = (meal, field, value) => {
+    setConfig((prev) => ({
+      ...prev,
+      serviceWindows: {
+        ...prev.serviceWindows,
+        [meal]: {
+          ...prev.serviceWindows[meal],
+          [field]: value,
+        },
+      },
+    }));
+  };
+
+  const toggleCutoff = () => {
+    setConfig((prev) => ({
+      ...prev,
+      serviceWindows: {
+        ...prev.serviceWindows,
+        autoCutoffEnabled: !prev.serviceWindows.autoCutoffEnabled,
+      },
+    }));
+  };
+
+  const updateCutoffHours = (value) => {
+    setConfig((prev) => ({
+      ...prev,
+      serviceWindows: {
+        ...prev.serviceWindows,
+        cutoffHours: Number(value),
+      },
+    }));
+  };
+
+  return (
+    <Card className="p-6 flex flex-col h-full">
+      <SectionLabel>
+        <span>Service Windows &amp; Logistics</span>
+        <span className="text-gray-300 text-sm">⏱</span>
+      </SectionLabel>
+
+      <div className="space-y-4 flex-1">
+        <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+          <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-3">
+            Lunch Delivery
+          </p>
+
+          <div className="flex gap-3">
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                Start Time
+              </label>
+              <input
+                type="time"
+                value={lunch.startTime}
+                onChange={(e) =>
+                  updateWindow("lunch", "startTime", e.target.value)
+                }
+                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+              />
+            </div>
+
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                End Time
+              </label>
+              <input
+                type="time"
+                value={lunch.endTime}
+                onChange={(e) =>
+                  updateWindow("lunch", "endTime", e.target.value)
+                }
+                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-violet-50 rounded-xl border border-violet-100">
+          <p className="text-[9px] font-black text-violet-500 uppercase tracking-widest mb-3">
+            Dinner Delivery
+          </p>
+
+          <div className="flex gap-3">
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                Start Time
+              </label>
+              <input
+                type="time"
+                value={dinner.startTime}
+                onChange={(e) =>
+                  updateWindow("dinner", "startTime", e.target.value)
+                }
+                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+              />
+            </div>
+
+            <div className="flex-1 space-y-1">
+              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+                End Time
+              </label>
+              <input
+                type="time"
+                value={dinner.endTime}
+                onChange={(e) =>
+                  updateWindow("dinner", "endTime", e.target.value)
+                }
+                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest">
+              Global Auto-Cutoff
+            </p>
+            <Toggle active={autoCutoffEnabled} onToggle={toggleCutoff} />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[10px] font-bold text-gray-700 uppercase">
+                Hours Before Delivery Start
+              </p>
+              <p className="text-[8px] text-gray-400 uppercase tracking-tighter mt-0.5">
+                Applies to all windows
+              </p>
+            </div>
+            <input
+              type="number"
+              value={cutoffHours}
+              onChange={(e) => updateCutoffHours(e.target.value)}
+              className="bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 font-bold w-16 text-center focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 p-4 bg-gray-50 border border-gray-100 rounded-xl">
+        <p className="text-[10px] leading-relaxed text-gray-400 italic text-center">
+          A 5-hour auto-cutoff is recommended to maximize user satisfaction and
+          optimize logistics flow.
+        </p>
+      </div>
+    </Card>
+  );
+}
+
+// ─── Tiffin Catalog ───────────────────────────────────────────────────────────
+function TiffinCatalogCard({ catalog, setConfig }) {
+  const update = (id, field, val) => {
+    setConfig((prev) => ({
+      ...prev,
+      pricingVariants: prev.pricingVariants.map((c) =>
+        c.id === id ? { ...c, [field]: val } : c
+      ),
+    }));
+  };
 
   return (
     <Card className="p-6">
-      <WidgetTitle
-        label="Weekly Menu Customizer"
-        right={
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-lg border border-gray-200">
-              <Icon name="calendar_month" className="text-sm text-blue-500" />
-              <span className="text-[9px] font-black uppercase text-gray-500">
-                OCT 21 – OCT 27
-              </span>
-            </div>
-            <Icon
-              name="download"
-              className="text-sm cursor-pointer text-gray-400 hover:text-gray-700 transition-colors"
-            />
-          </div>
-        }
-      />
+      <SectionLabel>
+        <span>Tiffin Catalog &amp; Pricing</span>
+        <div className="flex gap-3">
+          <span className="text-gray-300 cursor-pointer hover:text-gray-600">
+            🔍
+          </span>
+          <span className="text-gray-300 cursor-pointer hover:text-gray-600">
+            ≡
+          </span>
+        </div>
+      </SectionLabel>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+              <th className="pb-3 text-left">Tiffin Variant</th>
+              <th className="pb-3 text-left">Daily (₹)</th>
+              <th className="pb-3 text-left">Weekly (₹)</th>
+              <th className="pb-3 text-left">Monthly (₹)</th>
+              <th className="pb-3" />
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-50">
+            {catalog.map((item) => (
+              <tr key={item.id}>
+                <td className="py-3.5">
+                  <p className="text-xs font-bold text-gray-800">{item.name}</p>
+                  <p className="text-[9px] text-gray-400 uppercase tracking-tight mt-0.5">
+                    {item.desc}
+                  </p>
+                </td>
+                {["daily", "weekly", "monthly"].map((f) => (
+                  <td className="py-3.5 pr-4" key={f}>
+                    <input
+                      type="number"
+                      value={item[f]}
+                      onChange={(e) =>
+                        update(item.id, f, Number(e.target.value))
+                      }
+                      className="w-20 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                    />
+                  </td>
+                ))}
+                <td className="py-3.5 text-right">
+                  <button className="text-gray-300 hover:text-gray-600 text-sm transition-colors p-1.5 rounded-lg hover:bg-gray-100">
+                    ⚙️
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Link to="/22" className="w-full">
+        <button className="mt-4 w-full py-2.5 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+          <span>+</span> Add New Tiffin Variant
+        </button>
+      </Link>
+    </Card>
+  );
+}
 
-      {/* Day chips */}
-      <div className="flex gap-2 mb-8 overflow-x-auto pb-2 border-b border-gray-100">
+// ─── Trial Offer ──────────────────────────────────────────────────────────────
+function TrialOfferCard({ trialOffer, setConfig }) {
+  const { price, selectedTier, refundOnFirstOrder, limitMeals } = trialOffer;
+
+const updateTrialOffer = (field, value) => {
+  setConfig((prev) => ({
+    ...prev,
+    trialOffer: {
+      ...prev.trialOffer,
+      [field]: value,
+    },
+  }));
+};
+
+  return (
+    <Card className="p-6">
+      <SectionLabel>
+        <span>Trial Offer Configuration</span>
+        <span className="text-gray-300">⭐</span>
+      </SectionLabel>
+      <div className="space-y-5">
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h4 className="text-xs font-black uppercase text-blue-500 mb-1">
+                Standard Trial Price
+              </h4>
+            </div>
+            <div className="text-2xl font-black text-gray-800">₹{price}</div>
+          </div>
+          <input
+            type="number"
+            value={price}
+           onChange={(e) => updateTrialOffer("price", Number(e.target.value))}
+            placeholder="Set price (e.g. 49)"
+            className="w-full bg-white border border-blue-200 rounded-lg px-3 py-2 text-sm text-gray-700 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+          />
+          <div className="flex flex-wrap gap-2">
+            {["Mini", "Normal", "Deluxe"].map((t) => (
+              <button
+                key={t}
+              onClick={() => updateTrialOffer("selectedTier", t)}
+                className={`px-3 py-1 rounded-full text-[8px] font-black uppercase transition-all ${
+                  selectedTier === t
+                    ? "bg-blue-500 text-white border border-blue-500"
+                    : "bg-white text-gray-400 border border-gray-200 hover:border-blue-300"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">
+            Promotion Logic
+          </p>
+          {[
+  {
+    label: "Refund on 1st Order",
+    state: refundOnFirstOrder,
+    toggle: () =>
+      updateTrialOffer("refundOnFirstOrder", !refundOnFirstOrder),
+  },
+  {
+    label: "Limit to Breakfast/Lunch",
+    state: limitMeals,
+    toggle: () => updateTrialOffer("limitMeals", !limitMeals),
+  },
+].map((opt) => (
+            <div
+              key={opt.label}
+              className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100"
+            >
+              <span className="text-[10px] uppercase font-bold text-gray-600">
+                {opt.label}
+              </span>
+              <Toggle active={opt.state} onToggle={opt.toggle} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+// ─── Weekly Menu ──────────────────────────────────────────────────────────────
+function WeeklyMenuCard({ weeklyMenu, setConfig }) {
+   const [activeDay, setActiveDay] = useState("WED");
+   const [activeMeal, setActiveMeal] = useState("lunch");
+const menus = {
+  mini: weeklyMenu?.mini || [],
+  normal: weeklyMenu?.normal || [],
+  deluxe: weeklyMenu?.deluxe || [],
+};
+
+  const removeItem = (tier, idx) => {
+  setConfig((prev) => ({
+    ...prev,
+    weeklyMenu: {
+      ...prev.weeklyMenu,
+      [tier]: prev.weeklyMenu[tier].filter((_, i) => i !== idx),
+    },
+  }));
+};
+  const tierConfig = [
+    {
+      key: "mini",
+      label: "Mini Thali Components",
+      tag: "Fixed Menu",
+      accent: "emerald",
+      border: "border-emerald-200",
+      ring: "border-emerald-400",
+    },
+    {
+      key: "normal",
+      label: "Normal Thali Components",
+      tag: "Standard",
+      accent: "blue",
+      border: "border-blue-200",
+      ring: "border-blue-400",
+    },
+    {
+      key: "deluxe",
+      label: "Deluxe Thali Components",
+      tag: "Premium",
+      accent: "violet",
+      border: "border-violet-200",
+      ring: "border-violet-400",
+    },
+  ];
+
+  const accentText = {
+    emerald: "text-emerald-500",
+    blue: "text-blue-500",
+    violet: "text-violet-500",
+  };
+  const accentBg = {
+    emerald: "bg-emerald-50",
+    blue: "bg-blue-50",
+    violet: "bg-violet-50",
+  };
+  const accentLeft = {
+    emerald: "border-l-emerald-400",
+    blue: "border-l-blue-400",
+    violet: "border-l-violet-400",
+  };
+
+  return (
+    <Card className="p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400">
+          Weekly Menu Customizer
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
+            <span className="text-blue-500 text-sm">📅</span>
+            <span className="text-[9px] font-black uppercase text-gray-500">
+              Oct 21 – Oct 27
+            </span>
+          </div>
+          <button className="text-gray-400 hover:text-gray-600 text-sm transition-colors p-1.5 rounded-lg hover:bg-gray-100">
+            ⬇️
+          </button>
+        </div>
+      </div>
+
+      {/* Day Chips */}
+      <div className="flex gap-1.5 mb-6 overflow-x-auto pb-2 border-b border-gray-100">
         {days.map((d) => (
           <button
             key={d}
             onClick={() => setActiveDay(d)}
-            className={`flex-1 text-center py-2 rounded-xl text-[10px] font-bold border transition-all cursor-pointer ${
+            className={`flex-1 min-w-[2.5rem] text-center py-2 rounded-lg text-[10px] font-bold border transition-all ${
               activeDay === d
-                ? "bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-200"
+                ? "bg-blue-500 text-white border-blue-500 shadow-sm shadow-blue-200"
                 : "bg-gray-50 text-gray-400 border-gray-100 hover:bg-gray-100"
             }`}
           >
@@ -551,173 +714,410 @@ const WeeklyMenuWidget = () => {
         ))}
       </div>
 
-      {/* Meal tabs */}
-      <div className="flex justify-center gap-4 mb-10">
-        {mealTabs.map(({ icon, label }) => (
-          <button
-            key={label}
-            onClick={() => setActiveMeal(label)}
-            className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer border flex items-center gap-2 ${
-              activeMeal === label
-                ? "bg-gray-900 text-white border-gray-900"
-                : "bg-gray-50 text-gray-400 border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <Icon name={icon} className="text-sm" />
-            {label}
-          </button>
-        ))}
+      {/* Meal Tab */}
+      <div className="flex justify-center mb-8">
+        <div className="inline-flex items-center bg-gray-50 p-1.5 rounded-full border border-gray-200 gap-1">
+          {mealTabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveMeal(tab.id)}
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border ${
+                activeMeal === tab.id
+                  ? "bg-white text-gray-800 border-gray-200 shadow-sm"
+                  : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
+              }`}
+            >
+              <span className="text-sm">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Thali columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {thaliColumns.map(({ color, icon, title, badge, accent, items }) => (
-          <div key={title} className="space-y-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className={`flex items-center gap-2 ${color}`}>
-                <Icon name={icon} className="text-lg" />
-                <h5 className="text-[10px] font-black uppercase tracking-[0.2em]">
-                  {title}
+      {/* Menu Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {tierConfig.map((tier, ti) => (
+          <div key={tier.key} className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div
+                className={`flex items-center gap-2 ${accentText[tier.accent]}`}
+              >
+                <span className="text-lg">
+                  {ti === 0 ? "🌿" : ti === 1 ? "🍽️" : "✨"}
+                </span>
+                <h5 className="text-[9px] font-black uppercase tracking-[0.15em]">
+                  {tier.label}
                 </h5>
               </div>
-              <span className="text-[8px] font-bold text-gray-300 uppercase tracking-tighter">
-                {badge}
+              <span className="text-[8px] font-bold text-gray-300 uppercase tracking-tight">
+                {tier.tag}
               </span>
             </div>
-            <div className="space-y-2">
-              {items.map((item, i) => (
-                <ComponentItem
-                  key={item}
-                  name={item}
-                  accent={i === 0 && accent ? accent : null}
-                />
+            <div className="space-y-1.5">
+              {menus[tier.key].map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`group flex items-center justify-between p-3 bg-gray-50 rounded-xl border transition-all ${
+                    idx === 0
+                      ? `border-l-2 ${accentLeft[tier.accent]} border-t-0 border-r-0 border-b-0 bg-${tier.accent}-50 ${tier.border}`
+                      : "border-gray-100 hover:border-gray-200"
+                  }`}
+                  style={idx === 0 ? { borderLeftWidth: "2px" } : {}}
+                >
+                  <span className="text-xs font-semibold text-gray-700">
+                    {item}
+                  </span>
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <IconBtn
+                      title="Delete"
+                      icon="🗑️"
+                      danger
+                      onClick={() => removeItem(tier.key, idx)}
+                    />
+                    <button className="text-gray-200 hover:text-gray-400 text-xs p-1 transition-colors">
+                      ⠿
+                    </button>
+                  </div>
+                </div>
               ))}
-              <BtnAdd label="Add Component" />
+              <button className="w-full py-2 flex items-center justify-center gap-1.5 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all">
+                <span>+</span> Add Item
+              </button>
             </div>
           </div>
         ))}
       </div>
     </Card>
   );
-};
+}
 
-// ─── Main Dashboard ──────────────────────────────────────────────────────────
+// ─── Cancellation Panel ───────────────────────────────────────────────────────
+function CancellationCard() {
+  const [statuses, setStatuses] = useState(mealStatuses);
+  const [selectedDate, setSelectedDate] = useState("2024-10-23");
 
-export default function VendorDashboard7() {
+  const toggleMeal = (id) =>
+    setStatuses(
+      statuses.map((m) => (m.id === id ? { ...m, active: !m.active } : m)),
+    );
+
   return (
-    <div
-      className="antialiased overflow-x-hidden min-h-screen bg-gray-50 pt-12"
-    >
-      {/* Background dot grid */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 2px 2px, rgba(0,0,0,0.04) 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      />
+    <Card className="p-6">
+      <SectionLabel>
+        <span>Meal Cancellation &amp; Outage Control</span>
+        <span className="text-gray-300 text-sm">📅</span>
+      </SectionLabel>
 
-      {/* Header */}
-      {/* <header className="w-full pt-8 pb-6 px-12 flex justify-between items-center border-b border-gray-100 bg-white/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="inline-block shrink-0">
-          <div className="text-2xl font-black text-gray-900 tracking-tighter uppercase">
-            AhaarMitra
+      {/* Date picker */}
+      <div className="max-w-xl mx-auto mb-8">
+        <div className="bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden">
+          <div className="p-6 pb-3">
+            <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 text-center">
+              Step 1: Select Target Date
+            </p>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 text-sm z-10">
+                📅
+              </span>
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="w-full bg-white border border-gray-200 rounded-xl pl-10 pr-4 py-3.5 text-base font-black text-gray-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 outline-none transition-all cursor-pointer"
+              />
+            </div>
           </div>
-          <div className="h-0.5 w-full bg-gradient-to-r from-blue-500 to-transparent" />
+          <div className="px-6 pb-6 pt-3 bg-white/60 border-t border-gray-100">
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1 bg-rose-50 rounded-full border border-rose-200">
+                <span className="text-rose-500 text-xs">⚠️</span>
+                <p className="text-[9px] font-black text-rose-500 uppercase tracking-widest">
+                  Step 2: Instant Global Overwrite
+                </p>
+              </div>
+              <Link to="/23">
+                <button className="w-full bg-rose-500 hover:bg-rose-600 text-white text-[11px] font-black py-4 px-8 rounded-xl transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-3 group border border-rose-400">
+                  <span className="text-lg group-hover:scale-110 transition-transform inline-block">
+                    🚫
+                  </span>
+                  Cancel All Meals for Selected Day
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <nav className="hidden md:flex items-center gap-10">
-          {["Finance", "Order History", "Services", "Subscriber"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className={`text-[11px] font-black uppercase tracking-widest transition-colors ${
-                item === "Services"
-                  ? "text-gray-900 border-b-2 border-gray-300 pb-1"
-                  : "text-gray-400 hover:text-gray-900"
+      {/* Meal status grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {statuses.map((meal) => (
+          <div
+            key={meal.id}
+            className={`p-5 rounded-2xl border transition-all ${
+              !meal.active
+                ? "border-rose-300 bg-rose-50 ring-1 ring-rose-200"
+                : "border-gray-100 bg-gray-50 hover:border-gray-200"
+            }`}
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <span
+                  className={`text-2xl block ${!meal.active ? "opacity-40" : ""}`}
+                >
+                  {meal.icon}
+                </span>
+                <h4
+                  className={`text-xs font-black uppercase tracking-widest mt-2 ${!meal.active ? "text-gray-400" : "text-gray-800"}`}
+                >
+                  {meal.label}
+                </h4>
+              </div>
+              <span
+                className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full border ${
+                  meal.active
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-600"
+                    : "bg-rose-100 border-rose-300 text-rose-500"
+                }`}
+              >
+                {meal.active ? "Active" : "Inactive"}
+              </span>
+            </div>
+            <p
+              className={`text-[10px] mb-4 uppercase tracking-tighter font-medium ${
+                !meal.active ? "text-rose-400" : "text-gray-400"
               }`}
             >
-              {item}
-            </a>
-          ))}
-        </nav>
+              {meal.active ? `Service Window: ${meal.time}` : meal.time}
+            </p>
+            <button
+              onClick={() => toggleMeal(meal.id)}
+              className={`w-full py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border ${
+                meal.active
+                  ? "bg-white text-gray-400 border-gray-200 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-500"
+                  : "bg-white text-gray-400 border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-600"
+              }`}
+            >
+              <span className="text-sm">{meal.active ? "🚫" : "↩️"}</span>
+              {meal.active ? `Cancel ${meal.label}` : `Resume ${meal.label}`}
+            </button>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
 
-        <a
-          href="#"
-          className="text-sm font-bold text-gray-400 hover:text-gray-800 transition-colors flex items-center gap-2 shrink-0"
-        >
-          <Icon name="settings" className="text-base" />
-          Settings
-        </a>
-      </header> */}
-      {/* Main content */}
-      <main className="max-w-7xl mx-auto p-6 md:p-12 relative">
+// ─── App ──────────────────────────────────────────────────────────────────────
+export default function VendorDashboard7() {
+
+  const [config, setConfig] = useState(defaultConfig);
+const [loading, setLoading] = useState(true);
+const [saving, setSaving] = useState(false);
+const [message, setMessage] = useState("");
+
+const handleSaveAll = async () => {
+  try {
+    setSaving(true);
+    setMessage("");
+
+    const res = await saveServiceConfig(config);
+
+setConfig({
+  ...defaultConfig,
+  ...res.data,
+  mealTypes: res.data?.mealTypes?.length
+    ? res.data.mealTypes
+    : defaultConfig.mealTypes,
+  zones: res.data?.zones?.length
+    ? res.data.zones
+    : defaultConfig.zones,
+  weeklyMenu: {
+    ...defaultConfig.weeklyMenu,
+    ...(res.data.weeklyMenu || {}),
+  },
+  serviceWindows: {
+    ...defaultConfig.serviceWindows,
+    ...(res.data.serviceWindows || {}),
+    lunch: {
+      ...defaultConfig.serviceWindows.lunch,
+      ...(res.data.serviceWindows?.lunch || {}),
+    },
+    dinner: {
+      ...defaultConfig.serviceWindows.dinner,
+      ...(res.data.serviceWindows?.dinner || {}),
+    },
+  },
+  trialOffer: {
+    ...defaultConfig.trialOffer,
+    ...(res.data.trialOffer || {}),
+  },
+});
+    setMessage("Saved successfully");
+  } catch (error) {
+    console.error(error);
+    setMessage(error.message);
+  } finally {
+    setSaving(false);
+  }
+};
+
+
+
+  const navItems = [
+    { label: "Finance", active: false },
+    { label: "Order History", active: false },
+    { label: "Services", active: true },
+    { label: "Subscriber", active: false },
+  ];
+  useEffect(() => {
+  const fetchConfig = async () => {
+    try {
+      setLoading(true);
+
+      const res = await getServiceConfig();
+
+      if (res.data) {
+     setConfig({
+  ...defaultConfig,
+  ...res.data,
+  mealTypes: res.data?.mealTypes?.length
+    ? res.data.mealTypes
+    : defaultConfig.mealTypes,
+  zones: res.data?.zones?.length
+    ? res.data.zones
+    : defaultConfig.zones,
+  weeklyMenu: {
+    ...defaultConfig.weeklyMenu,
+    ...(res.data.weeklyMenu || {}),
+  },
+  serviceWindows: {
+    ...defaultConfig.serviceWindows,
+    ...(res.data.serviceWindows || {}),
+    lunch: {
+      ...defaultConfig.serviceWindows.lunch,
+      ...(res.data.serviceWindows?.lunch || {}),
+    },
+    dinner: {
+      ...defaultConfig.serviceWindows.dinner,
+      ...(res.data.serviceWindows?.dinner || {}),
+    },
+  },
+  trialOffer: {
+    ...defaultConfig.trialOffer,
+    ...(res.data.trialOffer || {}),
+  },
+});
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchConfig();
+}, []);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <style>{`
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+        input[type='date']::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.5; }
+        .uniform-card-height { height: 560px; }
+      `}</style>
+
+    
+
+      {/* Main */}
+      <main className="max-w-7xl mx-auto px-6 md:px-10 py-10 pt-24">
+        {loading && (
+  <div className="mb-4 text-sm font-semibold text-gray-500">
+    Loading service config...
+  </div>
+)}
+
+{message && (
+  <div className="mb-4 text-sm font-semibold text-blue-500">
+    {message}
+  </div>
+)}
         {/* Hero */}
-        <div className="mb-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-4">
-                Service{" "}
-                <span className="text-blue-600">Manager.</span>
-              </h1>
-              <p className="text-gray-500 text-lg max-w-2xl">
-                Configure your meal offerings, pricing schedules, and service
-                windows.
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black py-3 px-8 rounded-xl transition-all uppercase tracking-widest shadow-lg shadow-blue-200">
-                Save All Changes
-              </button>
-            </div>
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-3">
+              Service <span className="text-blue-500">Manager.</span>
+            </h1>
+            <p className="text-gray-400 text-base max-w-xl">
+              Configure your meal offerings, pricing schedules, and service
+              windows.
+            </p>
+          </div>
+         <button
+  onClick={handleSaveAll}
+  disabled={saving}
+  className="shrink-0 bg-blue-500 hover:bg-blue-600 text-white text-[10px] font-black py-3 px-8 rounded-xl transition-all uppercase tracking-widest shadow-md shadow-blue-200 disabled:opacity-50"
+>
+  {saving ? "Saving..." : "Save All Changes"}
+</button>
+        </div>
+
+        {/* Top 3 cards - equal height */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+          <div className="uniform-card-height flex flex-col">
+           <MealTypesCard
+  meals={config.mealTypes}
+  setConfig={setConfig}
+/>
+          </div>
+          <div className="uniform-card-height flex flex-col">
+           <ServiceZonesCard
+  hubs={config.zones}
+  setConfig={setConfig}
+/>
+          </div>
+          <div className="uniform-card-height flex flex-col">
+           <ServiceWindowsCard
+  serviceWindows={config.serviceWindows}
+  setConfig={setConfig}
+/>
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          <div className="col-span-12 md:col-span-4">
-            <MealTypesWidget />
+        {/* Catalog + Trial */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-5">
+          <div className="md:col-span-7">
+           <TiffinCatalogCard
+  catalog={config.pricingVariants}
+  setConfig={setConfig}
+/>
           </div>
-          <div className="col-span-12 md:col-span-4">
-            <ServiceReachWidget />
+          <div className="md:col-span-5">
+           <TrialOfferCard
+  trialOffer={config.trialOffer}
+  setConfig={setConfig}
+/>
           </div>
-          <div className="col-span-12 md:col-span-4">
-            <ServiceWindowsWidget />
-          </div>
-          <div className="col-span-12 md:col-span-7">
-            <TiffinCatalogWidget />
-          </div>
-          <div className="col-span-12 md:col-span-5">
-            <TrialOfferWidget />
-          </div>
-          <div className="col-span-12">
-            <WeeklyMenuWidget />
-          </div>
+        </div>
+
+        {/* Weekly Menu */}
+        <div className="mb-5">
+         <WeeklyMenuCard
+  weeklyMenu={config.weeklyMenu}
+  setConfig={setConfig}
+/>
+        </div>
+
+        {/* Cancellation */}
+        <div>
+          <CancellationCard />
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full py-10 px-12 border-t border-gray-100 bg-white/60 backdrop-blur-sm mt-20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-8">
-            {["Privacy Policy", "Terms of Service", "Support Portal"].map(
-              (link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-gray-400 hover:text-gray-800 transition-colors text-[10px] font-bold uppercase tracking-widest"
-                >
-                  {link}
-                </a>
-              )
-            )}
-          </div>
-          <div className="text-gray-400 text-[10px] font-medium uppercase tracking-[0.2em]">
-            © 2024 AHAARMITRA ANALYTICS. PRECISION IN SERVICE MANAGEMENT.
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 }
