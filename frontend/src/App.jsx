@@ -40,6 +40,7 @@ import SuccessIntelligence6 from "./VendorPages/SuccessIntelligence6.jsx";
 import CulinaryTrends5 from "./VendorPages/CulinaryTrends5.jsx";
 import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
+<<<<<<< HEAD
 
 
 import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
@@ -49,6 +50,12 @@ import VendorDash from "./VendorPages/VendorDashboard10.jsx";
 import Tempr from "./Userpages/tempr.jsx";
 
 import Ex from "./Userpages/Ex.jsx";
+=======
+import VendorAllInfo from "./VendorPages/VendorAllInfo.jsx";
+import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
+import VendorProfile from "./VendorPages/VendorProfile9.jsx";
+import VendorDash from "./VendorPages/VendorDashboard10.jsx";
+>>>>>>> be35023d6c371b5725d4ef7ae129dbab5c4eca60
 
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
@@ -64,9 +71,15 @@ const App = () => {
     location.pathname.startsWith(route)
   );
 
+<<<<<<< HEAD
   // 👤 AUTH STATE (TEMP - replace later)
   const isLoggedIn = true; // change to auth later
   const isVendor = false; // change based on role
+=======
+  // 👤 AUTH STATE (TEMP)
+  const isLoggedIn = false;
+  const isVendor = false;
+>>>>>>> be35023d6c371b5725d4ef7ae129dbab5c4eca60
 
   // 🧠 DETECT VENDOR ROUTES
   const vendorRoutes = ["/v4", "/v5", "/v6", "/v7"];
@@ -117,6 +130,7 @@ const App = () => {
 
               {/* ✅ FIXED VENDOR ROUTE */}
               <Route path="/vendor/:id" element={<VendorDetails1 />} />
+              {/* <Route path="/1" element={<VendorDetails1 />} /> */}
 
               <Route path="/2" element={<TiffinTrial2 />} />
               <Route path="/3" element={<CheckoutConfirmation3 />} />
@@ -151,14 +165,22 @@ const App = () => {
               <Route path="/v5" element={<CulinaryTrends5 />} />
               <Route path="/v6" element={<SuccessIntelligence6 />} />
               <Route path="/v7" element={<VendorDashboard7 />} />
+<<<<<<< HEAD
+=======
+              <Route path="/v9" element={<VendorAllInfo />} />
+>>>>>>> be35023d6c371b5725d4ef7ae129dbab5c4eca60
               <Route path="/v8" element={<VendorFinance8 />} />
 
               <Route path="/v9" element={<VendorProfile />} />
+<<<<<<< HEAD
 
               <Route path="/v10" element={<VendorLogin10 />} />
               <Route path="/ex" element={<Ex />} />
 
               <Route path="/tempr" element={<Tempr />} />
+=======
+              <Route path="/v10" element={<VendorDash />} />
+>>>>>>> be35023d6c371b5725d4ef7ae129dbab5c4eca60
             </Routes>
           </div>
 
