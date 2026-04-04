@@ -220,7 +220,7 @@ export default function SuccessIntelligence6() {
             </div>
 
             {/* Tabs */}
-            <div className="px-7 border-b border-gray-100 flex gap-6">
+            {/* <div className="px-7 border-b border-gray-100 flex gap-6">
               {TABS.map((tab) => (
                 <button
                   key={tab}
@@ -234,7 +234,7 @@ export default function SuccessIntelligence6() {
                   {tab}
                 </button>
               ))}
-            </div>
+            </div> */}
 
             {/* Tab Content */}
             <div className="p-7 space-y-8">
@@ -556,7 +556,7 @@ export default function SuccessIntelligence6() {
       </div>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-gray-200 bg-white mt-4">
+      {/* <footer className="border-t border-gray-200 bg-white mt-4">
         <div className="max-w-[1200px] mx-auto px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-8">
             {["Metrics Documentation", "Retention Playbooks", "Support"].map((l) => (
@@ -569,7 +569,7 @@ export default function SuccessIntelligence6() {
             © 2024 AhaarMitra Success Analytics. Proactive Culinary Retention.
           </span>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -372,7 +372,7 @@ export default function AhaarMitraTracker4() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full py-10 px-8 border-t border-gray-200 bg-white mt-20">
+      {/* <footer className="w-full py-10 px-8 border-t border-gray-200 bg-white mt-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-8">
             <a href="#" className="text-gray-400 hover:text-gray-700 transition-colors text-[10px] font-bold uppercase tracking-widest">Privacy Policy</a>
@@ -383,7 +383,7 @@ export default function AhaarMitraTracker4() {
             © 2024 AHAARMITRA DIGITAL. EMPOWERING CULINARY ENTREPRENEURSHIP.
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -323,7 +323,7 @@ const mergeConfig = (incoming = {}) => ({
 
 function SectionLabel({ children }) {
   return (
-    <div className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 flex items-center justify-between">
+    <div className="text-[10px] font-black uppercase tracking-[0.18em] text-gray-500 mb-3 flex items-center justify-between">
       {children}
     </div>
   );
@@ -432,7 +432,7 @@ function MealTypesCard({ meals, setConfig }) {
             >
               <div className="flex items-center gap-3">
                 <span className="text-xl">{meta.icon}</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                <span className="text-sm font-semibold uppercase tracking-wider text-gray-800">
                   {meta.label}
                 </span>
               </div>
@@ -458,7 +458,7 @@ function MealTypesCard({ meals, setConfig }) {
 
         {missingMeals.length > 0 && (
           <div className="mt-2 space-y-2">
-            <p className="text-[8px] font-black uppercase tracking-widest text-gray-400">
+            <p className="text-[10px] font-black uppercase tracking-widest text-gray-500">
               Add Missing Meal Types
             </p>
 
@@ -473,7 +473,7 @@ function MealTypesCard({ meals, setConfig }) {
                   key={mealName}
                   type="button"
                   onClick={() => addMissingMeal(mealName)}
-                  className="w-full py-2.5 px-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+                  className="w-full py-2.5 px-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-600 hover:border-blue-400 hover:text-blue-500 transition-all"
                 >
                   <span className="text-sm">{meta.icon}</span>
                   Add {meta.label}
@@ -526,7 +526,7 @@ function ServiceZonesCard({ hubs, setConfig }) {
         <span className="text-gray-300 text-sm">📍</span>
       </SectionLabel>
 
-      <p className="text-[8px] font-black uppercase tracking-widest text-gray-400 mb-2">
+      <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
         Configured Service Hubs
       </p>
 
@@ -553,7 +553,7 @@ function ServiceZonesCard({ hubs, setConfig }) {
                   onChange={(e) =>
                     updateZoneField(i, "address", e.target.value)
                   }
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -562,7 +562,7 @@ function ServiceZonesCard({ hubs, setConfig }) {
                     placeholder="City"
                     value={hub.city}
                     onChange={(e) => updateZoneField(i, "city", e.target.value)}
-                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
                   />
 
                   <input
@@ -572,7 +572,7 @@ function ServiceZonesCard({ hubs, setConfig }) {
                     onChange={(e) =>
                       updateZoneField(i, "state", e.target.value)
                     }
-                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
                   />
 
                   <input
@@ -582,12 +582,12 @@ function ServiceZonesCard({ hubs, setConfig }) {
                     onChange={(e) =>
                       updateZoneField(i, "pincode", e.target.value)
                     }
-                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
                   />
                 </div>
 
                 {hub.address && (
-                  <p className="text-[10px] text-gray-500 font-medium">
+                  <p className="text-xs text-gray-600 font-medium">
                     {hub.address}, {hub.city}, {hub.state} - {hub.pincode}
                   </p>
                 )}
@@ -609,7 +609,7 @@ function ServiceZonesCard({ hubs, setConfig }) {
       <button
         type="button"
         onClick={addZone}
-        className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+        className="mt-3 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[9px] font-black uppercase tracking-widest text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-all"
       >
         <span className="text-sm">📍+</span> Add Hub Address
       </button>
@@ -646,13 +646,13 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
 
       <div className="space-y-4 flex-1">
         <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
-          <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-3">
+          <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3">
             Lunch Delivery
           </p>
 
           <div className="flex gap-3 mb-3">
             <div className="flex-1 space-y-1">
-              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+              <label className="text-[10px] uppercase tracking-tighter text-gray-500">
                 Start Time
               </label>
               <input
@@ -661,12 +661,12 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
                 onChange={(e) =>
                   updateWindow("lunch", "startTime", e.target.value)
                 }
-                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
               />
             </div>
 
             <div className="flex-1 space-y-1">
-              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+              <label className="text-[10px] uppercase tracking-tighter text-gray-500">
                 End Time
               </label>
               <input
@@ -675,13 +675,13 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
                 onChange={(e) =>
                   updateWindow("lunch", "endTime", e.target.value)
                 }
-                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
               />
             </div>
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[10px] font-bold text-gray-700 uppercase">
+            <span className="text-[11px] font-semibold text-gray-700 uppercase">
               Auto Cutoff
             </span>
             <Toggle
@@ -697,7 +697,7 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
           </div>
 
           <div className="space-y-1">
-            <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+            <label className="text-[10px] uppercase tracking-tighter text-gray-500">
               Cutoff Minutes
             </label>
             <input
@@ -706,7 +706,7 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
               onChange={(e) =>
                 updateWindow("lunch", "cutoffMinutes", e.target.value)
               }
-              className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+              className="w-full bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
             />
           </div>
         </div>
@@ -718,7 +718,7 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
 
           <div className="flex gap-3 mb-3">
             <div className="flex-1 space-y-1">
-              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+              <label className="text-[10px] uppercase tracking-tighter text-gray-500">
                 Start Time
               </label>
               <input
@@ -727,12 +727,12 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
                 onChange={(e) =>
                   updateWindow("dinner", "startTime", e.target.value)
                 }
-                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
               />
             </div>
 
             <div className="flex-1 space-y-1">
-              <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+              <label className="text-[10px] uppercase tracking-tighter text-gray-500">
                 End Time
               </label>
               <input
@@ -741,13 +741,13 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
                 onChange={(e) =>
                   updateWindow("dinner", "endTime", e.target.value)
                 }
-                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+                className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
               />
             </div>
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[10px] font-bold text-gray-700 uppercase">
+            <span className="text-[11px] font-semibold text-gray-700 uppercase">
               Auto Cutoff
             </span>
             <Toggle
@@ -763,7 +763,7 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
           </div>
 
           <div className="space-y-1">
-            <label className="text-[8px] uppercase tracking-tighter text-gray-400">
+            <label className="text-[10px] uppercase tracking-tighter text-gray-500">
               Cutoff Minutes
             </label>
             <input
@@ -772,7 +772,7 @@ function ServiceWindowsCard({ serviceWindows, setConfig }) {
               onChange={(e) =>
                 updateWindow("dinner", "cutoffMinutes", e.target.value)
               }
-              className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
+              className="w-full bg-white border border-violet-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-400/30 focus:border-violet-400 transition-all"
             />
           </div>
         </div>
@@ -808,7 +808,7 @@ function TiffinCatalogCard({ catalog, setConfig }) {
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="text-[9px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+            <tr className="text-[10px] font-black text-gray-500 uppercase tracking-widest border-b border-gray-100">
               <th className="pb-3 text-left">Tiffin Variant</th>
               <th className="pb-3 text-left">Daily (₹)</th>
               <th className="pb-3 text-left">Weekly (₹)</th>
@@ -821,10 +821,10 @@ function TiffinCatalogCard({ catalog, setConfig }) {
             {catalog.map((item, index) => (
               <tr key={`${item.variantName}-${index}`}>
                 <td className="py-3.5">
-                  <p className="text-xs font-bold text-gray-800">
+                  <p className="text-sm font-semibold text-gray-800">
                     {item.variantName}
                   </p>
-                  <p className="text-[9px] text-gray-400 uppercase tracking-tight mt-0.5">
+                  <p className="text-[10px] text-gray-500 uppercase tracking-tight mt-0.5">
                     {(item.components || []).join(", ")}
                   </p>
                 </td>
@@ -839,7 +839,7 @@ function TiffinCatalogCard({ catalog, setConfig }) {
                       type="number"
                       value={value}
                       onChange={(e) => update(index, f, Number(e.target.value))}
-                      className="w-20 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
+                      className="w-20 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400 transition-all"
                     />
                   </td>
                 ))}
@@ -861,7 +861,7 @@ function TiffinCatalogCard({ catalog, setConfig }) {
       <Link to="/22" className="w-full">
         <button
           type="button"
-          className="mt-4 w-full py-2.5 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+          className="mt-4 w-full py-2.5 flex items-center justify-center gap-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-all"
         >
           <span>+</span> Add New Tiffin Variant
         </button>
@@ -893,7 +893,7 @@ function TrialOfferCard({ trialOffer, setConfig, pricingVariants }) {
 
       <div className="space-y-5">
         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100">
-          <span className="text-[10px] uppercase font-bold text-gray-600">
+          <span className="text-[11px] uppercase font-semibold text-gray-700">
             Trial Enabled
           </span>
           <Toggle
@@ -934,7 +934,7 @@ function TrialOfferCard({ trialOffer, setConfig, pricingVariants }) {
                 className={`px-3 py-1 rounded-full text-[8px] font-black uppercase transition-all ${
                   currentVariant === variant.variantName
                     ? "bg-blue-500 text-white border border-blue-500"
-                    : "bg-white text-gray-400 border border-gray-200 hover:border-blue-300"
+                    : "bg-white text-gray-500 border border-gray-200 hover:border-blue-300"
                 }`}
               >
                 {variant.variantName}
@@ -943,8 +943,8 @@ function TrialOfferCard({ trialOffer, setConfig, pricingVariants }) {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">
+        {/* <div className="space-y-2">
+          <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">
             Promotion Logic
           </p>
 
@@ -966,13 +966,13 @@ function TrialOfferCard({ trialOffer, setConfig, pricingVariants }) {
               key={opt.label}
               className="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-100"
             >
-              <span className="text-[10px] uppercase font-bold text-gray-600">
+              <span className="text-[11px] uppercase font-semibold text-gray-700">
                 {opt.label}
               </span>
               <Toggle active={opt.state} onToggle={opt.toggle} />
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </Card>
   );
@@ -1067,7 +1067,7 @@ function WeeklyMenuCard({ weeklyMenu, setConfig }) {
   return (
     <Card className="p-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400">
+        <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-500">
           Weekly Menu Customizer
         </p>
 
@@ -1087,10 +1087,10 @@ function WeeklyMenuCard({ weeklyMenu, setConfig }) {
             type="button"
             key={d.key}
             onClick={() => setActiveDay(d.key)}
-            className={`flex-1 min-w-[2.5rem] text-center py-2 rounded-lg text-[10px] font-bold border transition-all ${
+            className={`flex-1 min-w-[2.5rem] text-center py-2 rounded-lg text-[11px] font-semibold border transition-all ${
               activeDay === d.key
                 ? "bg-blue-500 text-white border-blue-500 shadow-sm shadow-blue-200"
-                : "bg-gray-50 text-gray-400 border-gray-100 hover:bg-gray-100"
+                : "bg-gray-50 text-gray-500 border-gray-100 hover:bg-gray-100"
             }`}
           >
             {d.short}
@@ -1108,7 +1108,7 @@ function WeeklyMenuCard({ weeklyMenu, setConfig }) {
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border ${
                 activeMeal === tab.id
                   ? "bg-white text-gray-800 border-gray-200 shadow-sm"
-                  : "bg-transparent text-gray-400 border-transparent hover:text-gray-600"
+                  : "bg-transparent text-gray-500 border-transparent hover:text-gray-600"
               }`}
             >
               <span className="text-sm">{tab.icon}</span>
@@ -1147,7 +1147,7 @@ function WeeklyMenuCard({ weeklyMenu, setConfig }) {
                       : "border-gray-100 hover:border-gray-200"
                   }`}
                 >
-                  <span className="text-xs font-semibold text-gray-700">
+                  <span className="text-sm font-medium text-gray-800">
                     {item}
                   </span>
 
@@ -1173,12 +1173,12 @@ function WeeklyMenuCard({ weeklyMenu, setConfig }) {
                     }))
                   }
                   placeholder="Add item"
-                  className="flex-1 bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
+                  className="flex-1 bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400"
                 />
                 <button
                   type="button"
                   onClick={() => addItem(tier.key)}
-                  className="px-3 py-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+                  className="px-3 py-2 border border-dashed border-gray-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-all"
                 >
                   Add
                 </button>
@@ -1210,7 +1210,7 @@ function CancellationCard() {
       <div className="max-w-xl mx-auto mb-8">
         <div className="bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden">
           <div className="p-6 pb-3">
-            <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3 text-center">
+            <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-500 mb-3 text-center">
               Step 1: Select Target Date
             </p>
 
@@ -1271,7 +1271,7 @@ function CancellationCard() {
                 </span>
                 <h4
                   className={`text-xs font-black uppercase tracking-widest mt-2 ${
-                    !meal.active ? "text-gray-400" : "text-gray-800"
+                    !meal.active ? "text-gray-500" : "text-gray-800"
                   }`}
                 >
                   {meal.label}
@@ -1291,7 +1291,7 @@ function CancellationCard() {
 
             <p
               className={`text-[10px] mb-4 uppercase tracking-tighter font-medium ${
-                !meal.active ? "text-rose-400" : "text-gray-400"
+                !meal.active ? "text-rose-400" : "text-gray-500"
               }`}
             >
               {meal.active ? `Service Window: ${meal.time}` : meal.time}
@@ -1302,8 +1302,8 @@ function CancellationCard() {
               onClick={() => toggleMeal(meal.id)}
               className={`w-full py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border ${
                 meal.active
-                  ? "bg-white text-gray-400 border-gray-200 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-500"
-                  : "bg-white text-gray-400 border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-600"
+                  ? "bg-white text-gray-500 border-gray-200 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-500"
+                  : "bg-white text-gray-500 border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-600"
               }`}
             >
               <span className="text-sm">{meal.active ? "🚫" : "↩️"}</span>
@@ -1416,7 +1416,7 @@ export default function VendorDashboard7() {
             <h1 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-3">
               Service <span className="text-blue-500">Manager.</span>
             </h1>
-            <p className="text-gray-400 text-base max-w-xl">
+            <p className="text-gray-500 text-base max-w-xl">
               Configure your meal offerings, pricing schedules, and service
               windows.
             </p>
