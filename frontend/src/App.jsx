@@ -41,6 +41,7 @@ import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
 import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
 import VendorProfile from "./VendorPages/VendorProfile9.jsx";
+import VendorDash from "./VendorPages/VendorDashboard10.jsx";
 
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
@@ -149,6 +150,7 @@ const App = () => {
               <Route path="/v7" element={<VendorDashboard7 />} />
               <Route path="/v8" element={<VendorFinance8 />} />
               <Route path="/v9" element={<VendorProfile />} />
+              <Route path="/v10" element={<VendorDash />} />
             </Routes>
           </div>
 

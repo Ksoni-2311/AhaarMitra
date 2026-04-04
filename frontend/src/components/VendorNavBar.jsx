@@ -48,7 +48,7 @@ const VendorNavBar = () => {
           </span>
           <input
             className="bg-transparent outline-none text-sm w-32 lg:w-48 placeholder:text-gray-400"
-            placeholder="Search kitchen..."
+            placeholder="Search ..."
             type="text"
           />
         </div>

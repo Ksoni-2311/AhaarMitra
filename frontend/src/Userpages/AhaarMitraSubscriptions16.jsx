@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
 /* ─── Global Styles: Poppins + Material Symbols ─── */
 const GlobalStyles = () => (
   <>
@@ -51,13 +51,32 @@ const Icon = ({ name, className = "" }) => (
 ══════════════════════════════════════ */
 const Navbar = () => (
   <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm h-20 px-6 md:px-12 flex justify-between items-center">
-    <div className="text-2xl font-black text-gray-900 tracking-tighter">AhaarMitra</div>
+    <div className="text-2xl font-black text-gray-900 tracking-tighter">
+      AhaarMitra
+    </div>
 
     <div className="hidden md:flex items-center gap-8 font-bold tracking-tight">
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Explore</a>
-      <a className="text-gray-900 border-b-2 border-gray-900 pb-1" href="#">Subscriptions</a>
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Orders</a>
-      <a className="text-gray-400 hover:text-gray-900 transition-colors" href="#">Support</a>
+      <a
+        className="text-gray-400 hover:text-gray-900 transition-colors"
+        href="#"
+      >
+        Explore
+      </a>
+      <a className="text-gray-900 border-b-2 border-gray-900 pb-1" href="#">
+        Subscriptions
+      </a>
+      <a
+        className="text-gray-400 hover:text-gray-900 transition-colors"
+        href="#"
+      >
+        Orders
+      </a>
+      <a
+        className="text-gray-400 hover:text-gray-900 transition-colors"
+        href="#"
+      >
+        Support
+      </a>
     </div>
 
     <div className="flex items-center gap-6">
@@ -105,48 +124,68 @@ const SubscriptionCard = ({
         <div className="flex gap-4">
           <div className="w-16 h-16 rounded-xl overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center shrink-0">
             {vendorImg ? (
-              <img alt="Vendor" className="w-full h-full object-cover" src={vendorImg} />
+              <img
+                alt="Vendor"
+                className="w-full h-full object-cover"
+                src={vendorImg}
+              />
             ) : (
               <Icon name={vendorIcon} className="text-3xl text-gray-300" />
             )}
           </div>
           <div>
-            <h3 className="text-2xl font-black mb-1 text-gray-900">{vendorName}</h3>
+            <h3 className="text-2xl font-black mb-1 text-gray-900">
+              {vendorName}
+            </h3>
             <div className="flex items-center gap-3">
               <span className="bg-green-50 text-green-600 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-widest border border-green-200">
                 Active
               </span>
-              <span className="text-gray-400 text-xs font-bold uppercase tracking-wider">{planLabel}</span>
+              <span className="text-gray-400 text-xs font-bold uppercase tracking-wider">
+                {planLabel}
+              </span>
             </div>
           </div>
         </div>
         <div className="text-right">
           <div className="text-3xl font-black text-gray-900">
             {daysRemaining}{" "}
-            <span className="text-sm text-gray-400 uppercase tracking-widest">Days</span>
+            <span className="text-sm text-gray-400 uppercase tracking-widest">
+              Days
+            </span>
           </div>
-          <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Remaining</div>
+          <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
+            Remaining
+          </div>
         </div>
       </div>
 
       {/* Info row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 py-6 border-y border-gray-100">
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Next Delivery</span>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">
+            Next Delivery
+          </span>
           <div className="flex items-center gap-2">
             <Icon name="calendar_today" className="text-amber-500 text-lg" />
-            <span className="font-bold text-sm text-gray-800">{nextDelivery}</span>
+            <span className="font-bold text-sm text-gray-800">
+              {nextDelivery}
+            </span>
           </div>
         </div>
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Included Meals</span>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">
+            Included Meals
+          </span>
           <div className="flex items-center gap-2">
             <Icon name={mealIcon} className="text-amber-500 text-lg" />
             <span className="font-bold text-sm text-gray-800">{mealLabel}</span>
           </div>
         </div>
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Daily Budget</span>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">
+            Daily Budget
+          </span>
           <div className="flex items-center gap-2">
             <Icon name="payments" className="text-amber-500 text-lg" />
             <span className="font-bold text-sm text-gray-800">{budget}</span>
@@ -173,7 +212,7 @@ const SubscriptionCard = ({
               <Icon name={action.icon} className="text-lg" />
               {action.label}
             </button>
-          )
+          ),
         )}
       </div>
     </div>
@@ -203,7 +242,9 @@ const perks = [
 
 const VendorPerks = () => (
   <section className="pt-8">
-    <h2 className="text-xl font-bold mb-6 text-gray-900">Vendor Special Perks</h2>
+    <h2 className="text-xl font-bold mb-6 text-gray-900">
+      Vendor Special Perks
+    </h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {perks.map((perk, i) => (
         <div
@@ -214,8 +255,12 @@ const VendorPerks = () => (
             <Icon name={perk.icon} />
           </div>
           <div>
-            <h4 className="font-bold text-sm mb-1 text-gray-800">{perk.title}</h4>
-            <p className="text-[11px] text-gray-400 font-medium leading-relaxed">{perk.desc}</p>
+            <h4 className="font-bold text-sm mb-1 text-gray-800">
+              {perk.title}
+            </h4>
+            <p className="text-[11px] text-gray-400 font-medium leading-relaxed">
+              {perk.desc}
+            </p>
           </div>
         </div>
       ))}
@@ -230,14 +275,20 @@ const Sidebar = () => (
   <div className="sticky top-28 space-y-6">
     {/* Subscription Summary */}
     <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
-      <h3 className="text-lg font-bold mb-6 text-gray-900">Subscription Summary</h3>
+      <h3 className="text-lg font-bold mb-6 text-gray-900">
+        Subscription Summary
+      </h3>
       <div className="space-y-6">
         <div className="flex justify-between items-center pb-4 border-b border-gray-100">
-          <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">Active Plans</span>
+          <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">
+            Active Plans
+          </span>
           <span className="text-xl font-black text-gray-900">2</span>
         </div>
         <div className="flex justify-between items-center pb-4 border-b border-gray-100">
-          <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">Total Monthly Spend</span>
+          <span className="text-xs text-gray-400 font-bold uppercase tracking-widest">
+            Total Monthly Spend
+          </span>
           <span className="text-xl font-black text-gray-900">₹4,650</span>
         </div>
         <div className="space-y-4">
@@ -265,7 +316,9 @@ const Sidebar = () => (
         <Icon name="account_balance_wallet" className="text-gray-400" />
       </div>
       <div className="mb-6">
-        <span className="block text-[11px] text-gray-400 font-medium mb-1">Next Billing Date</span>
+        <span className="block text-[11px] text-gray-400 font-medium mb-1">
+          Next Billing Date
+        </span>
         <h3 className="text-2xl font-black text-gray-900">May 16, 2024</h3>
       </div>
       <div className="space-y-3">
@@ -279,22 +332,28 @@ const Sidebar = () => (
     </div>
 
     {/* Concierge Support */}
-    <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-      <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">
-        Concierge Support
-      </h3>
-      <div className="space-y-4">
-        <a className="flex items-center gap-4 group cursor-pointer" href="#">
-          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-            <Icon name="support_agent" className="text-sm text-gray-500" />
-          </div>
-          <div>
-            <span className="block text-xs text-gray-400 font-bold">24/7 Priority</span>
-            <span className="text-sm font-bold text-gray-800">Live Chat Support</span>
-          </div>
-        </a>
+    <Link to="/support">
+      <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">
+          Concierge Support
+        </h3>
+        <div className="space-y-4">
+          <a className="flex items-center gap-4 group cursor-pointer" href="#">
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+              <Icon name="support_agent" className="text-sm text-gray-500" />
+            </div>
+            <div>
+              <span className="block text-xs text-gray-400 font-bold">
+                24/7 Priority
+              </span>
+              <span className="text-sm font-bold text-gray-800">
+                Live Chat Support
+              </span>
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
+    </Link>
   </div>
 );
 
@@ -311,20 +370,53 @@ const Footer = () => (
         </p>
       </div>
       <div className="flex flex-col gap-3">
-        <h4 className="text-gray-700 text-xs font-bold uppercase tracking-widest mb-2">Legal</h4>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest" href="#">Privacy Policy</a>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest" href="#">Terms of Service</a>
+        <h4 className="text-gray-700 text-xs font-bold uppercase tracking-widest mb-2">
+          Legal
+        </h4>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Privacy Policy
+        </a>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Terms of Service
+        </a>
       </div>
       <div className="flex flex-col gap-3">
-        <h4 className="text-gray-700 text-xs font-bold uppercase tracking-widest mb-2">Support</h4>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest" href="#">Contact Support</a>
-        <a className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest" href="#">Partner with Us</a>
+        <h4 className="text-gray-700 text-xs font-bold uppercase tracking-widest mb-2">
+          Support
+        </h4>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Contact Support
+        </a>
+        <a
+          className="text-gray-400 hover:text-gray-800 transition-colors text-xs font-medium uppercase tracking-widest"
+          href="#"
+        >
+          Partner with Us
+        </a>
       </div>
       <div className="flex flex-col gap-4 items-end">
         <div className="flex gap-4">
-          <Icon name="brand_awareness" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors" />
-          <Icon name="share" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors" />
-          <Icon name="public" className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors" />
+          <Icon
+            name="brand_awareness"
+            className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors"
+          />
+          <Icon
+            name="share"
+            className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors"
+          />
+          <Icon
+            name="public"
+            className="text-gray-300 hover:text-gray-700 cursor-pointer transition-colors"
+          />
         </div>
         <div className="text-gray-400 text-[10px] font-medium uppercase tracking-widest text-right">
           © 2024 AhaarMitra Editorial. All rights reserved.

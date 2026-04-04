@@ -22,7 +22,7 @@ const vendors = [
       { label: "Top Rated", color: "bg-amber-500 text-black" },
       { label: "Pure Veg", color: "bg-black text-white" },
     ],
-    img: LandingImage,
+    img: "https://t4.ftcdn.net/jpg/09/14/04/91/360_F_914049154_beKtlm5YbwsysvupFSQoNvEI9FuVq1hC.jpg",
   },
   {
     id: 2,
@@ -31,11 +31,11 @@ const vendors = [
     price: "₹149",
     subs: "842",
     badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
-    img: LandingImage,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3JZIL2VyoUmdoQ-pqft4aLQl0MjVCq8jVA&s",
   },
   {
     id: 3,
-    name: "The Fit Kitchen",
+    name: "Gharam Rasoi",
     rating: "4.7",
     price: "₹179",
     subs: "2,105",
@@ -44,12 +44,12 @@ const vendors = [
   },
   {
     id: 3,
-    name: "The Fit Kitchen",
+    name: "Swaad Ghar Tiffins",
     rating: "4.7",
     price: "₹179",
-    subs: "2,105",
+    subs: "1,105",
     badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
-    img: LandingImage,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvBP2wpne32lKxUkchKIe3u_9DhtQ5iGchfA&s",
   },
 ];
 
@@ -66,13 +66,14 @@ export default function HomePage() {
           <h2 className="text-2xl md:text-3xl font-black text-gray-900">
             Popular Kitchens
           </h2>
-
-          <button className="flex items-center gap-1 text-sm font-bold text-gray-600 hover:text-amber-500 transition">
-            Explore More
-            <span className="material-symbols-outlined text-lg">
-              arrow_forward
-            </span>
-          </button>
+          <Link to="/explore">
+            <button className="flex items-center gap-1 text-sm font-bold text-gray-600 hover:text-amber-500 transition">
+              Explore More
+              <span className="material-symbols-outlined text-lg">
+                arrow_forward
+              </span>
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -150,9 +151,9 @@ function ScrollZoomHero() {
             className="w-[610px] md:w-[810px] lg:w-[930px] object-contain"
           />
           <div className="h-40"></div>
-          <div className="mt-4 px-6 py-4 rounded-xl bg-white/20 backdrop-blur-md text-center">
+          <div className="mt-4 px-6 py-4 rounded-xl bg-[#FFE0B2]/60 backdrop-blur-md text-center">
             {/* Text */}
-            <p className="text-white text-sm md:text-base max-w-xl mx-auto leading-tight">
+            <p className="text-white text-sm md:text-base max-w-xl mx-auto leading-tight font-semibold">
               Har din ghar jaisa swaad — connecting home chefs with people who
               crave authentic meals.
             </p>

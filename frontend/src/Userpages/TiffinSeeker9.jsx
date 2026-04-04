@@ -54,13 +54,13 @@ const vendors = [
     dinnerStatus: "Schedule",
     badges: [{ label: "Fastest Delivery", color: "bg-green-600 text-white" }],
     badgeBar: "bg-green-600",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEzF78wTCqvV5dG62b6yhmGxmUuXcgVTIn7Q&s",
   },
   {
     id: 1,
     name: "Shree Tiffin Services",
-      // description:
-      //   "Authentic home-style comfort crafted for the daily urban table using organic spices.",
+    // description:
+    //   "Authentic home-style comfort crafted for the daily urban table using organic spices.",
     rating: "4.9",
     price: "₹99",
     subs: "1,248",
@@ -76,7 +76,7 @@ const vendors = [
       },
     ],
     badgeBar: "bg-amber-500",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDMBmIchnkIkoQGR77HPKNPe8Mi87AWVXdlxtSOo0_aqUzxSiao8g8wNuB6MLnue5hBiJqoCqYqYf_QwyAx8srHTmiWQLzDoSpBgjo79alSoDbXQZ1BxnJSwyVy8He4b-CbkpWuTgncU4YcUKtpcr-pZOyPo1hbVYNmqrmfArc3zZZuFPXAiqx6A5bpLRmZEtfGqskXEk_ur5KQcptvlknPuRIA86F4SmByElS4qXuo1rcrzcBC2SHCGJ1fTtaHQtFIc92CaW3sgiyX",
+    img: "https://content.jdmagicbox.com/v2/comp/bangalore/a9/080pxx80.xx80.240327200713.z7a9/catalogue/ulike-tiffin-service-homemade-north-indian-food-rt-nagar-bangalore-tiffin-services-1skkr97gae.jpg",
   },
   {
     id: 2,
@@ -92,7 +92,7 @@ const vendors = [
     dinnerStatus: "Schedule",
     badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
     badgeBar: "bg-blue-500",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDK1tSZ-wBDTNCjK3U3eV-EuMtd2Cl4BRrx5feYW8Pfs8Bl576PyFGfiUmELvHa2DcAA0ASCPZH5rm6xkvI4VWEyveQtFW_HU-6WaVJhIecNa3nIEBWvPePZbqil-AqaPw_U4D03iHh6mX8U4qIdX2_-eQM0Yi_dfr2w8Pj6F662kJ14gBX9_W7bX1uqGyfRomUAqsC9fF9xIzr2nCfGeyS7-zawAHEF1FnS_ep-oVvA-kKbIodDQAMjaroBolce2E3nQzZ_aDltzmU",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgdb80F71pp86M8wG07Gimw8nEpq_K_JXHKw&s",
   },
   {
     id: 3,

@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Star = ({ filled }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +33,7 @@ const CheckCircle = () => (
   </svg>
 );
 
-export default function TiffinTrial2() {
+export default function VendorDetails1() {
   const [activeTab, setActiveTab] = useState("explore");
 
   const ratings = [
@@ -49,10 +50,10 @@ export default function TiffinTrial2() {
       style={{ fontFamily: "'Manrope', sans-serif" }}
     >
       {/* Google Fonts */}
-      <link
+      {/* <link
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
-      />
+      /> */}
 
       {/* NAV */}
       {/* <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm h-16 px-8 md:px-12 flex justify-between items-center">
@@ -270,7 +271,12 @@ export default function TiffinTrial2() {
                   <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
                     Daily
                   </span>
-                  <span className="text-xl font-black text-gray-700">₹85</span>
+                  <p className="text-lg font-bold">
+                    <span className="line-through text-gray-400 mr-2">
+                      ₹80
+                    </span>
+                    ₹40
+                  </p>
                 </div>
                 <div className="col-span-1 md:col-span-2 text-center">
                   <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
@@ -323,7 +329,12 @@ export default function TiffinTrial2() {
                   <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
                     Daily
                   </span>
-                  <span className="text-xl font-black text-gray-700">₹140</span>
+                  <p className="text-lg font-bold">
+                    <span className="line-through text-gray-400 mr-2">
+                      ₹120
+                    </span>
+                    ₹60
+                  </p>
                 </div>
                 <div className="col-span-1 md:col-span-2 text-center">
                   <span className="text-xs md:hidden text-gray-400 block mb-1 uppercase font-bold">
@@ -473,7 +484,10 @@ export default function TiffinTrial2() {
                 Order a Trial
               </button>
 
-              <button className="flex-1 bg-gray-900 text-white font-black py-5 rounded-xl text-sm uppercase tracking-widest shadow-lg hover:bg-amber-500 transition-all flex items-center justify-center gap-3">
+              <Link
+                to="/4"
+                className="flex-1 bg-gray-900 text-white font-black py-5 rounded-xl text-sm uppercase tracking-widest shadow-lg hover:bg-amber-500 transition-all flex items-center justify-center gap-3"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -488,7 +502,7 @@ export default function TiffinTrial2() {
                   />
                 </svg>
                 Build My Plan
-              </button>
+              </Link>
             </div>
           </section>
 
