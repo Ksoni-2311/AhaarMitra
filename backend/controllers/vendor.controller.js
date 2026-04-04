@@ -186,3 +186,22 @@ export const loginVendor = async (req, res) => {
     });
   }
 };
+
+export const getAllVendors = async (req, res) => {
+  try {
+    const vendors = await Vendor.find()
+      .sort({ createdAt: -1 }) // newest first
+      .limit(50); // optional limit
+
+    res.status(200).json({
+      success: true,
+      count: vendors.length,
+      vendors,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch vendors",
+    });
+  }
+};

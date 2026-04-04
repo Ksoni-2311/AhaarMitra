@@ -5,8 +5,8 @@ const vendors = [
   {
     id: 1,
     name: "Shree Tiffin Services",
-    description:
-      "Authentic home-style comfort crafted for the daily urban table using organic spices.",
+    // description:
+    //   "Authentic home-style comfort crafted for the daily urban table using organic spices.",
     rating: "4.9",
     price: "₹99",
     subs: "1,248",
@@ -27,8 +27,8 @@ const vendors = [
   {
     id: 2,
     name: "Urban Nutri-Bowls",
-    description:
-      "Macro-balanced, calorie-counted meals designed for high-performance lifestyles.",
+    // description:
+    //   "Macro-balanced, calorie-counted meals designed for high-performance lifestyles.",
     rating: "4.8",
     price: "₹149",
     subs: "842",
@@ -43,8 +43,8 @@ const vendors = [
   {
     id: 3,
     name: "The Fit Kitchen",
-    description:
-      "Premium non-vegetarian keto and high-protein bowls tailored for muscle gain.",
+    // description:
+    //   "Premium non-vegetarian keto and high-protein bowls tailored for muscle gain.",
     rating: "4.7",
     price: "₹179",
     subs: "2,105",
@@ -59,8 +59,8 @@ const vendors = [
   {
     id: 1,
     name: "Shree Tiffin Services",
-    description:
-      "Authentic home-style comfort crafted for the daily urban table using organic spices.",
+      // description:
+      //   "Authentic home-style comfort crafted for the daily urban table using organic spices.",
     rating: "4.9",
     price: "₹99",
     subs: "1,248",
@@ -81,8 +81,8 @@ const vendors = [
   {
     id: 2,
     name: "Urban Nutri-Bowls",
-    description:
-      "Macro-balanced, calorie-counted meals designed for high-performance lifestyles.",
+    // description:
+    //   "Macro-balanced, calorie-counted meals designed for high-performance lifestyles.",
     rating: "4.8",
     price: "₹149",
     subs: "842",
@@ -97,8 +97,8 @@ const vendors = [
   {
     id: 3,
     name: "The Fit Kitchen",
-    description:
-      "Premium non-vegetarian keto and high-protein bowls tailored for muscle gain.",
+    // description:
+    //   "Premium non-vegetarian keto and high-protein bowls tailored for muscle gain.",
     rating: "4.7",
     price: "₹179",
     subs: "2,105",

@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { saveServiceConfig } from "../services/vendorServiceConfigApi";
-
 
 const AddressPopUp20 = () => {
   return (
@@ -99,9 +97,7 @@ const AddressPopUp20 = () => {
                 Cancel
               </button>
             </Link>
-            <button
-            onClick={handlechange}
-            className="flex-[2] py-4 px-6 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-500 shadow-lg transition-all border border-blue-500/30">
+            <button className="flex-[2] py-4 px-6 rounded-2xl bg-blue-600 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-500 shadow-lg transition-all border border-blue-500/30">
               Add Hub
             </button>
         </div>

@@ -1,44 +1,65 @@
-import React from 'react'
-import { Star } from 'lucide-react';
+import React from "react";
+import { Star } from "lucide-react";
 
 const VendorCard = () => {
-    return (<div className=" flex flex-row surface-container border border-white/10 rounded-2xl overflow-hidden hover:border-amber-600/50 transition-all duration-500 shadow-2xl" href="#">
-        <div className="relative h-60 w-1/3 overflow-hidden">
-            <img alt="Shree Tiffin" className="w-full h-full object-cover hero-zoom transition-transform duration-700" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuO_ub5HAUesE2mFjBnHLj2Flh0phmb2vXA&s" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-            <div className="absolute bottom-4 left-2 flex gap-2">
-                <span className="bg-green-600 text-white px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider">Top Rated</span>
-                <span className="bg-amber-600 text-white px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider">Offer</span>
-            </div>
+  return (
+    <div className="w-full sm:w-[260px] md:w-[300px] bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+      
+      {/* IMAGE */}
+      <div className="relative h-40 w-full">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuO_ub5HAUesE2mFjBnHLj2Flh0phmb2vXA&s"
+          alt="Auntie's Kitchen"
+          className="w-full h-full object-cover"
+        />
+
+        {/* Rating */}
+        <div className="absolute top-3 right-3 flex items-center gap-1 bg-white px-2 py-1 rounded-full shadow text-xs font-bold">
+          <Star className="w-3 h-3 text-orange-500 fill-orange-500" />
+          4.8
         </div>
-        <div className="p-6 flex-1 flex flex-col">
-            <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-black tracking-tight text-black group-hover:text-amber-500 transition-colors">Shree Tiffin Services</h3>
-                <div className="flex items-center gap-1 bg-white/5 px-2 py-1 rounded border border-white/10">
-                <Star className="w-3 h-3 text-amber-500" />
-                    {/* <a className=" text-amber-500 text-xs" style={{ fontVariationSettings: "FILL' 1" }}></a> */}
-                    <span className="text-xs font-bold">4.5</span>
-                </div>
-            </div>
-            <p className="text-sm text-black font-medium mb-6 line-clamp-1">Authentic home-style comfort for daily table.</p>
-            <div className="mt-auto pt-6 border-t border-white/5 grid grid-cols-2 gap-4">
-                <div className="flex flex-col">
-                    <span className="text-[10px] uppercase font-bold text-black tracking-widest mb-1">Dietary</span>
-                    <span className="text-xs font-bold text-black flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-green-500"></span> Pure Veg
-                    </span>
-                </div>
-                <div className="flex flex-col text-right sm:flex-col ">
-                    <span className="text-[10px] uppercase font-bold text-black tracking-widest mb-1">Price Range</span>
-                    <span className="text-sm font-black text-amber-500">₹2700 - ₹3500</span>
-                </div>
-            </div>
+      </div>
+
+      {/* CONTENT */}
+      <div className="p-4 flex flex-col gap-3">
+        
+        {/* Title + Tag */}
+        <div className="flex justify-between items-center">
+          <h3 className="text-base font-bold text-gray-900">
+            Auntie's Kitchen
+          </h3>
+          <span className="text-[10px] font-bold bg-orange-100 text-orange-500 px-2 py-0.5 rounded-full">
+            PURE VEG
+          </span>
         </div>
+
+        {/* Description */}
+        <p className="text-xs text-gray-500 leading-relaxed">
+          Specializes in North Indian comfort food with minimal spices and lots of love.
+        </p>
+
+        {/* Divider */}
+        <div className="border-t border-gray-100 pt-3 flex items-center justify-between">
+          
+          {/* Price */}
+          <div>
+            <p className="text-[10px] text-gray-400 font-bold uppercase">
+              Starts at
+            </p>
+            <p className="text-lg font-black text-gray-900">
+              ₹120<span className="text-xs font-medium text-gray-500">/day</span>
+            </p>
+          </div>
+
+          {/* Button */}
+          <button className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded-full transition">
+            View Plans
+          </button>
+
+        </div>
+      </div>
     </div>
-        // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+  );
+};
 
-        // </div>
-    )
-}
-
-export default VendorCard
+export default VendorCard;

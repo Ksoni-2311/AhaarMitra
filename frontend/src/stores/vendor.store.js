@@ -41,17 +41,19 @@ const useVendorStore = create((set) => ({
     return { success: false };
   }
 },
-  saveBusiness: async (formData) => {
-  try {
-    set({ loading: true });
 
-    const token = localStorage.getItem("token");
-    console.log(token);
-    
-    const res = await axiosInstance.post(
-      "/vendor/business",
-      formData,
-      {
+  saveBusiness: async ({ businessName, type, address, gstNumber, fssaiNumber }) => {
+    try {
+      set({ loading: true });
+      const token = localStorage.getItem("token");
+
+      const res = await axiosInstance.post("/vendor/business", {
+        businessName,
+        type,
+        address,
+        gstNumber,
+        fssaiNumber,
+      }, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

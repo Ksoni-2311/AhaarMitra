@@ -4,11 +4,19 @@ const vendorSchema = new mongoose.Schema({
   name: String,
   email: String,
   phone: { type: String, unique: true },
+<<<<<<< HEAD
   password: String,
+=======
+  password:String,
+>>>>>>> 10e62d205fd702fd8af55de68fa576014ae4133a
   profilePic: {
     url: String,
     public_id: String,
   },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 10e62d205fd702fd8af55de68fa576014ae4133a
   isOtpVerified: { type: Boolean, default: false },
 
   business: {
