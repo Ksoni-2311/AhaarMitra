@@ -1,12 +1,14 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   motion,
   useScroll,
   useTransform,
 } from "framer-motion";
+
 import LandingImage from "../assets/LandingImage.png";
 import ahaarmitraLogo from "../../assets/AhaarMitraLogo.png";
+
 import LandingNav from "../components/LandingNav";
 import Footer from "../components/Footer";
 
@@ -31,34 +33,30 @@ const vendors = [
     rating: "4.8",
     price: "₹149",
     subs: "842",
-    badges: [
-      { label: "Nutritionist Plus", color: "bg-blue-500 text-white" },
-    ],
-    img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775293455/aaharmitra/business/sze75qywizntvx2aqlht.jpg",
+    badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3JZIL2VyoUmdoQ-pqft4aLQl0MjVCq8jVA&s",
   },
   {
-    id: "69d0d517871831a749f47b0b",
-    name: "Ghar Ka Dabba",
+    id: "3",
+    name: "Gharam Rasoi",
     rating: "4.7",
     price: "₹179",
     subs: "2,105",
-    badges: [
-      { label: "Fastest Delivery", color: "bg-green-500 text-white" },
-    ],
+    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
     img: LandingImage,
   },
   {
-    id: "69d0d199871831a749f47af3",
-    name:"Rasoi Express",
-    rating: "4.6",
-    price: "₹159",
-    subs: "1,530",
-    badges: [
-      { label: "Low Oil", color: "bg-purple-500 text-white" },
-    ],
-    img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775292952/aaharmitra/business/ygpynuqzco19efpqseht.jpg",
+    id: "4", // ✅ FIXED duplicate id
+    name: "Swaad Ghar Tiffins",
+    rating: "4.7",
+    price: "₹179",
+    subs: "1,105",
+    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvBP2wpne32lKxUkchKIe3u_9DhtQ5iGchfA&s",
   },
 ];
+
+/* ================= MAIN ================= */
 
 export default function HomePage() {
   return (
@@ -77,6 +75,9 @@ export default function HomePage() {
           <Link to="/explore">
             <button className="flex items-center gap-1 text-sm font-bold text-gray-600 hover:text-amber-500 transition">
               Explore More
+              <span className="material-symbols-outlined text-lg">
+                arrow_forward
+              </span>
             </button>
           </Link>
         </div>
@@ -110,9 +111,15 @@ function ScrollZoomHero() {
   const blur = useTransform(scrollYProgress, [0, 1], ["0px", "8px"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 0.7]);
 
+  // ✅ FIX
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
   return (
     <section ref={ref} className="h-[200vh] relative">
       <div className="sticky top-0 h-screen overflow-hidden">
+
+        {/* Background */}
         <motion.img
           src={LandingImage}
           alt="tiffin"
@@ -120,14 +127,48 @@ function ScrollZoomHero() {
           style={{ scale, filter: blur }}
         />
 
+        {/* Overlay */}
         <motion.div
           style={{ opacity: overlayOpacity }}
           className="absolute inset-0 bg-black"
         />
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <img src={ahaarmitraLogo} alt="logo" className="w-[600px]" />
-        </div>
+        {/* Content */}
+        <motion.div
+          style={{
+            opacity: textOpacity,
+            y: textY,
+          }}
+          className="absolute inset-0 flex flex-col items-center justify-center -translate-y-16 md:-translate-y-24 text-center px-4 top-32"
+        >
+          <img
+            src={ahaarmitraLogo}
+            alt="Ahaar Mitra"
+            className="w-[610px] md:w-[810px] lg:w-[930px] object-contain"
+          />
+
+          <div className="h-40"></div>
+
+          <div className="mt-4 px-6 py-4 rounded-xl bg-[#FFE0B2]/60 backdrop-blur-md text-center">
+            <p className="text-white text-sm md:text-base max-w-xl mx-auto leading-tight font-semibold">
+              Har din ghar jaisa swaad — connecting home chefs with people who
+              crave authentic meals.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 mt-4 justify-center items-center">
+              <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
+                Login
+              </button>
+
+              <Link to="/11">
+                <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
+                  Sign Up
+                </button>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -145,6 +186,7 @@ function WhyChoose() {
   return (
     <section className="bg-white py-16 text-center">
       <h2 className="text-3xl font-black">Why Choose Ahaar Mitra?</h2>
+
       <div className="flex justify-center gap-6 mt-8">
         {points.map((p, i) => (
           <div key={i} className="p-6 border rounded-xl">
@@ -190,7 +232,7 @@ function VendorCard({ vendor }) {
           onClick={() => setLiked(!liked)}
           className="absolute top-3 right-3 bg-white p-2 rounded-full"
         >
-          ❤️
+          {liked ? "❤️" : "🤍"}
         </button>
       </div>
 
@@ -202,13 +244,14 @@ function VendorCard({ vendor }) {
           ⭐ {vendor.rating} • {vendor.subs}
         </p>
 
-        {/* ✅ FIXED BUTTON */}
+        {/* Button */}
         <Link to={`/vendor/${vendor.id}`}>
           <button className="w-full bg-black text-white py-3 rounded-xl hover:bg-amber-500 transition text-xs font-bold uppercase">
             View Meal Plans
           </button>
         </Link>
       </div>
+
     </div>
   );
 }

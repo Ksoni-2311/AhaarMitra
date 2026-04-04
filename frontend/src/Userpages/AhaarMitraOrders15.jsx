@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
 // Inject Poppins + Material Symbols
 const GlobalStyles = () => (
   <>
@@ -232,9 +232,11 @@ const SubscriptionCard = ({ vendor, id, badge, badgeColor, planLabel, iconName, 
           ))}
         </div>
         <div className="flex">
+          <Link to = "/v4">
           <button className="w-full py-4 bg-gray-50 border border-gray-200 rounded-xl text-[11px] font-black uppercase tracking-[0.2em] hover:bg-gray-100 transition-colors flex items-center justify-center gap-3 text-gray-600">
             <Icon name="chat" className="text-xl" /> Contact Vendor
           </button>
+          </Link>
         </div>
       </div>
       <CalendarWidget {...summaryProps} />

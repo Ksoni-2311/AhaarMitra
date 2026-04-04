@@ -48,7 +48,7 @@ const VendorNavBar = () => {
           </span>
           <input
             className="bg-transparent outline-none text-sm w-32 lg:w-48 placeholder:text-gray-400"
-            placeholder="Search kitchen..."
+            placeholder="Search ..."
             type="text"
           />
         </div>
@@ -56,14 +56,16 @@ const VendorNavBar = () => {
         <button className="text-gray-500 hover:text-black">
           <span className="material-symbols-outlined">notifications</span>
         </button>
-
-        <div className="w-10 h-10 rounded-full overflow-hidden border">
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y"
-            alt="User Profile"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        
+        <Link to="/v9">
+          <div className="w-10 h-10 rounded-full overflow-hidden border">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDgB08kbHg4r0zUnel6GttGO-S_WADO-w39rZhmkQPeD79HasHrKA8oAcSftvGzC6oWsZv-3hHotK2rfgbjdQNkZqMa5FcXsDbZVFCEQoVtQ9a9zpeEfUxTW7eCHzfCeQaPfJ-PMY2ndmRCjf77328Z85PdHaoAjLcdRd3RFFqiwQAApTNkhBXUhMa453XBrKR-JtM3zUmkov1Nmp9X9J_3nspx3uueROaIDFzZhSepvqDnuU7HJlfrQcZiHVxo0o5fvUwKLJ2v7y"
+              alt="User Profile"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );

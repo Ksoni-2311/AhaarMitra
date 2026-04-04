@@ -213,8 +213,8 @@ const ConfigurePlan4 = () => {
                       <div className="w-2 h-2 rounded-full bg-gray-800 opacity-0 group-peer-checked/weekly:opacity-100"></div>
                     </div>
                   </div>
-                  <span className="font-bold text-base">Weekly Plan</span>
-                  <span className="text-[10px] text-gray-600 mt-1 uppercase">7 Days Duration</span>
+                  <span className="font-bold text-base">Today's Plan</span>
+                  {/* <span className="text-[10px] text-gray-600 mt-1 uppercase">7 Days Duration</span> */}
                 </label>
 
                 {/* 3-Weekly */}
@@ -228,8 +228,8 @@ const ConfigurePlan4 = () => {
                     <span className="material-symbols-outlined text-gray-400 group-hover:text-white transition-colors">event_repeat</span>
                     <div className="w-4 h-4 rounded-full border border-gray-200/30 group-hover:border-gray-200 peer-checked/three-weekly:bg-gray-100"></div>
                   </div>
-                  <span className="font-bold text-base">3-Weekly Plan</span>
-                  <span className="text-[10px] text-gray-600 mt-1 uppercase">21 Days Duration</span>
+                  <span className="font-bold text-base">Weekly Plan</span>
+                  <span className="text-[10px] text-gray-600 mt-1 uppercase">7 Days Duration</span>
                 </label>
 
                 {/* Monthly */}
