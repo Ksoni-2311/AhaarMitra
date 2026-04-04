@@ -8,6 +8,7 @@ const BusinessDetails2 = () => {
 
   const [formData, setFormData] = useState({
     businessName: "",
+    profilePic: null,
     type: "",
     address: "",
     gstNumber: "",
@@ -16,20 +17,43 @@ const BusinessDetails2 = () => {
 
   // 🔹 Handle Input Change
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value, files } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   // 🔹 Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
+    
+    if (!formData.profilePic) {
+      alert("Profile picture is required");
+      return;
+    }
 
-    const res = await saveBusiness(formData);
+    const data = new FormData();
 
-    if (res?.success) {
-      navigate("/v3"); // ✅ next step
+    data.append("businessName", formData.businessName);
+    data.append("type", formData.type);
+    data.append("address", formData.address);
+    data.append("gstNumber", formData.gstNumber);
+    data.append("fssaiNumber", formData.fssaiNumber);
+    data.append("profilePic", formData.profilePic);
+
+    try {
+      const res = await saveBusiness(data);
+
+      if (res?.success) {
+        alert("✅ Step 2 completed successfully!");
+        navigate("/v3");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong");
     }
   };
 
@@ -87,12 +111,58 @@ const BusinessDetails2 = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
 
+              {/* Profile Picture */}
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-black/70">
+                  Profile Picture <span className="text-red-500">*</span>
+                </label>
+
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl p-6 hover:border-blue-500 transition">
+
+                  {formData.profilePic ? (
+                    <img
+                      src={URL.createObjectURL(formData.profilePic)}
+                      alt="preview"
+                      className="w-24 h-24 rounded-full object-cover mb-3"
+                    />
+                  ) : (
+                    <div className="text-center text-gray-500 mb-3">
+                      <p className="text-sm font-medium">Click to upload</p>
+                      <p className="text-xs">PNG, JPG (max 2MB)</p>
+                    </div>
+                  )}
+
+                  <input
+                    type="file"
+                    name="profilePic"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="hidden"
+                    id="profilePicInput"
+                  />
+
+                  <label
+                    htmlFor="profilePicInput"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold cursor-pointer hover:bg-blue-500"
+                  >
+                    {formData.profilePic ? "Change Image" : "Upload Image"}
+                  </label>
+                </div>
+
+                {!formData.profilePic && (
+                  <p className="text-red-500 text-xs">
+                    Profile picture is required
+                  </p>
+                )}
+              </div>
+
+              {/* Inputs */}
               <input
                 name="businessName"
                 value={formData.businessName}
                 onChange={handleChange}
-                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10"
                 placeholder="Business Name"
+                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10"
                 required
               />
 
@@ -113,8 +183,8 @@ const BusinessDetails2 = () => {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10 min-h-[100px]"
                 placeholder="Address"
+                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10 min-h-[100px]"
                 required
               />
 
@@ -122,16 +192,16 @@ const BusinessDetails2 = () => {
                 name="gstNumber"
                 value={formData.gstNumber}
                 onChange={handleChange}
-                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10"
                 placeholder="GST Number"
+                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10"
               />
 
               <input
                 name="fssaiNumber"
                 value={formData.fssaiNumber}
                 onChange={handleChange}
-                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10"
                 placeholder="FSSAI Number"
+                className="w-full px-5 py-4 rounded-2xl bg-gray-100 border border-black/10"
               />
 
               <button
@@ -143,10 +213,9 @@ const BusinessDetails2 = () => {
               </button>
 
             </form>
-
           </div>
         </section>
-
+                {/* {console.log({formData})} */}
       </main>
 
       {/* Footer */}

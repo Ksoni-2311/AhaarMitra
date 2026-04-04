@@ -11,44 +11,45 @@ const RegisterProvider1 = () => {
     email: "",
     phone: "",
     password: "",
-    profilePic: null, // ✅ store file
   });
 
   const fullName = `${formData.firstName} ${formData.lastName}`.trim();
 
   const { registerVendor } = useVendorStore();
 
-  // 🔹 Handle Change (supports file)
+  // 🔹 Handle Change
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: files ? files[0] : value,
+      [name]: value,
     }));
   };
 
   // 🔹 Handle Submit
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const data = new FormData();
+    const data = new FormData();
 
-  data.append("name", fullName);
-  data.append("email", formData.email);
-  data.append("phone", formData.phone);
-  data.append("password", formData.password);
+    data.append("name", fullName);
+    data.append("email", formData.email);
+    data.append("phone", formData.phone);
+    data.append("password", formData.password);
 
-  // 🔥 IMAGE
-  data.append("profilePic", formData.profilePic);
+    try {
+      const res = await registerVendor(data);
 
-  const res = await registerVendor(data);
-
-  if (res?.success) {
-    alert("✅ Step 1 completed successfully!");
-    navigate("/v2");
-  }
-};
+      if (res?.success) {
+        alert("✅ Step 1 completed successfully!");
+        navigate("/v2");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <div className="antialiased overflow-x-hidden min-h-screen bg-white text-black">
@@ -84,52 +85,6 @@ const RegisterProvider1 = () => {
               className="space-y-6 border-b border-gray-200 pb-12 mb-12"
             >
 
-             {/* Profile Picture Upload (REQUIRED 🔥) */}
-<div className="space-y-2">
-  <label className="text-sm font-semibold text-black/70">
-    Profile Picture <span className="text-red-500">*</span>
-  </label>
-
-  <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl p-6 hover:border-blue-500 transition cursor-pointer">
-
-    {formData.profilePic ? (
-      <img
-        src={URL.createObjectURL(formData.profilePic)}
-        alt="preview"
-        className="w-24 h-24 rounded-full object-cover mb-3"
-      />
-    ) : (
-      <div className="text-center text-gray-500 mb-3">
-        <p className="text-sm font-medium">Click to upload</p>
-        <p className="text-xs">PNG, JPG (max 2MB)</p>
-      </div>
-    )}
-
-    <input
-      type="file"
-      name="profilePic"
-      accept="image/*"
-      onChange={handleChange}
-      className="hidden"
-      id="profilePicInput"
-    />
-
-    <label
-      htmlFor="profilePicInput"
-      className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold cursor-pointer hover:bg-blue-500"
-    >
-      {formData.profilePic ? "Change Image" : "Upload Image"}
-    </label>
-  </div>
-
-  {/* Error */}
-  {!formData.profilePic && (
-    <p className="text-red-500 text-xs">
-      Profile picture is required
-    </p>
-  )}
-</div>
-
               {/* First + Last Name */}
               <div className="grid grid-cols-2 gap-4">
                 <input
@@ -138,6 +93,7 @@ const RegisterProvider1 = () => {
                   onChange={handleChange}
                   className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                   placeholder="First Name"
+                  required
                 />
                 <input
                   name="lastName"
@@ -145,16 +101,19 @@ const RegisterProvider1 = () => {
                   onChange={handleChange}
                   className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                   placeholder="Last Name"
+                  required
                 />
               </div>
 
               {/* Email */}
               <input
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                 placeholder="Email Address"
+                required
               />
 
               {/* Phone */}
@@ -164,6 +123,7 @@ const RegisterProvider1 = () => {
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                 placeholder="+91 9876543210"
+                required
               />
 
               {/* Password */}
@@ -174,6 +134,7 @@ const RegisterProvider1 = () => {
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl text-sm bg-gray-100 border border-black/10"
                 placeholder="Password"
+                required
               />
 
               {/* Submit */}

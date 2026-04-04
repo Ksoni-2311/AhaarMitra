@@ -1,7 +1,9 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ahaarmitraLogo from "../../assets/ahaarMitraLogo.svg";
 const VendorNavBar = () => {
+  const location = useLocation();
   return (
     <div className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 h-16 px-6 md:px-12 flex justify-between items-center font-sans">
       <div className="lg:w-56 md:w-36 w-28">
@@ -9,18 +11,34 @@ const VendorNavBar = () => {
       </div>
 
       <div className="hidden md:flex items-center gap-8">
-        <a className="text-black transition">
-          <Link to={"/v4"}>Tracker</Link>{" "}
-        </a>
-        <a className="text-black transition">
-          <Link to={"/v5"}>Analytics</Link>
-        </a>
-        <a className="text-black transition">
-          <Link to={"/v6"}>Customers</Link>
-        </a>
-        <a className="text-black transition">
-          <Link to={"/v7"}>Services</Link>
-        </a>
+        {[
+          { name: "Tracker", path: "/v4" },
+          { name: "Analytics", path: "/v5" },
+          { name: "Customers", path: "/v6" },
+          { name: "Services", path: "/v7" },
+        ].map((item) => {
+          const isActive = location.pathname === item.path;
+
+          return (
+            <Link key={item.name} to={item.path} className="relative group">
+              <span
+                className={`transition-all duration-300 ${
+                  isActive
+                    ? "text-black font-semibold"
+                    : "text-gray-500 group-hover:text-black"
+                }`}
+              >
+                {item.name}
+              </span>
+
+              <span
+                className={`absolute left-0 -bottom-1 h-[2px] bg-black w-full origin-center transform transition-transform duration-300 ${
+                  isActive ? "scale-x-100" : "scale-x-0"
+                }`}
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="flex items-center gap-4 md:gap-6">

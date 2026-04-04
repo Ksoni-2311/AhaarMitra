@@ -64,6 +64,7 @@ export const updatePricingVariants = async (req, res) => {
   try {
     const vendorId = req.vendor._id;
     const { pricingVariants } = req.body;
+    console.log("getv3call▬");
 
     if (!pricingVariants) {
       return res.status(400).json({ message: "Pricing variants required" });
@@ -92,6 +93,7 @@ export const updateWeeklyMenu = async (req, res) => {
   try {
     const vendorId = req.vendor._id;
     const { weeklyMenu } = req.body;
+    console.log("getv1call4");
 
     if (!weeklyMenu) {
       return res.status(400).json({ message: "Weekly menu required" });

@@ -6,12 +6,16 @@ import {
   loginVendor,
 } from "../controllers/vendor.controller.js";
 import { vendorMiddleware } from "../middleware/vendorMiddleware.js";
-import upload from "../middleware/multer.js";
-
+import {upload} from '../middleware/multer.js'
 const router = express.Router();
 
-router.post("/register",upload.single("profilePic"),registerVendorController );
-router.post("/business", vendorMiddleware, saveBusiness);
+router.post("/register",registerVendorController );
+router.post(
+  "/business",
+  vendorMiddleware,              // 🔥 FIRST
+  upload.single("profilePic"), // 🔥 SECOND
+  saveBusiness
+);
 router.post("/bank", vendorMiddleware, saveBank);
 router.post("/login", loginVendor);
 // router.post("/logout", vendorMiddleware, saveBank);
