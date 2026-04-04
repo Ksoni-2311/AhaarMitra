@@ -1,188 +1,401 @@
-import React from "react";
+import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import LandingImage from "../assets/LandingImage.png";
+import ahaarmitraLogo from "../../assets/AhaarMitraLogo.png";
+import LandingNav from "../components/LandingNav";
+import Footer from "../components/Footer";
 
-export default function LandingPage0() {
+const vendors = [
+  {
+    id: 1,
+    name: "Shree Tiffin Services",
+    rating: "4.9",
+    price: "₹99",
+    subs: "1,248",
+    badges: [
+      { label: "Top Rated", color: "bg-amber-500 text-black" },
+      { label: "Pure Veg", color: "bg-black text-white" },
+    ],
+    img: LandingImage,
+  },
+  {
+    id: 2,
+    name: "Urban Nutri-Bowls",
+    rating: "4.8",
+    price: "₹149",
+    subs: "842",
+    badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
+    img: LandingImage,
+  },
+  {
+    id: 3,
+    name: "The Fit Kitchen",
+    rating: "4.7",
+    price: "₹179",
+    subs: "2,105",
+    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
+    img: LandingImage,
+  },
+  {
+    id: 3,
+    name: "The Fit Kitchen",
+    rating: "4.7",
+    price: "₹179",
+    subs: "2,105",
+    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
+    img: LandingImage,
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="bg-white text-gray-900 font-sans">
-      {/* HEADER */}
-      {/* <header className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur shadow-sm">
-        <div className="flex justify-between items-center px-6 md:px-12 h-20 max-w-7xl mx-auto">
-          <h1 className="text-2xl font-extrabold text-[#fe8627]">
-            AhaarMitra
-          </h1>
+    <>
+      <LandingNav />
+      <ScrollZoomHero />
+      <WhyChoose />
 
-          <nav className="hidden md:flex gap-8 font-medium">
-            <span className="text-[#fe8627] border-b-2 border-[#fe8627]">
-              Find Meals
+      {/* 🔥 Popular Kitchens Header */}
+      <section className="bg-white px-6 pt-16 pb-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <h2 className="text-2xl md:text-3xl font-black text-gray-900">
+            Popular Kitchens
+          </h2>
+
+          <button className="flex items-center gap-1 text-sm font-bold text-gray-600 hover:text-amber-500 transition">
+            Explore More
+            <span className="material-symbols-outlined text-lg">
+              arrow_forward
             </span>
-            <span className="text-gray-500 hover:text-[#fe8627]">
-              How it Works
-            </span>
-            <span className="text-gray-500 hover:text-[#fe8627]">
-              Meal Plans
-            </span>
-            <span className="text-gray-500 hover:text-[#fe8627]">
-              Become a Vendor
-            </span>
-          </nav>
-
-          <div className="flex gap-4 items-center">
-            <button className="hidden sm:block text-gray-500">
-              Login
-            </button>
-            <button className="bg-[#fe8627] text-white px-6 py-2 rounded-full font-semibold">
-              Join Now
-            </button>
-          </div>
-        </div>
-      </header> */}
-
-      {/* HERO */}
-      <section className="pt-24 px-6 md:px-12 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        {/* LEFT */}
-        <div className="space-y-6">
-          <span className="bg-orange-100 text-[#fe8627] px-4 py-1 rounded-full text-xs font-bold">
-            AUTHENTIC HOME COOKING
-          </span>
-
-          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
-            Ghar jaisa khana, <span className="text-[#fe8627]">ab har din</span>
-          </h1>
-
-          <p className="text-gray-500 text-lg">
-            Affordable tiffin & meal plans near you. Experience the warmth of
-            home-style food delivered fresh to your doorstep.
-          </p>
-
-          {/* SEARCH */}
-          <div className="flex bg-white border rounded-full shadow p-2 max-w-md">
-            <input
-              placeholder="Enter your location..."
-              className="flex-1 px-4 outline-none"
-            />
-            <button className="bg-[#fe8627] text-white px-6 py-2 rounded-full">
-              Find Meals
-            </button>
-          </div>
-
-          {/* USERS */}
-          <div className="flex items-center gap-3 text-sm text-gray-500">
-            <div className="flex -space-x-2">
-              <div
-                className="w-8 h-8 rounded-full"></div>
-                src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
-              <div/>
-              <img
-                className="w-8 h-8 rounded-full"
-                src="https://i.pravatar.cc/100?img=2"
-              />
-              <img
-                className="w-8 h-8 rounded-full bg-gray-100"
-                src="https://i.pravatar.cc/100?img=3"
-              />
-            </div>
-            <span>Joined by 10,000+ happy eaters</span>
-          </div>
-        </div>
-
-        {/* RIGHT IMAGE */}
-        <div className="hidden lg:block">
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeBEHR26Mhbnm5yiG_SgFaAR_60prKNmUt_8bdSJrucr82pdeEYmo4peiKBjaJezRa8LhiNIZShc_hFdBpHoxDH4Uh1zmJ1n2HLWsb3dKWVsWgoO-UQLCU5wOgEqCMrr6_GdN7VdMhOblfT417Z14NqFYcuaA1PqTWxRbN9zkxnOqvEgLciQBFo916e30qqWyTY90Ha9tlRaduILazFf74rwKDcrMjkCQ_s8Icu-bKDbUSJbpvW4u2NlxYChxZUZ_iWqrTLRXJZnEd"
-            alt="Meal"
-            className="rounded-3xl shadow-xl w-full h-full object-cover"
-          />
+          </button>
         </div>
       </section>
 
-      {/* WHY SECTION */}
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Why choose AhaarMitra?
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-[#fe8627] text-white p-8 rounded-2xl">
-            <h3 className="text-xl font-bold mb-2">Home-style food</h3>
-            <p className="opacity-90">
-              No preservatives, fresh ingredients, just like mom's cooking.
-            </p>
-          </div>
-
-          <div className="border p-8 rounded-2xl">
-            <h3 className="font-bold text-lg mb-2">Affordable pricing</h3>
-            <p className="text-gray-500">Save more with subscription plans.</p>
-          </div>
-
-          <div className="border p-8 rounded-2xl">
-            <h3 className="font-bold text-lg mb-2">Reliable delivery</h3>
-            <p className="text-gray-500">
-              Fast and on-time delivery every day.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* POPULAR KITCHENS */}
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold mb-10">Popular Kitchens</h2>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { name: "Auntie's Kitchen", price: "₹120/day" },
-            { name: "Healthy Tiffins", price: "₹180/day" },
-            { name: "Ghar Ki Rasoi", price: "₹140/day" },
-          ].map((item, i) => (
-            <div key={i} className="border rounded-2xl overflow-hidden">
-              <img
-                src={`https://picsum.photos/400/300?random=${i}`}
-                className="w-full h-48 object-cover"
-              />
-
-              <div className="p-6">
-                <h3 className="font-bold text-lg mb-2">{item.name}</h3>
-                <p className="text-gray-500 text-sm mb-4">
-                  Home-style meals with authentic taste.
-                </p>
-
-                <div className="flex justify-between items-center">
-                  <span className="font-bold">{item.price}</span>
-                  <button className="bg-[#fe8627] text-white px-4 py-2 rounded-full text-sm">
-                    View Plans
-                  </button>
-                </div>
-              </div>
-            </div>
+      {/* 🔥 Vendor Cards */}
+      <section className="bg-white py-6 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center">
+          {vendors.map((v) => (
+            <VendorCard key={v.id} vendor={v} />
           ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-6 md:px-12 max-w-7xl mx-auto pb-20">
-        <div className="bg-black text-white rounded-3xl p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to taste the{" "}
-            <span className="text-[#fe8627]">home comfort?</span>
-          </h2>
+      <Footer />
+    </>
+  );
+}
 
-          <p className="text-gray-400 mb-8">
-            Join thousands enjoying home-style meals daily.
+/* ================= HERO ================= */
+
+function ScrollZoomHero() {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1.2, 1.6]);
+  const blur = useTransform(scrollYProgress, [0, 1], ["0px", "8px"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 0.7]);
+
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0.1, 0.5, 0.65],
+    [1, 0.2, 0],
+    { clamp: true },
+  );
+
+  const textY = useTransform(scrollYProgress, [0, 0.7], [0, -320], {
+    clamp: true,
+  });
+
+  return (
+    <section ref={ref} className="h-[200vh] relative">
+      <div className="sticky top-0 h-screen overflow-hidden">
+        {/* Background */}
+        <motion.img
+          src={LandingImage}
+          alt="tiffin"
+          className="absolute w-full h-full object-cover"
+          style={{
+            scale,
+            filter: blur,
+            rotate: "1.5deg",
+          }}
+        />
+
+        {/* Overlay */}
+        <motion.div
+          style={{ opacity: overlayOpacity }}
+          className="absolute inset-0 bg-black"
+        />
+
+        {/* Content */}
+        <motion.div
+          style={{
+            opacity: textOpacity,
+            y: textY,
+          }}
+          className="absolute inset-0 flex flex-col items-center justify-center -translate-y-16 md:-translate-y-24 text-center px-4"
+        >
+          <img
+            src={ahaarmitraLogo}
+            alt="Ahaar Mitra"
+            className="w-[610px] md:w-[810px] lg:w-[930px] object-contain"
+          />
+
+          <p className="text-gray-200 text-sm md:text-base max-w-xl leading-tight mt-1">
+            Har din ghar jaisa swaad — connecting home chefs with people who
+            crave authentic meals.
           </p>
 
-          <div className="flex justify-center gap-4">
-            <button className="bg-[#fe8627] px-6 py-3 rounded-full">
-              Browse Meals
+          <div className="flex flex-col sm:flex-row gap-3 mt-5">
+            <button className="px-6 py-3 bg-gray-900 text-white font-bold rounded-full text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
+              I am a Customer
             </button>
-            <button className="border px-6 py-3 rounded-full">
-              Join as Vendor
+
+            <button className="px-6 py-3 bg-gray-900 text-white font-bold rounded-full text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
+              I am a Vendor
             </button>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
-      {/* FOOTER */}
-      <footer className="border-t py-10 text-center text-gray-500 text-sm">
-        © 2024 AhaarMitra. All rights reserved.
-      </footer>
+/* ================= WHY CHOOSE ================= */
+
+function WhyChoose() {
+  const points = [
+    {
+      title: "Flexibility",
+      desc: "Choice of plans, meals, and delivery preferences",
+    },
+    {
+      title: "Trust ",
+      desc: "Verified vendors and transparent system for both sides",
+    },
+    {
+      title: "Scalability ",
+      desc: "Supports growth for vendors and long-term usage for customers",
+    },
+    {
+      title: "Efficiency",
+      desc: "Saves time for users and simplifies operations for vendors",
+    },
+    {
+      title: "Accessibility ",
+      desc: "Available anytime, anywhere with simple platform access",
+    },
+  ];
+
+  const [centerIndex, setCenterIndex] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCenterIndex((prev) => (prev + 1) % points.length);
+    }, 2250); // 🔥 10% faster (2500 → 2250)
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="bg-white py-16 pb-5 px-6 text-center overflow-hidden">
+      <div>
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900">
+          Why Choose Ahaar Mitra?
+        </h2>
+
+        <p className="text-gray-500 text-sm md:text-base mt-3">
+          Bringing home-style meals closer to you — fresh, affordable, and made
+          with care.
+        </p>
+      </div>
+
+      <div className="relative flex justify-center items-center h-[240px]">
+        {points.map((item, index) => {
+          let position = index - centerIndex;
+
+          if (position < -2) position += points.length;
+          if (position > 2) position -= points.length;
+
+          const isCenter = position === 0;
+
+          return (
+            <motion.div
+              key={index}
+              animate={{
+                x: position * 400, // 🔥 increased gap (350 → 400)
+                scale: isCenter ? 1.1 : 0.88,
+                opacity: Math.abs(position) > 1 ? 0 : 0.5,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 140, // 🔥 slightly faster animation
+                damping: 16,
+              }}
+              className="absolute w-[310px] md:w-[350px] p-7 rounded-2xl border border-gray-200 bg-white shadow-md"
+            >
+              <h3
+                className={`text-xl font-black mb-2 ${
+                  isCenter ? "text-black" : "text-gray-400"
+                }`}
+              >
+                {item.title}
+              </h3>
+
+              <p
+                className={`text-sm ${
+                  isCenter ? "text-gray-700" : "text-gray-400"
+                }`}
+              >
+                {item.desc}
+              </p>
+            </motion.div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+/* ================= TEXT SCROLL (optional) ================= */
+
+function VendorCard({ vendor }) {
+  const [liked, setLiked] = useState(false);
+
+  return (
+    <div className="bg-white rounded-[1rem] overflow-hidden flex flex-col border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group w-full max-w-[300px]">
+      {/* Image */}
+      <div className="relative h-52 overflow-hidden">
+        <img
+          src={vendor.img}
+          alt={vendor.name}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+        />
+
+        {/* Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
+        {/* Badges */}
+        <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
+          {vendor.badges?.map((b) => (
+            <span
+              key={b.label}
+              className={`${b.color} px-2.5 py-1 rounded-full text-[10px] font-black uppercase`}
+            >
+              {b.label}
+            </span>
+          ))}
+        </div>
+
+        {/* Favourite */}
+        <button
+          onClick={() => setLiked(!liked)}
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 backdrop-blur border border-gray-200 flex items-center justify-center"
+        >
+          <span
+            className={`material-symbols-outlined text-lg ${
+              liked ? "text-red-500" : "text-gray-400"
+            }`}
+            style={liked ? { fontVariationSettings: "'FILL' 1" } : {}}
+          >
+            favorite
+          </span>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        {/* Name + Rating */}
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-lg font-black text-black leading-tight">
+            {vendor.name}
+          </h3>
+
+          <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+            <span className="material-symbols-outlined text-amber-500 text-sm">
+              star
+            </span>
+            <span className="text-xs font-bold text-amber-600">
+              {vendor.rating}
+            </span>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 gap-4 border-y border-gray-100 py-4 mb-4">
+          <div>
+            <p className="text-[10px] font-bold uppercase text-gray-400">
+              Price / Meal
+            </p>
+            <p className="text-lg font-black text-black">{vendor.price}</p>
+          </div>
+
+          <div>
+            <p className="text-[10px] font-bold uppercase text-gray-400">
+              Active Now
+            </p>
+            <p className="text-lg font-black text-amber-500">{vendor.subs}</p>
+          </div>
+        </div>
+
+        {/* Button */}
+        <Link to="/1">
+          <button className="w-full bg-black text-white font-bold py-3 rounded-xl hover:bg-amber-500 transition-all text-xs uppercase tracking-widest">
+            View Meal Plans
+          </button>
+        </Link>
+      </div>
     </div>
+  );
+}
+
+function TextScroll() {
+  const ref = useRef(null);
+  const { scrollY } = useScroll();
+
+  const lines = [
+    { text: "CREATIVE", reverse: false },
+    { text: "DESIGN", reverse: true },
+  ];
+
+  return (
+    <section ref={ref} className="bg-white py-16 overflow-hidden">
+      <div className="flex flex-col gap-4">
+        {lines.map((line, index) => {
+          const direction = line.reverse ? 1 : -1;
+          const x = useTransform(scrollY, [0, 1000], [0, direction * 250]);
+
+          return (
+            <div key={index} className="overflow-hidden">
+              <motion.div
+                style={{ x }}
+                className="flex items-center gap-8 py-2 will-change-transform"
+              >
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="flex items-center gap-8 shrink-0">
+                    <span className="text-[6vw] md:text-[4.5vw] font-black text-orange-500 whitespace-nowrap">
+                      {line.text}
+                    </span>
+
+                    <span className="text-[6vw] md:text-[4.5vw] font-black text-black whitespace-nowrap">
+                      {line.text}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

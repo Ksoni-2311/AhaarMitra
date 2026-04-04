@@ -49,13 +49,13 @@ const App = () => {
   const location = useLocation();
 
   // 🔒 ROUTES WHERE NAVBAR SHOULD BE HIDDEN
-  const hideNavbarRoutes = ["/11", "/13", "/14", "/5", "/v1", "/v2", "/v3"];
+  const hideNavbarRoutes = ["/11", "/13", "/14", "/5", "/v1", "/v2", "/v3","/0"];
   const shouldHideNavbar = hideNavbarRoutes.some((route) =>
     location.pathname.startsWith(route),
   );
 
   // 👤 AUTH STATE (TEMP - replace later)
-  const isLoggedIn = true; // change to auth later
+  const isLoggedIn = false; // change to auth later
   const isVendor = false; // change based on role
 
   // 🧠 DETECT VENDOR ROUTES
