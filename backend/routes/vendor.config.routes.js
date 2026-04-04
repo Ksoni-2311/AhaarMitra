@@ -1,6 +1,6 @@
 import express from "express";
 import auth from '../middleware/authMiddleware.js'
-import { getVendorServiceConfig} from "../controllers/vendor.config.controllers.js";
+import { getFullVendorDetails} from "../controllers/vendor.config.controllers.js";
 
 const router = express.Router();
 
@@ -9,5 +9,7 @@ const router = express.Router();
 // router.put("/service-config/pricing", auth, updatePricingVariants);
 // router.put("/service-config/weekly-menu", auth, updateWeeklyMenu);
 
-router.get("/service-config", auth, getVendorServiceConfig);
+// router.get("/service-config", auth, getVendorServiceConfig);
+router.get("/:id", getFullVendorDetails);
+
 export default router;

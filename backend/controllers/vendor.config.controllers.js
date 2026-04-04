@@ -1,5 +1,6 @@
 // import VendorServiceConfig from "../models/vendorServiceConfig.model.js";
-
+import Vendor from '../models/vendor.model.js'
+import vendorServiceConfig from '../models/vendor.service.config.js';
 // ✅ GET SERVICE CONFIG
 export const getVendorServiceConfig = async (req, res) => {
   try {
@@ -112,5 +113,38 @@ export const updateWeeklyMenu = async (req, res) => {
   } catch (error) {
     console.error("MENU ERROR:", error);
     return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getFullVendorDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 🔥 basic vendor info (NO sensitive data)
+    const vendor = await Vendor.findById(id).select(
+      "business profilePic"
+    );
+
+    if (!vendor) {
+      return res.status(404).json({
+        message: "Vendor not found",
+      });
+    }
+
+    // 🔥 full service config
+    const config = await vendorServiceConfig.findOne({
+      vendor: id,
+    });
+
+    res.json({
+      success: true,
+      vendor,
+      config,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };

@@ -14,23 +14,15 @@
     "axios": "^1.14.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
-<<<<<<< HEAD
     "cloudinary": "^1.41.3",
-=======
-    "cloudinary": "^2.9.0",
->>>>>>> 10e62d205fd702fd8af55de68fa576014ae4133a
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "firebase": "^12.11.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.1",
-<<<<<<< HEAD
     "multer": "^2.1.1",
     "multer-storage-cloudinary": "^4.0.0"
-=======
-    "multer": "^2.1.1"
->>>>>>> 10e62d205fd702fd8af55de68fa576014ae4133a
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

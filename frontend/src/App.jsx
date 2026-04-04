@@ -3,8 +3,9 @@ import NavBar from "./components/NavBar.jsx";
 import VendorNavBar from "./components/VendorNavBar";
 import PublicNavBar from "./components/PublicNavBar";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+
 import Footer from "./components/Footer.jsx";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 // User Pages
 import LandingPage from "./Userpages/LandingPage0.jsx";
@@ -23,7 +24,7 @@ import AhaarMitraSubscriptions from "./Userpages/AhaarMitraSubscriptions16.jsx";
 import AhaarMitraSupport from "./Userpages/AhaarMitraSupport17.jsx";
 import CustomerAccount from "./Userpages/CustomerAccount18.jsx";
 
-
+// Vendor Utility Pages
 import MealTypePopUp from "./VendorPages/MealTypePopUp19.jsx";
 import AddressPopUp from "./VendorPages/AddressPopUp20.jsx";
 import CancelLunch from "./VendorPages/CancelLunch21.jsx";
@@ -39,25 +40,24 @@ import SuccessIntelligence6 from "./VendorPages/SuccessIntelligence6.jsx";
 import CulinaryTrends5 from "./VendorPages/CulinaryTrends5.jsx";
 import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
-import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
+import VendorAllInfo from "./VendorPages/VendorAllInfo.jsx";
 
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
 import Loader from "./components/Loader.jsx";
-import VendorAllInfo from "./VendorPages/VendorAllInfo.jsx";
 
 const App = () => {
   const location = useLocation();
 
   // 🔒 ROUTES WHERE NAVBAR SHOULD BE HIDDEN
-  const hideNavbarRoutes = ["/11", "/13", "/14", "/5", "/v1", "/v2", "/v3","/0"];
+  const hideNavbarRoutes = ["/11", "/13", "/14", "/5", "/v1", "/v2", "/v3", "/0"];
   const shouldHideNavbar = hideNavbarRoutes.some((route) =>
-    location.pathname.startsWith(route),
+    location.pathname.startsWith(route)
   );
 
-  // 👤 AUTH STATE (TEMP - replace later)
-  const isLoggedIn = false; // change to auth later
-  const isVendor = false; // change based on role
+  // 👤 AUTH STATE (TEMP)
+  const isLoggedIn = false;
+  const isVendor = false;
 
   // 🧠 DETECT VENDOR ROUTES
   const vendorRoutes = ["/v4", "/v5", "/v6", "/v7"];
@@ -68,18 +68,16 @@ const App = () => {
   const [isAuthReady, setIsAuthReady] = React.useState(false);
 
   React.useEffect(() => {
-  const timer = setTimeout(() => {
-    setIsLoading(false);
-    setIsAuthReady(true);
-  }, 1);// change to 2720 after testing
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setIsAuthReady(true);
+    }, 1);
 
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
-      {/* 🔥 LOADER */}
-      {/* <AnimatePresence mode="wait">{isLoading && <Loader />}</AnimatePresence> */}
-
       {!isLoading && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -87,22 +85,18 @@ const App = () => {
           transition={{ duration: 0.5 }}
           className="flex flex-col min-h-screen"
         >
-          {/* ✅ NAVBAR LOGIC */}
+          {/* ✅ NAVBAR */}
           {isAuthReady &&
             !shouldHideNavbar &&
             (isLoggedIn ? (
-              isVendorPage ? (
-                <VendorNavBar />
-              ) : (
-                <NavBar />
-              )
+              isVendorPage ? <VendorNavBar /> : <NavBar />
             ) : (
               <PublicNavBar />
             ))}
 
           <ScrollToTop />
 
-          {/* MAIN CONTENT */}
+          {/* MAIN */}
           <div className="flex-grow">
             <Routes location={location}>
               {/* Redirect */}
@@ -111,7 +105,10 @@ const App = () => {
               {/* User Routes */}
               <Route path="/explore" element={<TiffinSeeker9 />} />
               <Route path="/0" element={<LandingPage />} />
-              <Route path="/1" element={<VendorDetails1 />} />
+
+              {/* ✅ FIXED VENDOR ROUTE */}
+              <Route path="/vendor/:id" element={<VendorDetails1 />} />
+
               <Route path="/2" element={<TiffinTrial2 />} />
               <Route path="/3" element={<CheckoutConfirmation3 />} />
               <Route path="/4" element={<ConfigurePlan4 />} />
@@ -125,8 +122,7 @@ const App = () => {
               <Route path="/17" element={<AhaarMitraSupport />} />
               <Route path="/18" element={<CustomerAccount />} />
 
-
-
+              {/* Utility */}
               <Route path="/19" element={<MealTypePopUp />} />
               <Route path="/20" element={<AddressPopUp />} />
               <Route path="/21" element={<CancelLunch />} />
@@ -138,7 +134,6 @@ const App = () => {
               <Route path="/support" element={<AhaarMitraSupport />} />
               <Route path="/account" element={<CustomerAccount />} />
 
-
               {/* Vendor Routes */}
               <Route path="/v1" element={<RegisterProvider1 />} />
               <Route path="/v2" element={<BusinessDetails2 />} />
@@ -148,11 +143,10 @@ const App = () => {
               <Route path="/v6" element={<SuccessIntelligence6 />} />
               <Route path="/v7" element={<VendorDashboard7 />} />
               <Route path="/v9" element={<VendorAllInfo />} />
-              {/* <Route path="/v8" element={<VendorFinance8 />} /> */}
             </Routes>
           </div>
 
-          {/* FOOTER */}  
+          {/* FOOTER */}
           {!shouldHideNavbar && <Footer />}
         </motion.div>
       )}

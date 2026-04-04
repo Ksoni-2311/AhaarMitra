@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axiosInstance from "../utils/axios";
 
 const useVendorStore = create((set) => ({
-  vendor: null,
+  vendor: [],
   token: null,
   isAuthenticated: false,
   loading: false,
@@ -122,7 +122,59 @@ const useVendorStore = create((set) => ({
 
       return { success: false };
     }
+  },
+  getAllVendors: async () => {
+  try {
+    set({ loading: true });
+
+    const res = await axiosInstance.get("/vendor/all");
+    const data = res.data;
+
+    console.log("API RESPONSE:", data); // 👈 ADD THIS
+
+    set({
+      vendor: data.vendors || [], // ✅ FIX
+      loading: false,
+    });
+
+  } catch (error) {
+    console.error(error);
+    set({ loading: false, vendor: [] }); // ✅ SAFE
   }
+},getVendorFullDetails: async (id) => {
+  try {
+    set({ loading: true, error: null });
+
+    const res = await axiosInstance.get(`/vendor/${id}`);
+    console.log(res);
+    const data = res.data;
+    console.log(data);
+    
+    set({
+      selectedVendor: data.vendor || null,
+      vendorConfig: data.config || null,
+      loading: false,
+    });
+
+    return { success: true };
+
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Failed to fetch vendor";
+
+    console.error("Vendor fetch error:", message);
+
+    set({
+      loading: false,
+      error: message,
+      selectedVendor: null,
+      vendorConfig: null,
+    });
+
+    return { success: false };
+  }
+}
 }));
+
 
 export default useVendorStore;
