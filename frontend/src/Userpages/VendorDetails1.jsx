@@ -137,7 +137,7 @@ const todayMenu = weeklyMenu?.[todayKey];
         {/* HERO */}
         <section className="relative h-[520px] w-full overflow-hidden">
           <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBmIchnkIkoQGR77HPKNPe8Mi87AWVXdlxtSOo0_aqUzxSiao8g8wNuB6MLnue5hBiJqoCqYqYf_QwyAx8srHTmiWQLzDoSpBgjo79alSoDbXQZ1BxnJSwyVy8He4b-CbkpWuTgncU4YcUKtpcr-pZOyPo1hbVYNmqrmfArc3zZZuFPXAiqx6A5bpLRmZEtfGqskXEk_ur5KQcptvlknPuRIA86F4SmByElS4qXuo1rcrzcBC2SHCGJ1fTtaHQtFIc92CaW3sgiyX"
+            src={business?.image?.url || "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGlmZmlufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"}
             alt="Gourmet Tiffin"
             className="w-full h-full object-cover"
           />

@@ -40,12 +40,7 @@ import SuccessIntelligence6 from "./VendorPages/SuccessIntelligence6.jsx";
 import CulinaryTrends5 from "./VendorPages/CulinaryTrends5.jsx";
 import AhaarMitraTracker4 from "./VendorPages/AhaarMitraTracker4.jsx";
 import VendorDashboard7 from "./VendorPages/VendorDashboard7.jsx";
-<<<<<<< HEAD
 import VendorAllInfo from "./VendorPages/VendorAllInfo.jsx";
-=======
-import VendorFinance8 from "./VendorPages/VendorFinance8.jsx";
-import VendorProfile from "./VendorPages/VendorProfile9.jsx";
->>>>>>> 057770ed2b9e6b3c502b5a8e2c4a1ccc21bb1e74
 
 // Utils
 import ScrollToTop from "./utils/ScrollToTop.jsx";
@@ -60,15 +55,9 @@ const App = () => {
     location.pathname.startsWith(route)
   );
 
-<<<<<<< HEAD
   // 👤 AUTH STATE (TEMP)
   const isLoggedIn = false;
   const isVendor = false;
-=======
-  // 👤 AUTH STATE (TEMP - replace later)
-  const isLoggedIn = true; // change to auth later
-  const isVendor = false; // change based on role
->>>>>>> 057770ed2b9e6b3c502b5a8e2c4a1ccc21bb1e74
 
   // 🧠 DETECT VENDOR ROUTES
   const vendorRoutes = ["/v4", "/v5", "/v6", "/v7"];
@@ -119,6 +108,7 @@ const App = () => {
 
               {/* ✅ FIXED VENDOR ROUTE */}
               <Route path="/vendor/:id" element={<VendorDetails1 />} />
+              {/* <Route path="/1" element={<VendorDetails1 />} /> */}
 
               <Route path="/2" element={<TiffinTrial2 />} />
               <Route path="/3" element={<CheckoutConfirmation3 />} />
@@ -153,12 +143,7 @@ const App = () => {
               <Route path="/v5" element={<CulinaryTrends5 />} />
               <Route path="/v6" element={<SuccessIntelligence6 />} />
               <Route path="/v7" element={<VendorDashboard7 />} />
-<<<<<<< HEAD
               <Route path="/v9" element={<VendorAllInfo />} />
-=======
-              <Route path="/v8" element={<VendorFinance8 />} />
-              <Route path="/v9" element={<VendorProfile />} />
->>>>>>> 057770ed2b9e6b3c502b5a8e2c4a1ccc21bb1e74
             </Routes>
           </div>
 

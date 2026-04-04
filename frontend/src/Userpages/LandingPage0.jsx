@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   motion,
-  AnimatePresence,
   useScroll,
   useTransform,
 } from "framer-motion";
@@ -11,10 +10,12 @@ import ahaarmitraLogo from "../../assets/AhaarMitraLogo.png";
 import LandingNav from "../components/LandingNav";
 import Footer from "../components/Footer";
 
+/* ================= FIXED VENDORS ================= */
+
 const vendors = [
   {
-    id: 1,
-    name: "Shree Tiffin Services",
+    id: "69d0dc68871831a749f47b21",
+    name: "Maa Ke Haath Ka Khana",
     rating: "4.9",
     price: "₹99",
     subs: "1,248",
@@ -22,34 +23,40 @@ const vendors = [
       { label: "Top Rated", color: "bg-amber-500 text-black" },
       { label: "Pure Veg", color: "bg-black text-white" },
     ],
-    img: LandingImage,
+    img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775295716/aaharmitra/business/zbtkysnt2wdbvjhiel2y.jpg",
   },
   {
-    id: 2,
-    name: "Urban Nutri-Bowls",
+    id: "69d0d38e871831a749f47aff",
+    name: "Swad Ghar Ka",
     rating: "4.8",
     price: "₹149",
     subs: "842",
-    badges: [{ label: "Nutritionist Plus", color: "bg-blue-500 text-white" }],
-    img: LandingImage,
+    badges: [
+      { label: "Nutritionist Plus", color: "bg-blue-500 text-white" },
+    ],
+    img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775293455/aaharmitra/business/sze75qywizntvx2aqlht.jpg",
   },
   {
-    id: 3,
-    name: "The Fit Kitchen",
+    id: "69d0d517871831a749f47b0b",
+    name: "Ghar Ka Dabba",
     rating: "4.7",
     price: "₹179",
     subs: "2,105",
-    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
+    badges: [
+      { label: "Fastest Delivery", color: "bg-green-500 text-white" },
+    ],
     img: LandingImage,
   },
   {
-    id: 3,
-    name: "The Fit Kitchen",
-    rating: "4.7",
-    price: "₹179",
-    subs: "2,105",
-    badges: [{ label: "Fastest Delivery", color: "bg-green-500 text-white" }],
-    img: LandingImage,
+    id: "69d0d199871831a749f47af3",
+    name:"Rasoi Express",
+    rating: "4.6",
+    price: "₹159",
+    subs: "1,530",
+    badges: [
+      { label: "Low Oil", color: "bg-purple-500 text-white" },
+    ],
+    img: "https://res.cloudinary.com/drnie4sny/image/upload/v1775292952/aaharmitra/business/ygpynuqzco19efpqseht.jpg",
   },
 ];
 
@@ -60,23 +67,22 @@ export default function HomePage() {
       <ScrollZoomHero />
       <WhyChoose />
 
-      {/* 🔥 Popular Kitchens Header */}
+      {/* Header */}
       <section className="bg-white px-6 pt-16 pb-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <h2 className="text-2xl md:text-3xl font-black text-gray-900">
             Popular Kitchens
           </h2>
 
-          <button className="flex items-center gap-1 text-sm font-bold text-gray-600 hover:text-amber-500 transition">
-            Explore More
-            <span className="material-symbols-outlined text-lg">
-              arrow_forward
-            </span>
-          </button>
+          <Link to="/explore">
+            <button className="flex items-center gap-1 text-sm font-bold text-gray-600 hover:text-amber-500 transition">
+              Explore More
+            </button>
+          </Link>
         </div>
       </section>
 
-      {/* 🔥 Vendor Cards */}
+      {/* Vendor Cards */}
       <section className="bg-white py-6 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center">
           {vendors.map((v) => (
@@ -104,303 +110,105 @@ function ScrollZoomHero() {
   const blur = useTransform(scrollYProgress, [0, 1], ["0px", "8px"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 0.7]);
 
-  const textOpacity = useTransform(
-    scrollYProgress,
-    [0.1, 0.5, 0.65],
-    [1, 0.2, 0],
-    { clamp: true },
-  );
-
-  const textY = useTransform(scrollYProgress, [0, 0.7], [0, -320], {
-    clamp: true,
-  });
-
   return (
     <section ref={ref} className="h-[200vh] relative">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Background */}
         <motion.img
           src={LandingImage}
           alt="tiffin"
           className="absolute w-full h-full object-cover"
-          style={{
-            scale,
-            filter: blur,
-            rotate: "1.5deg",
-          }}
+          style={{ scale, filter: blur }}
         />
 
-        {/* Overlay */}
         <motion.div
           style={{ opacity: overlayOpacity }}
           className="absolute inset-0 bg-black"
         />
 
-        {/* Content */}
-        <motion.div
-          style={{
-            opacity: textOpacity,
-            y: textY,
-          }}
-          className="absolute inset-0 flex flex-col items-center justify-center -translate-y-16 md:-translate-y-24 text-center px-4 top-32"
-        >
-          <img
-            src={ahaarmitraLogo}
-            alt="Ahaar Mitra"
-            className="w-[610px] md:w-[810px] lg:w-[930px] object-contain"
-          />
-          <div className="h-40"></div>
-          <div className="mt-4 px-6 py-4 rounded-xl bg-white/20 backdrop-blur-md text-center">
-            {/* Text */}
-            <p className="text-white text-sm md:text-base max-w-xl mx-auto leading-tight">
-              Har din ghar jaisa swaad — connecting home chefs with people who
-              crave authentic meals.
-            </p>
-
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 mt-4 justify-center items-center">
-              <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
-                Login
-              </button>
-              <Link to="/11">
-                <button className="px-6 py-3 bg-white text-black font-bold rounded-xl text-sm uppercase tracking-widest hover:bg-amber-500 transition-all">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
-          </div>
-        </motion.div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <img src={ahaarmitraLogo} alt="logo" className="w-[600px]" />
+        </div>
       </div>
     </section>
   );
 }
 
-/* ================= WHY CHOOSE ================= */
+/* ================= WHY ================= */
 
 function WhyChoose() {
   const points = [
-    {
-      title: "Flexibility",
-      desc: "Choice of plans, meals, and delivery preferences",
-    },
-    {
-      title: "Trust ",
-      desc: "Verified vendors and transparent system for both sides",
-    },
-    {
-      title: "Scalability ",
-      desc: "Supports growth for vendors and long-term usage for customers",
-    },
-    {
-      title: "Efficiency",
-      desc: "Saves time for users and simplifies operations for vendors",
-    },
-    {
-      title: "Accessibility ",
-      desc: "Available anytime, anywhere with simple platform access",
-    },
+    { title: "Flexibility", desc: "Choice of plans" },
+    { title: "Trust", desc: "Verified vendors" },
+    { title: "Scalability", desc: "Supports growth" },
   ];
 
-  const [centerIndex, setCenterIndex] = useState(1);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCenterIndex((prev) => (prev + 1) % points.length);
-    }, 2250); // 🔥 10% faster (2500 → 2250)
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="bg-white py-16 pb-5 px-6 text-center overflow-hidden">
-      <div>
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900">
-          Why Choose Ahaar Mitra?
-        </h2>
-
-        <p className="text-gray-500 text-sm md:text-base mt-3">
-          Bringing home-style meals closer to you — fresh, affordable, and made
-          with care.
-        </p>
-      </div>
-
-      <div className="relative flex justify-center items-center h-[240px]">
-        {points.map((item, index) => {
-          let position = index - centerIndex;
-
-          if (position < -2) position += points.length;
-          if (position > 2) position -= points.length;
-
-          const isCenter = position === 0;
-
-          return (
-            <motion.div
-              key={index}
-              animate={{
-                x: position * 400, // 🔥 increased gap (350 → 400)
-                scale: isCenter ? 1.1 : 0.88,
-                opacity: Math.abs(position) > 1 ? 0 : 0.5,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 140, // 🔥 slightly faster animation
-                damping: 16,
-              }}
-              className="absolute w-[310px] md:w-[350px] p-7 rounded-2xl border border-gray-200 bg-white shadow-md"
-            >
-              <h3
-                className={`text-xl font-black mb-2 ${
-                  isCenter ? "text-black" : "text-gray-400"
-                }`}
-              >
-                {item.title}
-              </h3>
-
-              <p
-                className={`text-sm ${
-                  isCenter ? "text-gray-700" : "text-gray-400"
-                }`}
-              >
-                {item.desc}
-              </p>
-            </motion.div>
-          );
-        })}
+    <section className="bg-white py-16 text-center">
+      <h2 className="text-3xl font-black">Why Choose Ahaar Mitra?</h2>
+      <div className="flex justify-center gap-6 mt-8">
+        {points.map((p, i) => (
+          <div key={i} className="p-6 border rounded-xl">
+            <h3 className="font-bold">{p.title}</h3>
+            <p className="text-sm text-gray-500">{p.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
 
-/* ================= TEXT SCROLL (optional) ================= */
+/* ================= CARD ================= */
 
 function VendorCard({ vendor }) {
   const [liked, setLiked] = useState(false);
 
   return (
-    <div className="bg-white rounded-[1rem] overflow-hidden flex flex-col border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group w-full max-w-[300px]">
+    <div className="bg-white rounded-xl overflow-hidden border shadow hover:shadow-lg transition w-full max-w-[300px]">
+
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="relative h-52">
         <img
           src={vendor.img}
           alt={vendor.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          className="w-full h-full object-cover"
         />
-
-        {/* Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
           {vendor.badges?.map((b) => (
             <span
               key={b.label}
-              className={`${b.color} px-2.5 py-1 rounded-full text-[10px] font-black uppercase`}
+              className={`${b.color} px-2 py-1 rounded text-[10px] font-bold`}
             >
               {b.label}
             </span>
           ))}
         </div>
 
-        {/* Favourite */}
+        {/* Like */}
         <button
           onClick={() => setLiked(!liked)}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 backdrop-blur border border-gray-200 flex items-center justify-center"
+          className="absolute top-3 right-3 bg-white p-2 rounded-full"
         >
-          <span
-            className={`material-symbols-outlined text-lg ${
-              liked ? "text-red-500" : "text-gray-400"
-            }`}
-            style={liked ? { fontVariationSettings: "'FILL' 1" } : {}}
-          >
-            favorite
-          </span>
+          ❤️
         </button>
       </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1">
-        {/* Name + Rating */}
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-black text-black leading-tight">
-            {vendor.name}
-          </h3>
+      <div className="p-4 flex flex-col gap-3">
+        <h3 className="font-bold">{vendor.name}</h3>
 
-          <div className="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
-            <span className="material-symbols-outlined text-amber-500 text-sm">
-              star
-            </span>
-            <span className="text-xs font-bold text-amber-600">
-              {vendor.rating}
-            </span>
-          </div>
-        </div>
+        <p className="text-sm text-gray-500">
+          ⭐ {vendor.rating} • {vendor.subs}
+        </p>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-4 border-y border-gray-100 py-4 mb-4">
-          <div>
-            <p className="text-[10px] font-bold uppercase text-gray-400">
-              Price / Meal
-            </p>
-            <p className="text-lg font-black text-black">{vendor.price}</p>
-          </div>
-
-          <div>
-            <p className="text-[10px] font-bold uppercase text-gray-400">
-              Active Now
-            </p>
-            <p className="text-lg font-black text-amber-500">{vendor.subs}</p>
-          </div>
-        </div>
-
-        {/* Button */}
-        <Link to="/1">
-          <button className="w-full bg-black text-white font-bold py-3 rounded-xl hover:bg-amber-500 transition-all text-xs uppercase tracking-widest">
+        {/* ✅ FIXED BUTTON */}
+        <Link to={`/vendor/${vendor.id}`}>
+          <button className="w-full bg-black text-white py-3 rounded-xl hover:bg-amber-500 transition text-xs font-bold uppercase">
             View Meal Plans
           </button>
         </Link>
       </div>
     </div>
-  );
-}
-
-function TextScroll() {
-  const ref = useRef(null);
-  const { scrollY } = useScroll();
-
-  const lines = [
-    { text: "CREATIVE", reverse: false },
-    { text: "DESIGN", reverse: true },
-  ];
-
-  return (
-    <section ref={ref} className="bg-white py-16 overflow-hidden">
-      <div className="flex flex-col gap-4">
-        {lines.map((line, index) => {
-          const direction = line.reverse ? 1 : -1;
-          const x = useTransform(scrollY, [0, 1000], [0, direction * 250]);
-
-          return (
-            <div key={index} className="overflow-hidden">
-              <motion.div
-                style={{ x }}
-                className="flex items-center gap-8 py-2 will-change-transform"
-              >
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="flex items-center gap-8 shrink-0">
-                    <span className="text-[6vw] md:text-[4.5vw] font-black text-orange-500 whitespace-nowrap">
-                      {line.text}
-                    </span>
-
-                    <span className="text-[6vw] md:text-[4.5vw] font-black text-black whitespace-nowrap">
-                      {line.text}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
   );
 }
